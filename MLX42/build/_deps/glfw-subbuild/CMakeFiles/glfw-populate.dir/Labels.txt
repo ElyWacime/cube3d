@@ -1,0 +1,14 @@
+# Target labels
+ glfw-populate
+# Source files and their labels
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/CMakeFiles/glfw-populate-complete.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-build.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-configure.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-download.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-install.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-mkdir.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-patch.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-test.rule
+/Users/yajallal/Desktop/cub3d/MLX42/build/_deps/glfw-subbuild/glfw-populate-prefix/src/glfw-populate-stamp/glfw-populate-update.rule
