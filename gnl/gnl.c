@@ -3,7 +3,7 @@
 char    *gnl(int fd)
 {
     static char buffer[42];
-    char        *line[100000];
+    char        line[100000];
     static int  counter;
 	static int	readed;
 	int			i;
@@ -21,7 +21,7 @@ char    *gnl(int fd)
 				break;
 		}
 		line[i++] = buffer[counter++];
-		if (buffer[counter - 1] = '\n')
+		if (line[i - 1] == '\n')
 			break;
 	}
 	line[i] = '\0';
