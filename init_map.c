@@ -2,42 +2,46 @@
 
 void	get_node_positions(t_list *map)
 {
-	t_list	*head;
 	int		lst_size;
 	int		count;
 
 	count = 0;
 	lst_size = ft_lstsize(map);
-	head = map;
-	while (head)
+	while (map)
 	{
 		if (count == 0)
-			head->position = FIRST;
-		else if (count = lst_size)
-			head->position = LAST;
+			map->position = FIRST;
+		else if (count == lst_size)
+			map->position = LAST;
 		else
-			head->position = MIDDLE;
-		head = head->next;
+			map->position = MIDDLE;
+        count++;
+        printf("fuck %d\n", count);
+		map = map->next;
 	}
 }
 
 int create_map(void)
 {
 	char        *line = NULL;
-	int         fd = open("file", O_RDONLY);
+	int         fd = open("gnl/file", O_RDONLY);
 	t_list	    *map;
-	t_list	    *head;
-
 	map = NULL;
 	line = gnl(fd);
-	while (line)
+    while (line)
 	{
+        printf("%s", line);
 		ft_lstadd_back(&map, ft_lstnew(line));
+        printf(">>>>>>%s", (char *)ft_lstlast(map)->content);
 		line = gnl(fd);
 	}
-	while (map)
-	{
-		printf("%s", (char *)map->content);
-		map = map->next;
-	}	
+    map = map->next;
+    // printf("%p\n", map->next);
+    // get_node_positions(map);
+	// while (map)
+	// {
+    //     printf("%d\t%s",map->position, (char *)map->content);
+    //     map = map->next;
+	// }
+    return 0;	
 }

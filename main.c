@@ -1,1 +1,7 @@
-#include "gnl/gnl.h"
+#include "cube.h"
+
+int main(void)
+{
+    create_map();
+    return 0;
+}

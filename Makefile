@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 CFILES = init_map.c main.c gnl/gnl.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
@@ -19,3 +19,9 @@ clean:
 
 fclean: clean
 	rm -rf ${NAME}
+
+git:
+	git add .
+	git commit -m "update"
+
+re : fclean all

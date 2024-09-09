@@ -8,4 +8,7 @@
 #include "gnl/gnl.h"
 #include "libft/libft.h"
 
+void	get_node_positions(t_list *map);
+int     create_map(void);
+
 #endif
