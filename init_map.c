@@ -1,9 +1,9 @@
 #include "cube.h"
 
-int create_map(void)
+char **create_map(void)
 {
 	char        *line = NULL;
-	int         fd = open("gnl/file", O_RDONLY);
+	int         fd = open("./gnl/file", O_RDONLY);
     char        **map;
     char        *_map;
 
@@ -16,5 +16,5 @@ int create_map(void)
         line = gnl(fd);
     }
     map = ft_split(_map, '\n');
-    return 0;
+    return (map);
 }

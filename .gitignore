@@ -1,0 +1,6 @@
+.vscode
+cube.dSYM
+*.o
+cube
+gnl/*.o
+libft/*.o
