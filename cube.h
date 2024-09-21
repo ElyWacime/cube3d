@@ -11,13 +11,13 @@
 /*
 ** init_map.c
 */
-char    **create_map(void);
+char    **create_map(char *);
 
 /*
 ** check_map.c
 */
-int     get_players_position(char **map, int *position);
-int     flood_fill(char **map, int x, int y, int *k);
-int is_still_there_zeros(char **_map, int *zero_position);
+int     get_players_position(char **, int *);
+int     flood_fill(char**, int, int, int*);
+int is_still_there_zeros(char **, int *);
 
 #endif

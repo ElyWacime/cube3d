@@ -1,6 +1,25 @@
 #include "cube.h"
 
-int main(void)
+void parse_arguments(char *arg)
+{
+    char *cube;
+
+    cube = NULL;
+    cube = ft_strnstr(arg, ".cub", ft_strlen(arg) + 1);
+    if (!cube)
+    {
+        printf("wrong file format!");
+        exit(4);
+    }
+    if (ft_strncmp(cube, ".cube", 5))
+    {
+        printf("wrong file format!");
+        exit(5);
+    }
+
+}
+
+int main(int ac, char *av[])
 {
     char **map;
     char **_map;
@@ -9,8 +28,14 @@ int main(void)
     int k = 0;
     int valid;
 
-    map = create_map();
-    _map = create_map();
+    if (ac > 2)
+    {
+        printf("wrong number of arguments!");
+        exit(3);
+    }
+    parse_arguments(av[1]);
+    map = create_map(av[1]);
+    _map = create_map(av[1]);
     if (get_players_position(map, position))
     {
         perror("Map does't have player!");

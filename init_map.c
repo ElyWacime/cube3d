@@ -1,13 +1,19 @@
 #include "cube.h"
 
-char **create_map(void)
+char **create_map(char *file_cub)
 {
 	char        *line = NULL;
-	int         fd = open("./gnl/file", O_RDONLY);
+	int         fd;
     char        **map;
     char        *_map;
 
     _map = NULL;
+    fd = open(file_cub, O_RDONLY);
+    if (fd < 0)
+    {
+        printf("file not found!");
+        exit(6);
+    }
     line = gnl(fd);
     while (line)
     {
