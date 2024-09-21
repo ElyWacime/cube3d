@@ -51,8 +51,11 @@ int is_still_there_zeros(char **_map, int *zero_position)
 int flood_fill(char **map, int x, int  y, int *k)
 {
     if (*k == 1)
-        return 1;
-    if ((x < 0 || y < 0)
+    {
+        printf("map is invalid!");
+        exit(2);
+    }
+    if ((x < 0 || y < 0 || !map[y])
         || !map[y][x]
         || map[y][x] == ' ')
         return (1);
