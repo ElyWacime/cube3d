@@ -28,7 +28,7 @@ int main(int ac, char *av[])
     int k = 0;
     int valid;
 
-    if (ac > 2)
+    if (ac != 2)
     {
         printf("wrong number of arguments!");
         exit(3);

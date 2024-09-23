@@ -4,18 +4,20 @@ CFILES = check_map.c init_map.c main.c gnl/gnl.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = libft/libft.a
-
+MLX = ./mlx/build/libmlx42.a
+GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 
 all : ${NAME}
 
 ${NAME}: ${OBJ} ${LIBFT}
-	${CC} ${FLAGS} ${LIBFT} ${CFILES} -o ${NAME}
+	${CC} ${FLAGS} ${LIBFT} ${CFILES} ${MLX} ${GLFW} \
+	-framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}: #fix relink
 	make -C ./libft
 
 %.o : %.c cube.h
-	cc ${CFLAGS} -c $< -o $@
+	cc ${CFLAGS} -Imlx -c $< -o $@
 
 clean:
 	rm -rf ${OBJ}

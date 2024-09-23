@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "gnl/gnl.h"
 #include "libft/libft.h"
+#include "./mlx/include/MLX42/MLX42.h"
 
 /*
 ** init_map.c

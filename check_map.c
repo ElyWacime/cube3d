@@ -56,7 +56,7 @@ int flood_fill(char **map, int x, int  y, int *k)
         exit(2);
     }
     if ((x < 0 || y < 0 || !map[y])
-        || !map[y][x]
+        || x > (int)ft_strlen(map[y])
         || map[y][x] == ' ')
         return (1);
     if (map[y][x] == '1')
