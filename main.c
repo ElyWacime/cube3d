@@ -46,5 +46,6 @@ int main(int ac, char *av[])
     while (is_still_there_zeros(_map, zero_position))
         valid = flood_fill(_map, zero_position[1], zero_position[0], &k);
     printf("%d\n", valid);
+    init_map();
     return 0;
 }
