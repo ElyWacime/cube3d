@@ -21,7 +21,8 @@ int    get_players_position(char **map, int *position)
         }
         i++;
     }
-    return 1;
+    perror("Map does't have player!");
+    exit(1);
 }
 
 int is_still_there_zeros(char **_map, int *zero_position)

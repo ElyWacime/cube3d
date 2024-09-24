@@ -27,6 +27,7 @@ int main(int ac, char *av[])
     int zero_position[2];
     int k = 0;
     int valid;
+    t_var var;
 
     if (ac != 2)
     {
@@ -35,17 +36,15 @@ int main(int ac, char *av[])
     }
     parse_arguments(av[1]);
     map = create_map(av[1]);
+    var.map = map;
     _map = create_map(av[1]);
-    if (get_players_position(map, position))
-    {
-        perror("Map does't have player!");
-        exit(1);
-    }
+    get_players_position(map, position);
     printf("%c\t%d\t%d\n",map[position[0]][position[1]], position[1], position[0]);
     valid = flood_fill(_map, position[1], position[0], &k);
     while (is_still_there_zeros(_map, zero_position))
         valid = flood_fill(_map, zero_position[1], zero_position[0], &k);
+    free_double((void**)_map);
     printf("%d\n", valid);
-    init_map();
+    _init_map(&var);
     return 0;
 }
