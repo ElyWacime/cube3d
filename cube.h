@@ -24,6 +24,8 @@
 typedef struct s_var
 {
     char    **map;
+    char    **textures;
+    char    **wall_floor_colors;
     int     largest_line_in_map;
     int     map_len;
 }   t_var;
@@ -31,7 +33,7 @@ typedef struct s_var
 /*
 ** init_map.c
 */
-char    **create_map(char *);
+char    **create_map(char *, t_var *);
 void    _init_map(t_var*);
 
 /*

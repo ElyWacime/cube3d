@@ -1,6 +1,41 @@
 #include "cube.h"
 
-char **create_map(char *file_cub)
+void    get_texures_colors(t_var *var, int fd)
+{
+    char *line;
+    char *tmp;
+    int i;
+
+    i = 0;
+    while (i < 4)
+    {
+        line = gnl(fd);
+        if (!line)
+        {
+            write(2, "Invalid map!", 12);
+            exit(5);
+        }
+        tmp = ft_strjoin(tmp, line);
+        free(line);
+    }
+    var->textures = ft_split(tmp, '\n');
+    free(tmp);
+    tmp = NULL;
+    while (i < 8)
+    {
+        line = gnl(fd);
+        if (!line)
+        {
+            write(2, "Invalid map!", 12);
+            exit(6);
+        }
+        tmp = ft_strjoin(tmp, line);
+        free(line);
+    }
+    var->wall_floor_colors = ft_split(tmp, '\n');
+}
+
+char **create_map(char *file_cub, t_var *var)
 {
 	char        *line = NULL;
 	int         fd;
@@ -14,6 +49,7 @@ char **create_map(char *file_cub)
         printf("file not found!");
         exit(6);
     }
+    get_texures_colors(var, fd);
     line = gnl(fd);
     while (line)
     {
@@ -25,36 +61,38 @@ char **create_map(char *file_cub)
     return (map);
 }
 
-void    put_wall_img_to_map(char **map, mlx_t *mlx)
+void    create_floor(t_var *var, mlx_t *mlx)
 {
-    (void)map;
+    (void)var;
     (void)mlx;
     return;
 }
 
-void    put_floor_img_to_map(char **map, mlx_t *mlx)
+void    create_wall(t_var *var, mlx_t *mlx)
 {
-    (void)map;
+    (void)var;
     (void)mlx;
     return ;
 }
 
-void    add_floor_2d(char **map, mlx_t *mlx)
+void    create_2d_map(t_var *var, mlx_t *mlx)
 {
     int i;
     int j;
 
     i = 0;
-    while (map[i])
+    while (var->map[i])
     {
         j = 0;
-        while (map[i][j])
+        while (var->map[i][j])
         {
-            if (map[i][j] == '1')
-                put_wall_img_to_map(map, mlx);
-            else if (map[i][j] == '0')
-                put_floor_img_to_map(map, mlx);
+            if (var->map[i][j] == '1')
+                create_floor(var, mlx);
+            else if (var->map[i][j] == '0')
+                create_wall(var, mlx);
+            j++;
         }
+        i++;
     }
 }
 
@@ -62,10 +100,10 @@ void    _init_map(t_var *var)
 {
 
 	mlx_set_setting(MLX_MAXIMIZED, true);
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
+	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
 	if (!mlx)
 		ft_error();
-	add_floor_2d(var->map, mlx);
+	create_2d_map(var, mlx);
 	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();

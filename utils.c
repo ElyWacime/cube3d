@@ -13,10 +13,9 @@ void    free_double(void **ptr)
 {
     if (!ptr)
         return ;
-    while (ptr)
+    while (ptr && *ptr)
     {
-        if (*ptr)
-            free(*ptr);
+        free(*ptr);
         ptr++;
     }
 }
