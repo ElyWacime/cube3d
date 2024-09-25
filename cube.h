@@ -28,6 +28,8 @@ typedef struct s_var
     char    **wall_floor_colors;
     int     largest_line_in_map;
     int     map_len;
+    size_t  color_C;
+    size_t  color_F;
 }   t_var;
 
 /*
@@ -41,6 +43,7 @@ void    _init_map(t_var*);
 */
 void ft_error(void);
 void    free_double(void **ptr);
+char    **strdup_double_str(char **str);
 
 /*
 ** check_map.c
