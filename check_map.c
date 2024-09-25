@@ -40,6 +40,7 @@ int is_still_there_zeros(char **_map, int *zero_position)
             {
                 zero_position[0] = i;
                 zero_position[1] = j;
+                printf("fuck");
                 return 1;
             }
             j++;
@@ -49,24 +50,21 @@ int is_still_there_zeros(char **_map, int *zero_position)
     return 0;
 }
 
-int flood_fill(char **map, int x, int  y, int *k)
+void flood_fill(char **map, int x, int  y)
 {
-    if (*k == 1)
+    if ((x < 0 || y < 0 || y > strlen_double((void **)map))
+        || x > (int)ft_strlen(*(map + y))
+        || map[y][x] == ' ')
     {
         write(2, "Error\nmap is invalid!", 21);
-        exit(2);
+        exit(21);
     }
-    if ((x < 0 || y < 0 || !map[y])
-        || x > (int)ft_strlen(map[y])
-        || map[y][x] == ' ')
-        return (1);
     if (map[y][x] == '1')
-        return 0;
+        return ;
     if (map[y][x] == '0' || map[y][x] == 'N')
         map[y][x] = '1';
-    *k = flood_fill(map, x, y + 1, k);
-    *k = flood_fill(map, x, y - 1, k);
-    *k = flood_fill(map, x + 1, y, k);
-    *k = flood_fill(map, x - 1, y, k);
-    return *k;
+    flood_fill(map, x, y + 1);
+    flood_fill(map, x, y - 1);
+    flood_fill(map, x + 1, y);
+    flood_fill(map, x - 1, y);
 }

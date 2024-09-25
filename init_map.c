@@ -27,14 +27,29 @@ void    extraxt_C(t_var *var)
 {
     int i;
     char **color;
+    int _colors[3];
 
     i = -1;
     while (var->wall_floor_colors[++i])
     {
         if (var->wall_floor_colors[i][0] == 'C')
-            color = var->wall_floor_colors[i] + 2;
+            color = ft_split(var->wall_floor_colors[i] + 2, ',');
     }
-    
+    // printf("%s\t%s\t%s\n", color[0], color[1], color[2]);
+    if (strlen_double((void**)color) == 3)
+    {
+        _colors[0] = ft_atoi(color[0]);
+        _colors[1] = ft_atoi(color[1]);
+        _colors[2] = ft_atoi(color[2]);
+    }
+    // else
+    //     exit(666);
+    i = -1;
+    while (++i < 3)
+    {
+        var->color_C = var->color_C * 10 + ft_atoi(color[i]);
+    }
+    // printf(">>> %zX\n", var->color_C);
 }
 
 void    extract_F(t_var *var)

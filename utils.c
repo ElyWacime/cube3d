@@ -25,9 +25,14 @@ int strlen_double(void **ptr)
 {
     int i;
 
+    if (!ptr)
+        return 0;
     i = -1;
-    while (ptr && ptr[++i])
+    while (ptr && *ptr)
+    {
+        ptr++;
         i++;
+    }
     return i;
 }
 

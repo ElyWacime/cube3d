@@ -44,12 +44,13 @@ void    _init_map(t_var*);
 void ft_error(void);
 void    free_double(void **ptr);
 char    **strdup_double_str(char **str);
+int strlen_double(void **ptr);
 
 /*
 ** check_map.c
 */
 int     get_players_position(char **, int *);
-int     flood_fill(char**, int, int, int*);
+void     flood_fill(char**, int, int);
 int is_still_there_zeros(char **, int *);
 
 #endif
