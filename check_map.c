@@ -53,7 +53,7 @@ int flood_fill(char **map, int x, int  y, int *k)
 {
     if (*k == 1)
     {
-        printf("map is invalid!");
+        write(2, "Error\nmap is invalid!", 21);
         exit(2);
     }
     if ((x < 0 || y < 0 || !map[y])
