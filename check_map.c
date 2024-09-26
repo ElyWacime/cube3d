@@ -21,7 +21,7 @@ int    get_players_position(char **map, int *position)
         }
         i++;
     }
-    perror("Map does't have player!");
+    write(2, "Map does't have player!", 23);
     exit(1);
 }
 
@@ -40,7 +40,6 @@ int is_still_there_zeros(char **_map, int *zero_position)
             {
                 zero_position[0] = i;
                 zero_position[1] = j;
-                printf("fuck");
                 return 1;
             }
             j++;
@@ -52,8 +51,9 @@ int is_still_there_zeros(char **_map, int *zero_position)
 
 void flood_fill(char **map, int x, int  y)
 {
-    if ((x < 0 || y < 0 || y > strlen_double((void **)map))
-        || x > (int)ft_strlen(*(map + y))
+    if (x < 0 || y < 0
+        || y >= strlen_double((void**)map)
+        || x >= (int)ft_strlen(map[y])
         || map[y][x] == ' ')
     {
         write(2, "Error\nmap is invalid!", 21);

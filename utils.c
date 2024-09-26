@@ -23,31 +23,46 @@ void    free_double(void **ptr)
 
 int strlen_double(void **ptr)
 {
-    int i;
+    int     i;
+    void    **holder;
 
-    if (!ptr)
+    holder = ptr;
+    
+    
+    if (!holder)
         return 0;
-    i = -1;
-    while (ptr && *ptr)
+    i = 0;
+    while (holder && *holder)
     {
-        ptr++;
+        holder++;
         i++;
     }
     return i;
 }
 
-char    **strdup_double_str(char **str)
+char    **strdup_double(char **str)
 {
     char **ret;
     int retlen;
     int i;
+    // char **holder;
 
-    i = -1;
+    // holder = str;
+    // while (str && *str)
+    // {
+    //     printf(">> | %s\n", *str);
+    //     str++;
+    // }
+    // str = holder;
+    // printf(">>>>> %d\n", retlen);
+    // exit(0);
     retlen = strlen_double((void **)str);
-    ret = malloc(sizeof(char *) * (retlen + 1));
-    while (++i < retlen)
+    i = 0;
+    ret = (char **)malloc(sizeof(char *) * (retlen + 1));
+    while (i < retlen)
     {
         ret[i] = ft_strdup(str[i]);
+        i++;
     }
     ret[i] = NULL;
     return (ret);

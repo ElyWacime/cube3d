@@ -43,7 +43,7 @@ void    _init_map(t_var*);
 */
 void ft_error(void);
 void    free_double(void **ptr);
-char    **strdup_double_str(char **str);
+char    **strdup_double(char **str);
 int strlen_double(void **ptr);
 
 /*
