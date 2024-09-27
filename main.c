@@ -67,7 +67,6 @@ void parsing(int ac, char *av[], t_var *var)
         flood_fill(_map, zero_position[1], zero_position[0]);
     is_map_all_ones(_map);
     free_double((void**)_map);
-    _init_map(var);
 }
 
 int main(int ac, char *av[])
@@ -75,5 +74,6 @@ int main(int ac, char *av[])
     t_var var;
 
     parsing(ac, av, &var);
+    _init_map(&var);
     return 0;
 }

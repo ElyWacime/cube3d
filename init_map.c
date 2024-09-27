@@ -56,12 +56,9 @@ void    check_if_valid_color(char **color)
 uint32_t  transform_color_to_hexa(int *color)
 {
     uint32_t    _color;
-    int         i;
-
-    i = -1;
-    _color = 0;
-    while (++i < 3)
-        _color = (_color * 1000) + color[i];
+   
+   _color = (color[0] << 24) | (color[1] << 16) | (color[2] << 8) | 0xFF;
+   printf(">>> || %X\n", _color);
     return _color;
 }
 
@@ -168,7 +165,7 @@ void    _init_map(t_var *var)
     (void)var;
     int i;
     int j;
-	// mlx_set_setting(MLX_MAXIMIZED, true);
+
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
 	if (!mlx)
 		ft_error();
