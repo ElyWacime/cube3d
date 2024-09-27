@@ -18,7 +18,24 @@ void    check_textures(char *NO, char *SO, char *WE, char *EA)
 
 void   check_path(char *NO, char *SO, char *WE, char *EA)
 {
-    
+    int fd1;
+    int fd2;
+    int fd3;
+    int fd4;
+
+    fd1 = open(NO, O_RDONLY);
+    fd2 = open(SO, O_RDONLY);
+    fd3 = open(WE, O_RDONLY);
+    fd4 = open(EA, O_RDONLY);
+    if (fd1 < 0 || fd2 < 0 || fd3 < 0 || fd4 < 0)
+    {
+        write(2, "Error\nInvalid path!", 18);
+        exit(73);
+    }
+    close(fd1);
+    close(fd2);
+    close(fd3);
+    close(fd4);
 }
 
 void    parse_textures(t_var *var)
