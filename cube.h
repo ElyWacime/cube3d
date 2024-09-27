@@ -8,9 +8,10 @@
 #include "gnl/gnl.h"
 #include "libft/libft.h"
 #include "./mlx/include/MLX42/MLX42.h"
+#include <stdint.h>
 
-#define WIDTH 1000
-#define HEIGHT 1000
+#define WIDTH 2500
+#define HEIGHT 1200
 
 // typedef struct s_mlx
 // {
@@ -23,13 +24,13 @@
 
 typedef struct s_var
 {
-    char    **map;
-    char    **textures;
-    char    **colors;
-    int     largest_line_in_map;
-    int     map_len;
-    size_t  color_C;
-    size_t  color_F;
+    char        **map;
+    char        **textures;
+    char        **colors;
+    int         largest_line_in_map;
+    int         map_len;
+    uint32_t    color_C;
+    uint32_t    color_F;
 }   t_var;
 
 /*
@@ -37,6 +38,7 @@ typedef struct s_var
 */
 char    **create_map(char *, t_var *);
 void    _init_map(t_var*);
+uint32_t  transform_color_to_hexa(int *color);
 
 /*
 ** utils.c

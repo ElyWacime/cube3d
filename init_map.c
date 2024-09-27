@@ -53,9 +53,16 @@ void    check_if_valid_color(char **color)
     }
 }
 
-size_t  transform_color_to_hexa(int *color)
+uint32_t  transform_color_to_hexa(int *color)
 {
-    
+    uint32_t    _color;
+    int         i;
+
+    i = -1;
+    _color = 0;
+    while (++i < 3)
+        _color = (_color * 1000) + color[i];
+    return _color;
 }
 
 void    extraxt_C(t_var *var)
@@ -75,13 +82,27 @@ void    extraxt_C(t_var *var)
     _colors[1] = ft_atoi(color[1]);
     _colors[2] = ft_atoi(color[2]);
     free_double((void**)color);
-    var->color_C = transform_color_to_heaxa(_colors);
+    var->color_C = transform_color_to_hexa(_colors);
 }
 
 void    extract_F(t_var *var)
 {
-    (void)var;
-    return ;
+    char **color;
+    int _colors[3];
+
+    if (var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]))
+        color = ft_split(var->colors[1] + 2, ',');
+    else
+    {
+        write(2, "Error\nInvalid color!", 19);
+        exit(92);
+    }
+    check_if_valid_color(color);
+    _colors[0] = ft_atoi(color[0]);
+    _colors[1] = ft_atoi(color[1]);
+    _colors[2] = ft_atoi(color[2]);
+    free_double((void**)color);
+    var->color_F = transform_color_to_hexa(_colors);
 }
 
 void    parse_colors(t_var *var)
@@ -112,6 +133,7 @@ void    get_colors(t_var *var, int fd)
     var->colors = ft_split(tmp, '\n');
     free(tmp);
     parse_colors(var);
+    printf("%u\t%u\n", var->color_C, var->color_F);
 }
 
 char **create_map(char *file_cub, t_var *var)
@@ -144,13 +166,30 @@ char **create_map(char *file_cub, t_var *var)
 void    _init_map(t_var *var)
 {
     (void)var;
-	mlx_set_setting(MLX_MAXIMIZED, true);
+    int i;
+    int j;
+	// mlx_set_setting(MLX_MAXIMIZED, true);
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
 	if (!mlx)
 		ft_error();
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
+	mlx_image_t* img = mlx_new_image(mlx, WIDTH, HEIGHT);
+    if (!img)
+		ft_error();
+	i = -1;
+    while (++i < WIDTH)
+    {
+        j = -1;
+        while (++j < HEIGHT)
+        {
+            if (j > HEIGHT / 2)
+            {
+                mlx_put_pixel(img, i, j, var->color_F);
+                continue ;
+            }
+            mlx_put_pixel(img, i, j, var->color_C);
+        }
+    }
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();
-	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
     mlx_loop(mlx);
 }
