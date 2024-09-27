@@ -23,29 +23,59 @@ void    get_texures(t_var *var, int fd)
     free(tmp);
 }
 
-void    extraxt_C(t_var *var)
+void    check_if_valid_color(char **color)
 {
     int i;
+    int j;
+
+    i = -1;
+    if (strlen_double((void**)color) != 3)
+    {
+        write(2, "Error\nInvalid color!", 19);
+        exit(90);
+    }
+    while (color[++i])
+    {
+        if (ft_strlen(color[i]) > 3)
+        {
+            write(2, "Error\nInvalid color!", 19);
+            exit(90);
+        }
+        j = -1;
+        while (color[i][++j])
+        {
+            if (!ft_isdigit(color[i][j]))
+            {
+                write(2, "Error\nInvalid color!", 19);
+                exit(90);
+            }
+        }
+    }
+}
+
+size_t  transform_color_to_hexa(int *color)
+{
+    
+}
+
+void    extraxt_C(t_var *var)
+{
     char **color;
     int _colors[3];
 
-    i = -1;
-    while (var->colors[++i])
+    if (var->colors[0][0] == 'F' && ft_isspace(var->colors[0][1]))
+        color = ft_split(var->colors[0] + 2, ',');
+    else
     {
-        if (var->colors[i][0] == 'C')
-            color = ft_split(var->colors[i] + 2, ',');
+        write(2, "Error\nInvalid color!", 19);
+        exit(91);
     }
-    if (strlen_double((void**)color) == 3)
-    {
-        _colors[0] = ft_atoi(color[0]);
-        _colors[1] = ft_atoi(color[1]);
-        _colors[2] = ft_atoi(color[2]);
-    }
-    i = -1;
-    while (++i < 3)
-    {
-        var->color_C = var->color_C * 10 + ft_atoi(color[i]);
-    }
+    check_if_valid_color(color);
+    _colors[0] = ft_atoi(color[0]);
+    _colors[1] = ft_atoi(color[1]);
+    _colors[2] = ft_atoi(color[2]);
+    free_double((void**)color);
+    var->color_C = transform_color_to_heaxa(_colors);
 }
 
 void    extract_F(t_var *var)
@@ -54,19 +84,10 @@ void    extract_F(t_var *var)
     return ;
 }
 
-void    transform_colors_to_hexa(t_var *var)
+void    parse_colors(t_var *var)
 {
     extraxt_C(var);
     extract_F(var);
-}
-
-void    check_if_colors_valid(t_var *var)
-{
-    if (!var->colors)
-    {
-        write(2, "Error\ncolors not found!", 22);
-        exit(34);
-    }
 }
 
 void    get_colors(t_var *var, int fd)
@@ -90,8 +111,7 @@ void    get_colors(t_var *var, int fd)
     }
     var->colors = ft_split(tmp, '\n');
     free(tmp);
-    check_if_colors_valid(var);
-    transform_colors_to_hexa(var);
+    parse_colors(var);
 }
 
 char **create_map(char *file_cub, t_var *var)
