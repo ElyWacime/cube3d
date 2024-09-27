@@ -1,5 +1,47 @@
 #include "cube.h"
 
+void    check_textures(char *NO, char *SO, char *WE, char *EA)
+{
+    if (ft_strncmp(NO, "NO ", 3)
+        || ft_strncmp(SO, "SO ", 3)
+        || ft_strncmp(WE, "WE ", 3)
+        || ft_strncmp(EA, "EA ", 3))
+    {
+        write(2, "Error\nInvalid path!", 18);
+        exit(72);
+    }
+    free(NO);
+    free(SO);
+    free(WE);
+    free(EA);
+}
+
+void   check_path(char *NO, char *SO, char *WE, char *EA)
+{
+    
+}
+
+void    parse_textures(t_var *var)
+{
+    char *NO;
+    char *SO;
+    char *WE;
+    char *EA;
+
+    if (strlen_double((void**)var->textures) < 4)
+    {
+        write(2, "Error\nInvalid path!", 18);
+        exit(71);
+    }
+    check_textures(var->textures[0], var->textures[1],
+                    var->textures[2], var->textures[3]);
+    NO = var->textures[0] + 3;
+    SO = var->textures[1] + 3;
+    WE = var->textures[2] + 3;
+    EA = var->textures[3] + 3;
+    check_path(NO, SO, WE, EA);
+}
+
 void    get_texures(t_var *var, int fd)
 {
     char *line;
@@ -20,6 +62,7 @@ void    get_texures(t_var *var, int fd)
         free(line);
     }
     var->textures = ft_split(tmp, '\n');
+    parse_textures(var);
     free(tmp);
 }
 
