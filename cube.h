@@ -10,6 +10,7 @@
 #include "./mlx/include/MLX42/MLX42.h"
 #include <stdint.h>
 
+
 #define WIDTH 2500
 #define HEIGHT 1200
 
@@ -24,6 +25,7 @@
 
 typedef struct s_var
 {
+    mlx_t       *mlx;
     char        **map;
     char        **textures;
     char        **colors;
@@ -37,8 +39,13 @@ typedef struct s_var
 ** init_map.c
 */
 char    **create_map(char *, t_var *);
-void    _init_map(t_var*);
+void    _init_window(t_var*);
 uint32_t  transform_color_to_hexa(int *color);
+
+/*
+** init_mini_map.c
+*/
+void    init_mini_map(t_var *var);
 
 /*
 ** utils.c

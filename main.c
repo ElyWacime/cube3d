@@ -74,6 +74,7 @@ int main(int ac, char *av[])
     t_var var;
 
     parsing(ac, av, &var);
-    _init_map(&var);
+    _init_window(&var);
+    init_mini_map(&var);
     return 0;
 }

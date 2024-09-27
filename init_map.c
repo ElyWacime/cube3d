@@ -58,7 +58,6 @@ uint32_t  transform_color_to_hexa(int *color)
     uint32_t    _color;
    
    _color = (color[0] << 24) | (color[1] << 16) | (color[2] << 8) | 0xFF;
-   printf(">>> || %X\n", _color);
     return _color;
 }
 
@@ -160,13 +159,14 @@ char **create_map(char *file_cub, t_var *var)
     return (map);
 }
 
-void    _init_map(t_var *var)
+void    _init_window(t_var *var)
 {
     (void)var;
     int i;
     int j;
 
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
+    var->mlx = mlx;
 	if (!mlx)
 		ft_error();
 	mlx_image_t* img = mlx_new_image(mlx, WIDTH, HEIGHT);
