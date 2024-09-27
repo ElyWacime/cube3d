@@ -19,12 +19,33 @@ void parse_arguments(char *arg)
 
 }
 
-int main(int ac, char *av[])
+void    is_map_all_ones(char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] && map[i][j] != '1' && !ft_isspace(map[i][j]))
+            {
+                write(2, "Error\nInvalid map!", 17);
+                exit(31);
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+void parsing(int ac, char *av[], t_var *var)
 {
     char **_map;
     int position[2];
     int zero_position[2];
-    t_var var;
     char **to_print;
 
     if (ac != 2)
@@ -33,20 +54,26 @@ int main(int ac, char *av[])
         exit(3);
     }
     parse_arguments(av[1]);
-    var.map = create_map(av[1], &var);
-    _map = strdup_double(var.map);
+    var->map = create_map(av[1], var);
+    _map = strdup_double(var->map);
     to_print = _map;
     while (to_print && *to_print)
     {
         printf("%s\n", *to_print);
         to_print++;
     }
-    get_players_position(var.map, position);
-    printf("%c\t%d\t%d\n",var.map[position[0]][position[1]],
-        position[1], position[0]);
+    get_players_position(var->map, position);
     while (is_still_there_zeros(_map, zero_position))
         flood_fill(_map, zero_position[1], zero_position[0]);
+    is_map_all_ones(_map);
     free_double((void**)_map);
-    _init_map(&var);
+    _init_map(var);
+}
+
+int main(int ac, char *av[])
+{
+    t_var var;
+
+    parsing(ac, av, &var);
     return 0;
 }

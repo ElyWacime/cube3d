@@ -25,7 +25,7 @@ typedef struct s_var
 {
     char    **map;
     char    **textures;
-    char    **wall_floor_colors;
+    char    **colors;
     int     largest_line_in_map;
     int     map_len;
     size_t  color_C;
@@ -41,10 +41,11 @@ void    _init_map(t_var*);
 /*
 ** utils.c
 */
+int ft_isspace(char);
 void ft_error(void);
-void    free_double(void **ptr);
-char    **strdup_double(char **str);
-int strlen_double(void **ptr);
+void    free_double(void**);
+char    **strdup_double(char**);
+int strlen_double(void**);
 
 /*
 ** check_map.c

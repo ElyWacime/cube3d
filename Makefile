@@ -1,5 +1,5 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 CFILES = utils.c check_map.c init_map.c main.c gnl/gnl.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
