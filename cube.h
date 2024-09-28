@@ -14,6 +14,9 @@
 #define WIDTH 2500
 #define HEIGHT 1200
 
+#define MINI_WIDTH 512
+#define MINI_HEIGHT 512
+
 // typedef struct s_mlx
 // {
 // 	void*		window;
@@ -26,6 +29,8 @@
 typedef struct s_var
 {
     mlx_t       *mlx;
+    mlx_image_t *img;
+    mlx_image_t *mini_map;
     char        **map;
     char        **textures;
     char        **colors;
@@ -55,6 +60,7 @@ void ft_error(void);
 void    free_double(void**);
 char    **strdup_double(char**);
 int strlen_double(void**);
+void    print_map(t_var *var);
 
 /*
 ** check_map.c

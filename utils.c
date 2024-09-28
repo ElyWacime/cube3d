@@ -40,6 +40,25 @@ int strlen_double(void **ptr)
     return i;
 }
 
+void    print_map(t_var *var)
+{
+    int i;
+    int j;
+
+    i = -1;
+    printf("###########\n");
+    while (var->map[++i])
+    {
+        j = -1;
+        while (var->map[i][++j])
+        {
+            printf("%c", var->map[i][j]);
+        }
+        printf("\n");
+    }
+    printf("###########\n");
+}
+
 char    **strdup_double(char **str)
 {
     char **ret;

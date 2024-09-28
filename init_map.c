@@ -29,8 +29,8 @@ void   check_path(char *NO, char *SO, char *WE, char *EA)
     fd4 = open(EA, O_RDONLY);
     if (fd1 < 0 || fd2 < 0 || fd3 < 0 || fd4 < 0)
     {
-        write(2, "Error\nInvalid path!", 18);
-        exit(73);
+        write(2, "Error\nInvalid path!\n", 20);
+        // exit(73);
     }
     close(fd1);
     close(fd2);
@@ -189,7 +189,6 @@ void    get_colors(t_var *var, int fd)
     var->colors = ft_split(tmp, '\n');
     free(tmp);
     parse_colors(var);
-    printf("%u\t%u\n", var->color_C, var->color_F);
 }
 
 char **create_map(char *file_cub, t_var *var)
@@ -225,12 +224,11 @@ void    _init_window(t_var *var)
     int i;
     int j;
 
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
-    var->mlx = mlx;
-	if (!mlx)
+	var->mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
+	if (!var->mlx)
 		ft_error();
-	mlx_image_t* img = mlx_new_image(mlx, WIDTH, HEIGHT);
-    if (!img)
+	var->img = mlx_new_image(var->mlx, WIDTH, HEIGHT);
+    if (!var->img)
 		ft_error();
 	i = -1;
     while (++i < WIDTH)
@@ -240,13 +238,13 @@ void    _init_window(t_var *var)
         {
             if (j > HEIGHT / 2)
             {
-                mlx_put_pixel(img, i, j, var->color_F);
+                mlx_put_pixel(var->img, i, j, var->color_F);
                 continue ;
             }
-            mlx_put_pixel(img, i, j, var->color_C);
+            mlx_put_pixel(var->img, i, j, var->color_C);
         }
     }
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+	if (!var->img
+        || (mlx_image_to_window(var->mlx, var->img, 0, 0) < 0))
 		ft_error();
-    mlx_loop(mlx);
 }

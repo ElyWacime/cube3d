@@ -76,5 +76,6 @@ int main(int ac, char *av[])
     parsing(ac, av, &var);
     _init_window(&var);
     init_mini_map(&var);
+    mlx_loop(var.mlx);
     return 0;
 }
