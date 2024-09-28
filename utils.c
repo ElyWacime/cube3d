@@ -64,17 +64,7 @@ char    **strdup_double(char **str)
     char **ret;
     int retlen;
     int i;
-    // char **holder;
 
-    // holder = str;
-    // while (str && *str)
-    // {
-    //     printf(">> | %s\n", *str);
-    //     str++;
-    // }
-    // str = holder;
-    // printf(">>>>> %d\n", retlen);
-    // exit(0);
     retlen = strlen_double((void **)str);
     i = 0;
     ret = (char **)malloc(sizeof(char *) * (retlen + 1));
