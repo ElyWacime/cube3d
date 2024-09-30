@@ -51,18 +51,25 @@ int is_still_there_zeros(char **_map, int *zero_position)
 
 void flood_fill(char **map, int x, int  y)
 {
+    static int flag;
+
     if (x < 0 || y < 0
         || y >= strlen_double((void**)map)
         || x >= (int)ft_strlen(map[y])
-        || map[y][x] == ' ')
+        || map[y][x] == ' ' || flag > 1)
     {
         write(2, "Error\nmap is invalid!", 21);
         exit(21);
     }
     if (map[y][x] == '1')
         return ;
-    if (map[y][x] == '0' || map[y][x] == 'N')
+    if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'W'
+        || map[y][x] == 'S' || map[y][x] == 'E')
+    {
+        if (!(map[y][x] == '0'))
+            flag += 1;
         map[y][x] = '1';
+    }
     flood_fill(map, x, y + 1);
     flood_fill(map, x, y - 1);
     flood_fill(map, x + 1, y);

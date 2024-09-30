@@ -76,6 +76,7 @@ int main(int ac, char *av[])
     parsing(ac, av, &var);
     _init_window(&var);
     init_mini_map(&var);
+    mlx_key_hook(var->mlx, listen_to_key, (void*)&var);
     mlx_loop(var.mlx);
     return 0;
 }

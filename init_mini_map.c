@@ -1,15 +1,15 @@
 #include "cube.h"
 
-void    color_wall(int *tracker, t_var *var)
+void    color_wall(t_uint *tracker, t_var *var)
 {
-    int i;
-    int j;
+    t_uint i;
+    t_uint j;
 
     i = tracker[1];
-    while (i <= tracker[1] + 32 && i < MINI_HEIGHT)
+    while (i <= tracker[1] + 32 && i < var->mini_height)
     {
         j = tracker[0];
-        while (j <= tracker[0] + 32 && j < MINI_WIDTH)
+        while (j <= tracker[0] + 32 && j < var->mini_width)
         {
             mlx_put_pixel(var->mini_map, j, i, 0xFFFFFFFF);
             j++;
@@ -18,16 +18,16 @@ void    color_wall(int *tracker, t_var *var)
     }
 }
 
-void    color_floor(int *tracker, t_var *var)
+void    color_floor(t_uint *tracker, t_var *var)
 {
-    int i;
-    int j;
+    t_uint i;
+    t_uint j;
 
     i = tracker[1];
-    while (i <= tracker[1] + 32 && i < MINI_HEIGHT)
+    while (i <= tracker[1] + 32 && i < var->mini_height)
     {
         j = tracker[0];
-        while (j <= tracker[0] + 32 && j < MINI_WIDTH)
+        while (j <= tracker[0] + 32 && j < var->mini_width)
         {
             mlx_put_pixel(var->mini_map, j, i, 0xFF00FFFF);
             j++;
@@ -36,16 +36,16 @@ void    color_floor(int *tracker, t_var *var)
     }
 }
 
-void    color_player(int *tracker, t_var *var)
+void    color_player(t_uint *tracker, t_var *var)
 {
-    int i;
-    int j;
+    t_uint i;
+    t_uint j;
 
     i = tracker[1];
-    while (i <= tracker[1] + 32 && i < MINI_HEIGHT)
+    while (i <= tracker[1] + 32 && i < var->mini_height)
     {
         j = tracker[0];
-        while (j <= tracker[0] + 32 && j < MINI_WIDTH)
+        while (j <= tracker[0] + 32 && j < var->mini_width)
         {
             if (i >= (tracker[1]) && i <= tracker[1] + 32 / 6
                 && j >= tracker[0] && j <= tracker[0] + 32 / 6)
@@ -58,12 +58,39 @@ void    color_player(int *tracker, t_var *var)
     } 
 }
 
+unsigned int   calculate_mini_map_width(t_var *var)
+{
+    unsigned int width;
+    unsigned int i;
+    unsigned int j;
+
+    width = 0;
+    i = -1;
+    while (var->map[++i])
+    {
+        j = -1;
+        while (var->map[i][++j])
+            ;
+        if (j > width)
+            width = j;
+    }
+    return width;
+} 
+
+void    create_mini_map_image(t_var *var)
+{
+    var->mini_width = calculate_mini_map_width(var) * 32;
+    var->mini_height = (t_uint)(strlen_double((void **)var->map)) * 32;
+    printf("height = %u\twidth = %u\n", var->mini_height, var->mini_width);
+    var->mini_map = mlx_new_image(var->mlx, var->mini_width, var->mini_height);
+}
+
 void    init_mini_map(t_var *var)
 {
-    var->mini_map = mlx_new_image(var->mlx, MINI_WIDTH, MINI_HEIGHT);
+    create_mini_map_image(var);
     int i;
     int j;
-    int tracker[2];
+    t_uint tracker[2];
 
     tracker[1] = 0;
     i = -1;

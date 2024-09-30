@@ -14,8 +14,7 @@
 #define WIDTH 2500
 #define HEIGHT 1200
 
-#define MINI_WIDTH 512
-#define MINI_HEIGHT 512
+typedef unsigned int t_uint;
 
 // typedef struct s_mlx
 // {
@@ -36,9 +35,15 @@ typedef struct s_var
     char        **colors;
     int         largest_line_in_map;
     int         map_len;
+    t_uint        mini_width;
+    t_uint        mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
 }   t_var;
+
+/*
+** hooks.c
+*/
 
 /*
 ** init_map.c

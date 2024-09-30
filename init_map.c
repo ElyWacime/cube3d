@@ -215,12 +215,12 @@ char **create_map(char *file_cub, t_var *var)
         line = gnl(fd);
     }
     map = ft_split(_map, '\n');
+    free(_map);
     return (map);
 }
 
 void    _init_window(t_var *var)
 {
-    (void)var;
     int i;
     int j;
 
