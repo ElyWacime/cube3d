@@ -84,6 +84,8 @@ void    create_mini_map_image(t_var *var)
     var->mini_width = calculate_mini_map_width(var) * 32;
     var->mini_height = (t_uint)(strlen_double((void **)var->map)) * 32;
     var->mini_map = mlx_new_image(var->mlx, var->mini_width, var->mini_height);
+    if (!var->mini_map)
+        ft_error();
 }
 
 void    init_mini_map(t_var *var)
