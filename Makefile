@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-CFILES = init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c
+CFILES = hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = libft/libft.a

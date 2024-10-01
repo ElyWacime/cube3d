@@ -81,3 +81,8 @@ int ft_isspace(char c)
 {
     return (c == 32 || (c >= 9 && c <= 13));
 }
+
+t_uint px_to_map_grid(t_uint x)
+{
+    return (x / 32);
+}
