@@ -88,6 +88,34 @@ void    create_mini_map_image(t_var *var)
         ft_error();
 }
 
+// void    draw_line(double distance, t_var *var)
+// {
+//     double x;
+//     double y;
+
+//     x = var->player_position[1];
+//     y = var->player_position[0];
+//     while (x < var->player_position[1] + 50 && y < var->player_position[0] + 50)
+//     {
+//         printf("%u\t%u\n", (t_uint)x, (t_uint)y);
+//         mlx_put_pixel(var->mini_map, (t_uint)y,(t_uint)x, 0x00FF00FF);
+//         y += 50 / distance;
+//         x += 50 / distance;
+//     }
+// }
+
+// void    rotate_player_left(t_var *var)
+// {
+//     double  position[2];
+//     double  distance;
+
+//     position[0] = var->player_position[0] + 50;
+//     position[1] = var->player_position[1] + 50;
+//     distance = calculate_distance(position[0], position[1],
+//         var->player_position[0], var->player_position[1]);
+//     draw_line(distance, var);
+// }
+
 void    init_mini_map(t_var *var)
 {
     create_mini_map_image(var);
@@ -115,4 +143,5 @@ void    init_mini_map(t_var *var)
     }
     if (mlx_image_to_window(var->mlx, var->mini_map, 0, 0))
         ft_error();
+    // rotate_player_left(var);
 }
