@@ -49,8 +49,8 @@ void    color_player(t_uint *tracker, t_var *var, int color)
         j = tracker[0];
         while (j <= tracker[0] + 32 && j < var->mini_width)
         {
-            if (i >= (tracker[1]) && i <= tracker[1] + 32 / 8
-                && j >= tracker[0] && j <= tracker[0] + 32 / 8)
+            if (i >= (tracker[1]) && i < tracker[1] + 32 / 8
+                && j >= tracker[0] && j < tracker[0] + 32 / 8)
                 mlx_put_pixel(var->mini_map, j, i, color);
             else
                 mlx_put_pixel(var->mini_map, j, i, 0xFF00FFFF);
