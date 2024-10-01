@@ -8,6 +8,7 @@
 #include "gnl/gnl.h"
 #include "libft/libft.h"
 #include "./mlx/include/MLX42/MLX42.h"
+#include <math.h>
 #include <stdint.h>
 
 
@@ -28,7 +29,7 @@ typedef struct s_var
     int         map_len;
     t_uint      mini_width;
     t_uint      mini_height;
-    t_uint      player_position[2];
+    double      player_position[2];
     uint32_t    color_C;
     uint32_t    color_F;
 }   t_var;
@@ -61,6 +62,7 @@ char    **strdup_double(char**);
 int     strlen_double(void**);
 void    print_map(t_var *var);
 t_uint  px_to_map_grid(t_uint x);
+double  calculate_distance(double, double, double, double);
 
 /*
 ** check_map.c

@@ -86,3 +86,8 @@ t_uint px_to_map_grid(t_uint x)
 {
     return (x / 32);
 }
+
+double  calculate_distance(double a, double b, double a1, double b1)
+{
+    return (sqrt(((a - a1) * (a - a1)) + ((b - b1) * (b - b1))));
+}

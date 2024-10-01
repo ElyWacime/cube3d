@@ -42,8 +42,8 @@ void    color_player(t_uint *tracker, t_var *var, int color)
     t_uint j;
 
     i = tracker[1];
-    var->player_position[0] = tracker[0];
-    var->player_position[1] = tracker[1];
+    var->player_position[0] = (double)tracker[0];
+    var->player_position[1] = (double)tracker[1];
     while (i <= tracker[1] + 32 && i < var->mini_height)
     {
         j = tracker[0];
