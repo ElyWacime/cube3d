@@ -82,6 +82,22 @@ void    move_player_right(t_var *var)
     color_player_movement(var->player_position, var, 0x000000FF);
 }
 
+void    draw_line(double distance, t_var *var)
+{
+    double x;
+    double y;
+
+    x = var->player_position[1];
+    y = var->player_position[0];
+    while (x < var->player_position[1] + 50 && y < var->player_position[0] + 50)
+    {
+        printf("%u\t%u\n", (t_uint)x, (t_uint)y);
+        mlx_put_pixel(var->mini_map, (t_uint)x,(t_uint)y, 0x00FF00FF);
+        y += 50 / distance;
+        x += 50 / distance;
+    }
+}
+
 void    rotate_player_left(t_var *var)
 {
     double  position[2];
@@ -91,6 +107,7 @@ void    rotate_player_left(t_var *var)
     position[1] = var->player_position[1] + 50;
     distance = calculate_distance(position[0], position[1],
         var->player_position[0], var->player_position[1]);
+    draw_line(distance, var);
 }
 
 void    rotate_player_right(t_var *var)
