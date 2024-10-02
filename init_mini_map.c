@@ -43,7 +43,9 @@ int check_if_wall(double x, double y, t_var *var)
 
     x_positon = px_to_map_grid((t_uint)x);
     y_position = px_to_map_grid((t_uint)y);
-    return (var->map[y_position][x_positon] == '1');
+    return (var->map[y_position][x_positon] == '1'
+        || var->map[y_position][x_positon] == '\0'
+        || ft_isspace(var->map[y_position][x_positon]));
 }
 
 void    draw_line(t_line line, t_var *var)
@@ -122,16 +124,16 @@ void    draw_vector(t_var *var)
         var->player.vect[0] = var->player.position[0] + 50;
         var->player.vect[1] = var->player.position[1];
     }
-    else if (var->player.direction == 'W')
+    else if (var->player.direction == 'N')
     {
         var->player.vect[0] = var->player.position[0];
-        var->player.vect[1] = var->player.position[1] - 50;
+        var->player.vect[1] = var->player.position[1] -50;
         if (var->player.vect[1] < 0)
             var->player.vect[1] = 0;
     }
-    else if (var->player.direction == 'S')
+    else if (var->player.direction == 'W')
     {
-        var->player.vect[0] = var->player.position[0] - 50;
+        var->player.vect[0] = var->player.position[0] -50;
         var->player.vect[1] = var->player.position[1];
         if (var->player.vect[0] < 0)
             var->player.vect[0] = 0;
@@ -141,34 +143,6 @@ void    draw_vector(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     draw_line(vector, var);
-}
-
-void    color_player(t_uint *tracker, t_var *var, int color)
-{
-    t_uint i;
-    t_uint j;
-
-    i = tracker[1];
-    var->player_position[0] = (double)tracker[0];
-    var->player_position[1] = (double)tracker[1];
-    while (i <= tracker[1] + 32 && i < var->mini_height)
-    {
-        j = tracker[0];
-        while (j <= tracker[0] + 32 && j < var->mini_width)
-        {
-            if (i >= (tracker[1]) && i < tracker[1] + 32 / 16
-                && j >= tracker[0] && j < tracker[0] + 32 / 16)
-                mlx_put_pixel(var->mini_map, j, i, color);
-            else
-                mlx_put_pixel(var->mini_map, j, i, 0x000000FF);
-            j++;
-        }
-        i++;
-    }
-    var->player.position[0] = var->player_position[0];
-    var->player.position[1] = var->player_position[1];
-    var->player.direction = var->player_direction;
-    draw_vector(var);
 }
 
 unsigned int   calculate_mini_map_width(t_var *var)
@@ -219,11 +193,12 @@ void    init_mini_map(t_var *var)
             else if (var->map[i][j] == '0')
                 color_floor(tracker, var);
             else if (var->map[i][j] == 'N')
-                color_player(tracker, var, 0xFF00FFFF);
+                color_floor(tracker, var);
             tracker[0] += 32;
         }
         tracker[1] += 32;
     }
+    color_player(var, 0xFF00FFFF);
     if (mlx_image_to_window(var->mlx, var->mini_map, 0, 0))
         ft_error();
 }

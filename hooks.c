@@ -1,8 +1,55 @@
 #include "cube.h"
 
+void    color_player(t_var *var, int color)
+{
+    t_uint i;
+    t_uint j;
+
+    i = var->player_position[1];
+    while (i <= var->player_position[1] + 32 && i < var->mini_height)
+    {
+        j = var->player_position[0];
+        while (j <= var->player_position[0] + 32 && j < var->mini_width)
+        {
+            if (i >= (var->player_position[1]) && i < var->player_position[1] + 32 / 16
+                && j >= var->player_position[0] && j < var->player_position[0] + 32 / 16)
+                mlx_put_pixel(var->mini_map, j, i, color);
+            else
+                mlx_put_pixel(var->mini_map, j, i, 0x000000FF);
+            j++;
+        }
+        i++;
+    }
+    var->player.position[0] = var->player_position[0];
+    var->player.position[1] = var->player_position[1];
+    var->player.direction = var->player_direction;
+}
+
+void    calcul_left_rotation(t_var *var)
+{
+    double x;
+    double y;
+
+    printf("before : %f\t%f\n", var->player.vect[0], var->player.vect[1]);
+    x = var->player.vect[0] - var->player_position[0];
+    y = var->player.vect[1] - var->player_position[1];
+    var->player.vect[0] = (x * cos(from_deg_to_rad(18)) - y * sin(from_deg_to_rad(18))) + var->player_position[0];
+    var->player.vect[1] =( x * sin(from_deg_to_rad(18)) + y * sin(from_deg_to_rad(18))) + var->player_position[1];
+    printf("after : %f\t%f\n", var->player.vect[0], var->player.vect[1]);
+}
+
 void    rotate_player_left(t_var *var)
 {
-    (void)var;
+    t_line  vector;
+
+    mlx_delete_image(var->mlx, var->mini_map);
+    calcul_left_rotation(var);
+    vector.ax = var->player.position[0];
+    vector.ay = var->player.position[1];
+    vector.bx = var->player.vect[0];
+    vector.by = var->player.vect[1];
+    draw_line(vector, var);
+    init_mini_map(var);
 }
 
 void    rotate_player_right(t_var *var)
@@ -14,25 +61,27 @@ void    listen_to_key(struct mlx_key_data keydata, void *ptr)
 {
     t_var *var;
     
+
     var = (t_var *)ptr;
-	if (keydata.key == MLX_KEY_W
-        && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
-        // move_player_up(var);
-	if (keydata.key == MLX_KEY_A
-        && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
-		// move_player_left(var);
-	if (keydata.key == MLX_KEY_D
-        && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
-		// move_player_right(var);
-	if (keydata.key == MLX_KEY_S
-        && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
-		// move_player_down(var);
     if (keydata.key == MLX_KEY_LEFT
         && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
         rotate_player_left(var);
-    if (keydata.key == MLX_KEY_RIGHT
+    else if (keydata.key == MLX_KEY_RIGHT
         && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
         rotate_player_right(var);
+    // printf(">>> %f\t%f\n", var->player.vect[0], var->player.vect[0]);
+	// if (keydata.key == MLX_KEY_W
+    //     && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+        // move_player_up(var);
+	// else if (keydata.key == MLX_KEY_A
+    //     && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+		// move_player_left(var);
+	// else if (keydata.key == MLX_KEY_D
+    //     && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+		// move_player_right(var);
+	// else if (keydata.key == MLX_KEY_S
+    //     && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+		// move_player_down(var);
 }
 
 // void    color_player_movement(double *tracker, t_var *var, int color)

@@ -63,6 +63,8 @@ void parsing(int ac, char *av[], t_var *var)
         to_print++;
     }
     get_players_position(var->map, position, var);
+    var->player_position[0] = position[1] * 32;
+    var->player_position[1] = position[0] * 32;
     while (is_still_there_zeros(_map, zero_position))
         flood_fill(_map, zero_position[1], zero_position[0]);
     is_map_all_ones(_map);
@@ -76,6 +78,7 @@ int main(int ac, char *av[])
     parsing(ac, av, &var);
     _init_window(&var);
     init_mini_map(&var);
+    draw_vector(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_loop(var.mlx);
     return 0;

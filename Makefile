@@ -22,7 +22,10 @@ ${LIBFT}: #fix relink
 clean:
 	rm -rf ${OBJ}
 
-fclean: clean
+cleanlib:
+	make fclean -C ./libft
+
+fclean: clean cleanlib
 	rm -rf ${NAME}
 
 git:

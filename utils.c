@@ -91,3 +91,13 @@ double  calculate_distance(double a, double b, double a1, double b1)
 {
     return (sqrt(((a - a1) * (a - a1)) + ((b - b1) * (b - b1))));
 }
+
+double  from_rad_to_deg(double val)
+{
+    return ((val * 180) / PI);
+}
+
+double  from_deg_to_rad(double val)
+{
+    return ((val * PI) / 180);
+}

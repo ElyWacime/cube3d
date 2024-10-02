@@ -15,6 +15,8 @@
 #define WIDTH 2500
 #define HEIGHT 1200
 
+#define PI 3.14159265358979323846
+
 typedef unsigned int t_uint;
 
 typedef struct s_line
@@ -56,6 +58,7 @@ typedef struct s_var
 */
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
+void    color_player(t_var *var, int color);
 
 /*
 ** init_map.c
@@ -68,7 +71,9 @@ uint32_t    transform_color_to_hexa(int *);
 ** init_mini_map.c
 */
 void    init_mini_map(t_var *);
-void    color_player(t_uint *, t_var *, int);
+void    create_mini_map_image(t_var *var);
+void    draw_vector(t_var *var);
+void    draw_line(t_line line, t_var *var);
 
 /*
 ** utils.c
@@ -81,6 +86,8 @@ int     strlen_double(void**);
 void    print_map(t_var *var);
 t_uint  px_to_map_grid(t_uint x);
 double  calculate_distance(double, double, double, double);
+double  from_rad_to_deg(double);
+double  from_deg_to_rad(double);
 
 /*
 ** check_map.c
