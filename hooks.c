@@ -30,12 +30,12 @@ void    calcul_left_rotation(t_var *var)
     double x;
     double y;
 
-    printf("before : %f\t%f\n", var->player.vect[0], var->player.vect[1]);
     x = var->player.vect[0] - var->player_position[0];
     y = var->player.vect[1] - var->player_position[1];
-    var->player.vect[0] = (x * cos(from_deg_to_rad(18)) - y * sin(from_deg_to_rad(18))) + var->player_position[0];
-    var->player.vect[1] =( x * sin(from_deg_to_rad(18)) + y * sin(from_deg_to_rad(18))) + var->player_position[1];
-    printf("after : %f\t%f\n", var->player.vect[0], var->player.vect[1]);
+    var->player.vect[0] = (x * cos(from_deg_to_rad(18)) - y * sin(from_deg_to_rad(18)))
+        + var->player_position[0];
+    var->player.vect[1] = (x * sin(from_deg_to_rad(18)) + y * cos(from_deg_to_rad(18)))
+        + var->player_position[1];
 }
 
 void    rotate_player_left(t_var *var)
@@ -48,8 +48,8 @@ void    rotate_player_left(t_var *var)
     vector.ay = var->player.position[1];
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
-    draw_line(vector, var);
     init_mini_map(var);
+    draw_line(vector, var);
 }
 
 void    rotate_player_right(t_var *var)
