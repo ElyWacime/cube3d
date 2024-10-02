@@ -52,12 +52,12 @@ void    draw_line(t_line line, t_var *var)
     double x;
     double y;
 
-    printf("ENTER\n");
+    // printf("ENTER\n");
     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
     x = line.ax;
     y = line.ay;
-    printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
-    printf("x == %u\ty == %u\n", (t_uint)var->player.position[0], (t_uint)var->player.position[1]);
+    // printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
+    // printf("x == %u\ty == %u\n", (t_uint)var->player.position[0], (t_uint)var->player.position[1]);
     if (x <= line.bx && y <= line.by)
     {
         while (x <= line.bx && y <= line.by)
@@ -66,7 +66,7 @@ void    draw_line(t_line line, t_var *var)
                 break;
             x += (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
-            printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
+            // printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
         }
     }
@@ -78,7 +78,7 @@ void    draw_line(t_line line, t_var *var)
                 break;
             x -= (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
-            printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
+            // printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
         }
     }
@@ -90,7 +90,7 @@ void    draw_line(t_line line, t_var *var)
                 break;
             x -= (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
-            printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
+            // printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
         }
     }
@@ -102,7 +102,7 @@ void    draw_line(t_line line, t_var *var)
                 break;
             x += (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
-            printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
+            // printf("x == %u\ty == %u\n", (t_uint)x, (t_uint)y);
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
         }
     }
