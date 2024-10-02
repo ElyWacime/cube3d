@@ -17,8 +17,24 @@
 
 typedef unsigned int t_uint;
 
+typedef struct s_line
+{
+    double ax;
+    double ay;
+    double bx;
+    double by;
+}   t_line;
+
+typedef struct s_player
+{
+    double  position[2];
+    double  vect[2];
+    char    direction;
+}   t_player;
+
 typedef struct s_var
 {
+    t_player    player;
     mlx_t       *mlx;
     mlx_image_t *img;
     mlx_image_t *mini_map;
@@ -32,12 +48,14 @@ typedef struct s_var
     double      player_position[2];
     uint32_t    color_C;
     uint32_t    color_F;
+    char        player_direction;
 }   t_var;
 
 /*
 ** hooks.c
 */
 void    listen_to_key(struct mlx_key_data, void *);
+void    get_point_position_to_draw_diraction(t_var *, t_uint);
 
 /*
 ** init_map.c
@@ -67,7 +85,7 @@ double  calculate_distance(double, double, double, double);
 /*
 ** check_map.c
 */
-int     get_players_position(char **, int *);
+int     get_players_position(char **, int *, t_var *);
 void    flood_fill(char**, int, int);
 int     is_still_there_zeros(char **, int *);
 

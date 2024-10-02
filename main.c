@@ -62,7 +62,7 @@ void parsing(int ac, char *av[], t_var *var)
         printf("%s\n", *to_print);
         to_print++;
     }
-    get_players_position(var->map, position);
+    get_players_position(var->map, position, var);
     while (is_still_there_zeros(_map, zero_position))
         flood_fill(_map, zero_position[1], zero_position[0]);
     is_map_all_ones(_map);

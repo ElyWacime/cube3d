@@ -1,6 +1,6 @@
 #include "cube.h"
 
-int    get_players_position(char **map, int *position)
+int    get_players_position(char **map, int *position, t_var *var)
 {
     int i;
     int j;
@@ -11,8 +11,10 @@ int    get_players_position(char **map, int *position)
         j = 0;
         while (map[i][j])
         {
-            if (map[i][j] == 'N')
+            if (map[i][j] == 'N' || map[i][j] == 'E'
+                || map[i][j] == 'W' || map[i][j] == 'S')
             {
+                var->player_direction = map[i][j];
                 position[0] = i;
                 position[1] = j;
                 return 0;
@@ -21,7 +23,7 @@ int    get_players_position(char **map, int *position)
         }
         i++;
     }
-    write(2, "Map does't have player!", 23);
+    write(2, "Error\nMap does't have player!", 29);
     exit(1);
 }
 
