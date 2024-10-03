@@ -14,8 +14,6 @@ void    color_player(t_var *var, int color)
             if (i >= (var->player_position[1]) && i < var->player_position[1] + 32 / 16
                 && j >= var->player_position[0] && j < var->player_position[0] + 32 / 16)
                 mlx_put_pixel(var->mini_map, j, i, color);
-            else
-                mlx_put_pixel(var->mini_map, j, i, 0x000000FF);
             j++;
         }
         i++;

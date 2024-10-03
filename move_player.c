@@ -4,12 +4,18 @@ void    calcul_right_movement(t_var *var)
 {
     double  new_position[2];
 
-    new_position[0] = (var->player_position[0] + 10)
-        * cos(from_deg_to_rad(var->player.angle));
+    new_position[0] = (var->player_position[0]) 
+        + (2.0 * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player_position[1])
-        * sin(from_deg_to_rad(var->player.angle));
+        + (2.0 * sin(from_deg_to_rad(var->player.angle)));
     var->player_position[0] = new_position[0];
     var->player_position[1] = new_position[1];
+    new_position[0] = (var->player.vect[0]) 
+        + (2.0 * cos(from_deg_to_rad(var->player.angle)));
+    new_position[1] = (var->player.vect[1])
+        + (2.0 * sin(from_deg_to_rad(var->player.angle)));
+    var->player.vect[0] = new_position[0];
+    var->player.vect[1] = new_position[1];
 }
 
 void    move_player_right(t_var *var)
