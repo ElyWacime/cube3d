@@ -17,6 +17,8 @@
 
 #define PI 3.14159265358979323846
 
+#define SPEED 2.0
+
 typedef unsigned int t_uint;
 
 typedef struct s_line
