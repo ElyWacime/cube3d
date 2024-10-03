@@ -32,6 +32,7 @@ typedef struct s_player
     double  position[2];
     double  vect[2];
     char    direction;
+    double  angle;
 }   t_player;
 
 typedef struct s_var
@@ -52,6 +53,22 @@ typedef struct s_var
     uint32_t    color_F;
     char        player_direction;
 }   t_var;
+
+/*
+** move_player.c
+*/
+void    move_player_down(t_var *);
+void    move_player_right(t_var *);
+void    move_player_left(t_var *);
+void    move_player_up(t_var *);
+
+/*
+** rotation.c
+*/
+void    calcul_right_rotation(t_var *);
+void    calcul_left_rotation(t_var *);
+void    rotate_player_right(t_var *);
+void    rotate_player_left(t_var *);
 
 /*
 ** hooks.c
@@ -88,6 +105,8 @@ t_uint  px_to_map_grid(t_uint x);
 double  calculate_distance(double, double, double, double);
 double  from_rad_to_deg(double);
 double  from_deg_to_rad(double);
+int check_if_wall(double , double , t_var *);
+void    draw_line(t_line , t_var *);
 
 /*
 ** check_map.c

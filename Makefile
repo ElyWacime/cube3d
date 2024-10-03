@@ -1,6 +1,6 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-CFILES = hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c
+CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = libft/libft.a
@@ -10,7 +10,7 @@ GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/
 all : ${NAME}
 
 ${NAME}: ${OBJ} ${LIBFT}
-	${CC} ${FLAGS} ${LIBFT} ${CFILES} ${MLX} ${GLFW} \
+	${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} \
 	-framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}: #fix relink

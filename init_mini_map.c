@@ -6,10 +6,10 @@ void    color_wall(t_uint *tracker, t_var *var)
     t_uint j;
 
     i = tracker[1];
-    while (i <= tracker[1] + 32 && i < var->mini_height)
+    while (i < tracker[1] + 32 && i < var->mini_height)
     {
         j = tracker[0];
-        while (j <= tracker[0] + 32 && j < var->mini_width)
+        while (j < tracker[0] + 32 && j < var->mini_width)
         {
             mlx_put_pixel(var->mini_map, j, i, 0xFFFFFFFF);
             j++;
@@ -24,83 +24,15 @@ void    color_floor(t_uint *tracker, t_var *var)
     t_uint j;
 
     i = tracker[1];
-    while (i <= tracker[1] + 32 && i < var->mini_height)
+    while (i < tracker[1] + 32 && i < var->mini_height)
     {
         j = tracker[0];
-        while (j <= tracker[0] + 32 && j < var->mini_width)
+        while (j < tracker[0] + 32 && j < var->mini_width)
         {
             mlx_put_pixel(var->mini_map, j, i, 0x000000FF);
             j++;
         }
         i++;
-    }
-}
-
-int check_if_wall(double x, double y, t_var *var)
-{
-    int x_positon;
-    int y_position;
-
-    x_positon = px_to_map_grid((t_uint)x);
-    y_position = px_to_map_grid((t_uint)y);
-    return (var->map[y_position][x_positon] == '1'
-        || var->map[y_position][x_positon] == '\0'
-        || ft_isspace(var->map[y_position][x_positon]));
-}
-
-void    draw_line(t_line line, t_var *var)
-{
-    double distance;
-    double x;
-    double y;
-
-
-    distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
-    x = line.ax;
-    y = line.ay;
-    if (x <= line.bx && y <= line.by)
-    {
-        while (x <= line.bx && y <= line.by)
-        {
-            if (check_if_wall(x, y, var))
-                break;
-            x += (fabs(line.bx - line.ax) / distance);
-            y += (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
-        }
-    }
-    else if (x >= line.bx && y <= line.by)
-    {
-        while (x >= line.bx && y <= line.by)
-        {
-            if (check_if_wall(x, y, var))
-                break;
-            x -= (fabs(line.bx - line.ax) / distance);
-            y += (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
-        }
-    }
-    else if (x >= line.bx && y >= line.by)
-    {
-        while (x >= line.bx && y >= line.by)
-        {
-            if (check_if_wall(x, y, var))
-                break;
-            x -= (fabs(line.bx - line.ax) / distance);
-            y -= (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
-        }
-    }
-    else if (x <= line.bx && y >= line.by)
-    {
-        while (x <= line.bx && y >= line.by)
-        {
-            if (check_if_wall(x, y, var))
-                break;
-            x += (fabs(line.bx - line.ax) / distance);
-            y -= (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, 0x00FF00FF);
-        }
     }
 }
 

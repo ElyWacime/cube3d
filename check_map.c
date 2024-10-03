@@ -1,5 +1,17 @@
 #include "cube.h"
 
+void    init_player_angle(t_var *var)
+{
+    if (var->player_direction == 'N')
+        var->player.angle = 0;
+    else if (var->player_direction == 'S')
+        var->player.angle = 90;
+    else if (var->player_direction == 'W')
+        var->player.angle = 180;
+    else if (var->player_direction == 'E')
+        var->player.angle = 270;
+}
+
 int    get_players_position(char **map, int *position, t_var *var)
 {
     int i;
@@ -15,6 +27,7 @@ int    get_players_position(char **map, int *position, t_var *var)
                 || map[i][j] == 'W' || map[i][j] == 'S')
             {
                 var->player_direction = map[i][j];
+                init_player_angle(var);
                 position[0] = i;
                 position[1] = j;
                 return 0;
