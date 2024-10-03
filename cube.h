@@ -107,7 +107,7 @@ t_uint  px_to_map_grid(t_uint x);
 double  calculate_distance(double, double, double, double);
 double  from_rad_to_deg(double);
 double  from_deg_to_rad(double);
-int check_if_wall(double , double , t_var *);
+int     check_if_wall(double , double , t_var *);
 void    draw_line(t_line , t_var *);
 
 /*
