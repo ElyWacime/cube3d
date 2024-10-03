@@ -8,8 +8,13 @@ void    calcul_right_movement(t_var *var)
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player_position[1])
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
-    var->player_position[0] = new_position[0];
-    var->player_position[1] = new_position[1];
+    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    {
+        var->player_position[0] = new_position[0];
+        var->player_position[1] = new_position[1];
+    }
+    else
+        return ;
     new_position[0] = (var->player.vect[0]) 
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
@@ -26,8 +31,13 @@ void    calcul_left_movement(t_var *var)
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player_position[1])
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
-    var->player_position[0] = new_position[0];
-    var->player_position[1] = new_position[1];
+    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    {
+        var->player_position[0] = new_position[0];
+        var->player_position[1] = new_position[1];
+    }
+    else
+        return ;
     new_position[0] = (var->player.vect[0])
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
@@ -44,8 +54,13 @@ void    calcul_up_movement(t_var *var)
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player_position[1])
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
-    var->player_position[0] = new_position[0];
-    var->player_position[1] = new_position[1];
+    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    {
+        var->player_position[0] = new_position[0];
+        var->player_position[1] = new_position[1];
+    }
+    else
+        return ;
     new_position[0] = (var->player.vect[0])
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
@@ -62,8 +77,13 @@ void    calcul_down_movement(t_var *var)
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player_position[1])
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
-    var->player_position[0] = new_position[0];
-    var->player_position[1] = new_position[1];
+    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    {
+        var->player_position[0] = new_position[0];
+        var->player_position[1] = new_position[1];
+    }
+    else
+        return ;
     new_position[0] = (var->player.vect[0])
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
