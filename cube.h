@@ -117,4 +117,6 @@ int     get_players_position(char **, int *, t_var *);
 void    flood_fill(char**, int, int);
 int     is_still_there_zeros(char **, int *);
 
+void    draw_line2(t_line line, t_var *var);
+void cast(t_var *var);
 #endif

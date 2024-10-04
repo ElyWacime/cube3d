@@ -1,11 +1,11 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
-CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c
+CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = libft/libft.a
 MLX = ./mlx/build/libmlx42.a
-GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
+GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 
 all : ${NAME}
 

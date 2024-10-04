@@ -98,6 +98,7 @@ void    move_player_up(t_var *var)
     vector.by = var->player.vect[1];
     init_mini_map(var);
     draw_line(vector, var);
+    cast(var);
 }
 
 void    move_player_right(t_var *var)
