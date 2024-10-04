@@ -50,7 +50,6 @@ typedef struct s_var
     int         map_len;
     t_uint      mini_width;
     t_uint      mini_height;
-    double      player_position[2];
     uint32_t    color_C;
     uint32_t    color_F;
     char        player_direction;
