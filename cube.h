@@ -17,7 +17,7 @@
 
 #define PI 3.14159265358979323846
 
-#define SPEED 2.0
+#define SPEED 5.0
 
 typedef unsigned int t_uint;
 
@@ -50,10 +50,8 @@ typedef struct s_var
     int         map_len;
     t_uint      mini_width;
     t_uint      mini_height;
-    double      player_position[2];
     uint32_t    color_C;
     uint32_t    color_F;
-    char        player_direction;
 }   t_var;
 
 /*
@@ -107,7 +105,7 @@ t_uint  px_to_map_grid(t_uint x);
 double  calculate_distance(double, double, double, double);
 double  from_rad_to_deg(double);
 double  from_deg_to_rad(double);
-int check_if_wall(double , double , t_var *);
+int     check_if_wall(double , double , t_var *);
 void    draw_line(t_line , t_var *);
 
 /*

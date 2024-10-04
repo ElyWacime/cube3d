@@ -2,13 +2,13 @@
 
 void    init_player_angle(t_var *var)
 {
-    if (var->player_direction == 'N')
+    if (var->player.direction == 'N')
         var->player.angle = 0;
-    else if (var->player_direction == 'S')
+    else if (var->player.direction == 'S')
         var->player.angle = 90;
-    else if (var->player_direction == 'W')
+    else if (var->player.direction == 'W')
         var->player.angle = 180;
-    else if (var->player_direction == 'E')
+    else if (var->player.direction == 'E')
         var->player.angle = 270;
 }
 
@@ -26,7 +26,7 @@ int    get_players_position(char **map, int *position, t_var *var)
             if (map[i][j] == 'N' || map[i][j] == 'E'
                 || map[i][j] == 'W' || map[i][j] == 'S')
             {
-                var->player_direction = map[i][j];
+                var->player.direction = map[i][j];
                 init_player_angle(var);
                 position[0] = i;
                 position[1] = j;
