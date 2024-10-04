@@ -52,7 +52,6 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
-    char        player_direction;
 }   t_var;
 
 /*
