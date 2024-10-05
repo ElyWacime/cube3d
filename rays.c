@@ -37,9 +37,8 @@ void  cast_down(t_var *var)
 void cast(t_var *var)
 {
     t_uint angle = ((t_uint)(var->player.angle) + 30) % 360;
-    double _angle = angle * 1.0;
-    if ((_angle > 0 && _angle < 90)
-        || (_angle > 270 && _angle < 360))
+    if ((angle > 0 && angle < 90)
+        || (angle > 270 && angle < 360))
     {
         cast_up(var);
         printf("enter up\n");
