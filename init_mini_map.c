@@ -40,24 +40,24 @@ void    draw_vector(t_var *var)
 {
     t_line vector;
 
-    if (var->player.direction == 'S')
+    if (var->player.direction == 'N')
     {
         var->player.vect[0] = var->player.position[0];
-        var->player.vect[1] = var->player.position[1] + 50;
+        var->player.vect[1] = var->player.position[1] - 50;
     }
-    else if (var->player.direction == 'E')
+    else if (var->player.direction == 'S')
     {
         var->player.vect[0] = var->player.position[0] + 50;
         var->player.vect[1] = var->player.position[1];
     }
-    else if (var->player.direction == 'N')
+    else if (var->player.direction == 'W')
     {
         var->player.vect[0] = var->player.position[0];
-        var->player.vect[1] = var->player.position[1] -50;
+        var->player.vect[1] = var->player.position[1] +50;
         if (var->player.vect[1] < 0)
             var->player.vect[1] = 0;
     }
-    else if (var->player.direction == 'W')
+    else if (var->player.direction == 'E')
     {
         var->player.vect[0] = var->player.position[0] -50;
         var->player.vect[1] = var->player.position[1];

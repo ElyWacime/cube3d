@@ -3,13 +3,13 @@
 void    init_player_angle(t_var *var)
 {
     if (var->player.direction == 'N')
-        var->player.angle = 0;
-    else if (var->player.direction == 'S')
         var->player.angle = 90;
+    else if (var->player.direction == 'S')
+        var->player.angle = 0;
     else if (var->player.direction == 'W')
-        var->player.angle = 180;
-    else if (var->player.direction == 'E')
         var->player.angle = 270;
+    else if (var->player.direction == 'E')
+        var->player.angle = 360;
 }
 
 int    get_players_position(char **map, int *position, t_var *var)
