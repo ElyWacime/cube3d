@@ -79,6 +79,9 @@ int main(int ac, char *av[])
     _init_window(&var);
     init_mini_map(&var);
     draw_vector(&var);
+    var.player.mvt_y = 0;
+    var.player.mvt_x = 0;
+    var.player.rot_direction = 0;
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_loop(var.mlx);
     return 0;

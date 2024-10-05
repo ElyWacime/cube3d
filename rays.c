@@ -24,7 +24,7 @@ int    draw_line3(t_line line, t_var *var)
     return 0;
 }
 
-void  cast_up(t_var *var)
+void  cast_up_(t_var *var)
 {
     double *player = var->player.position;
     t_line line;
@@ -61,7 +61,7 @@ void  cast_up(t_var *var)
     draw_line(line, var, 0xFF0000FF);
 }
 
-void  cast_down(t_var *var)
+void  cast_down_(t_var *var)
 {
     double *player = var->player.position;
     t_line line;
@@ -92,11 +92,79 @@ void  cast_down(t_var *var)
     draw_line(line, var, 0xFF0000FF);
 }
 
+void cast_left(t_var *var)
+{
+
+}
+void cast_down(t_var *var)
+{
+    
+}
+void cast_right(t_var *var)
+{
+    
+}
+void cast_up(t_var *var)
+{
+    
+}
+void cast_up_left(t_var *var)
+{
+
+}
+void cast_down_left(t_var *var)
+{
+    
+}
+void cast_down_right(t_var *var)
+{
+    
+}
+void cast_up_right(t_var *var)
+{
+    
+}
 void cast(t_var *var)
 {
     t_uint angle = (var->player.angle) % 360;
-    if (angle > 0 && angle < 180)
-        cast_up(var);
-    else if (angle > 180 && angle != 0)
-        cast_down(var);
+    if (0 < angle  && angle < 90)
+    {
+        printf("up right\n");
+        cast_up_right(var);
+    }
+    else if (90 < angle && angle < 180)
+    {
+        printf("up left\n");
+        cast_down_right(var); 
+    }
+    else if (180 < angle  && angle < 270)
+    {
+        printf("down left\n");
+        cast_down_left(var);
+    }
+    else if (270 < angle && angle != 0)
+    {
+        printf(" down right\n");
+        cast_up_left(var); 
+    }
+    else if (angle == 0)
+    {
+        printf(" right\n");
+        cast_up(var); 
+    }
+    else if (angle == 90)
+    {
+        printf("up\n");
+        cast_right(var); 
+    }
+    else if (angle == 180)
+    {
+        printf("left\n");
+        cast_left(var); 
+    }
+    else if (angle == 270)
+    {
+        printf("down\n");
+        cast_down(var); 
+    }
 }

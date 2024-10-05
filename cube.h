@@ -33,6 +33,9 @@ typedef struct s_player
 {
     double  position[2];
     double  vect[2];
+    double  mvt_x;
+    double  mvt_y;
+    double  rot_direction;
     char    direction;
     t_uint  angle;
 }   t_player;
