@@ -12,8 +12,8 @@
 #include <stdint.h>
 
 
-#define WIDTH 2500
-#define HEIGHT 1200
+#define WIDTH 1200
+#define HEIGHT 600
 
 #define PI 3.14159265358979323846
 

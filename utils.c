@@ -135,7 +135,6 @@ double line_fun(double x,double a,double b)
 //     double a_prime = (line.ay  - line.by);
 //     double a_seconde = (line.ax  - line.bx);
 //     double i  = -1;
-
 //     a = a_prime / a_seconde;
 //     b = line.ay - ((a_prime * line.ax) / a_seconde);
 //     if (line.ax <= line.bx)
@@ -182,9 +181,9 @@ void    draw_line(t_line line, t_var *var, t_uint color)
         {
             // if (check_if_wall(x, y, var))
                 // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
         }
     }
     else if (x >= line.bx && y <= line.by)
@@ -193,9 +192,9 @@ void    draw_line(t_line line, t_var *var, t_uint color)
         {
             // if (check_if_wall(x, y, var))
                 // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
         }
     }
     else if (x >= line.bx && y >= line.by)
@@ -204,9 +203,9 @@ void    draw_line(t_line line, t_var *var, t_uint color)
         {
             // if (check_if_wall(x, y, var))
                 // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
         }
     }
     else if (x <= line.bx && y >= line.by)
@@ -215,11 +214,12 @@ void    draw_line(t_line line, t_var *var, t_uint color)
         {
             // if (check_if_wall(x, y, var))
                 // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
         }
     }
+
 }
 
 void    color_player(t_var *var, int color)

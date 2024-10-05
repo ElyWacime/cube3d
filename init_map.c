@@ -238,10 +238,13 @@ void    _init_window(t_var *var)
         {
             if (j > HEIGHT / 2)
             {
-                mlx_put_pixel(var->img, i, j, var->color_F);
+                mlx_put_pixel(var->img, i, j, 0x0000FF00);
+                // mlx_put_pixel(var->img, i, j, var->color_F);
                 continue ;
             }
-            mlx_put_pixel(var->img, i, j, var->color_C);
+             
+            mlx_put_pixel(var->img, i, j, 0x0000FF00);
+            // mlx_put_pixel(var->img, i, j, var->color_C);
         }
     }
 	if (!var->img

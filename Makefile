@@ -11,8 +11,7 @@ GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/
 all : ${NAME}
 
 ${NAME}: ${OBJ} ${LIBFT}
-	${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} \
-	-framework OpenGL -framework AppKit -o ${NAME}
+	${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}: #fix relink
 	make -C ./libft

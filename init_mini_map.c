@@ -47,22 +47,22 @@ void    draw_vector(t_var *var)
     }
     else if (var->player.direction == 'S')
     {
-        var->player.vect[0] = var->player.position[0] + 50;
-        var->player.vect[1] = var->player.position[1];
+        var->player.vect[0] = var->player.position[0];
+        var->player.vect[1] = var->player.position[1] + 50;
     }
     else if (var->player.direction == 'W')
     {
-        var->player.vect[0] = var->player.position[0];
-        var->player.vect[1] = var->player.position[1] +50;
-        if (var->player.vect[1] < 0)
-            var->player.vect[1] = 0;
+        var->player.vect[0] = var->player.position[0] - 50;
+        var->player.vect[1] = var->player.position[1];
+        // if (var->player.vect[1] < 0)
+        //     var->player.vect[1] = 0;
     }
     else if (var->player.direction == 'E')
     {
-        var->player.vect[0] = var->player.position[0] -50;
+        var->player.vect[0] = var->player.position[0] + 50;
         var->player.vect[1] = var->player.position[1];
-        if (var->player.vect[0] < 0)
-            var->player.vect[0] = 0;
+        // if (var->player.vect[0] < 0)
+        //     var->player.vect[0] = 0;
     }
     vector.ax = var->player.position[0];
     vector.ay = var->player.position[1];
@@ -124,7 +124,7 @@ void    init_mini_map(t_var *var)
         }
         tracker[1] += 32;
     }
-    color_player(var, 0xFF00FFFF);
+    color_player(var, 0xFF0000FF);
     if (mlx_image_to_window(var->mlx, var->mini_map, 0, 0))
         ft_error();
 }

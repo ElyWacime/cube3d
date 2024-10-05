@@ -3,7 +3,8 @@
         "stdlib.h": "c",
         "libft.h": "c",
         "__node_handle": "c",
-        "mlx42_int.h": "c"
+        "mlx42_int.h": "c",
+        "complex": "c"
     },
     "cmake.sourceDirectory": "/Users/welyousf/cursus/cube/mlx"
 }
