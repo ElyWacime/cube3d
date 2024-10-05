@@ -4,40 +4,66 @@ void  cast_up(t_var *var)
 {
     double *player = var->player.position;
     t_line line;
-    int flag = 0;
+    double tmpbx;
+    double tmpby;
     line.ax = player[0];
     line.ay = player[1];
     line.by = px_to_map_grid(player[1]) * 32;
     line.bx = tan(from_deg_to_rad(var->player.angle + 30)) * (player[1] - line.by) + player[0];
-    while (line.bx >= 0 && line.bx <= var->mini_width
-        && line.by >= 0 && line.by <= var->mini_height)
+    tmpbx = line.ax;
+    tmpby = line.by;
+    while (1)
     {
-        flag = 1;
-        line.by -= 32;
-        line.bx = tan(from_deg_to_rad(var->player.angle + 30)) * (player[1] - line.by) + player[0];
+        printf("ENTER while\n");
+        tmpby -= 32;
+        tmpbx = tan(from_deg_to_rad(var->player.angle + 30)) * (player[1] - line.by) + player[0];
+        if (tmpbx >= 0 && tmpbx <= var->mini_width
+            && tmpby >= 0 && tmpby <= var->mini_height)
+        {
+            printf("ENTER IF\n");
+            line.by = tmpby;
+            line.bx = tmpbx;
+        }
+        else 
+            break;
+        printf("ax = %f\tay = %f\tbx = %f\tby = %f\n", line.ax, line.ay, line.bx, line.by);
     }
-    if (flag)
-        draw_line(line, var, 0xFF0000FF);
+    draw_line(line, var, 0xFF0000FF);
 }
 
 void  cast_down(t_var *var)
 {
     double *player = var->player.position;
     t_line line;
-    int flag = 0;
+    double tmpbx;
+    double tmpby;
     line.ax = player[0];
     line.ay = player[1];
     line.by = px_to_map_grid(player[1]) * 32 + 32;
     line.bx =  tan(from_deg_to_rad(var->player.angle + 30)) * (player[1] - line.by) + player[0];
-    while (line.bx >= 0 && line.bx <= var->mini_width
-        && line.by >= 0 && line.by <= var->mini_height)
+    tmpbx = line.ax;
+    tmpby = line.by;
+    while (1)
     {
-        flag = 1;
-        line.by += 32;
-        line.bx = tan(from_deg_to_rad(var->player.angle + 30)) * (player[1] - line.by) + player[0];
+        tmpby += 32;
+        tmpbx = tan(from_deg_to_rad(var->player.angle + 30)) * (player[1] - line.by) + player[0];
+        if (tmpbx >= 0 && tmpbx <= var->mini_width
+            && tmpby >= 0 && tmpby <= var->mini_height)
+        {
+            printf("ENTER IF\n");
+            line.by = tmpby;
+            line.bx = tmpbx;
+        }
+        else 
+        {
+            printf("break from the while \n");
+            break;
+        }
     }
-    if (flag)
-        draw_line(line, var, 0xFF0000FF);
+    printf("%f\t%f\t%f\t%f\n\n", line.ax, line.ay, line.bx, line.by);
+    printf("mini width ::%u\tmini height:: %u\n\n\n\n\n\n*******************\n",
+        var->mini_width, var->mini_height);
+    draw_line(line, var, 0xFF0000FF);
 }
 
 void cast(t_var *var)
@@ -47,8 +73,11 @@ void cast(t_var *var)
         || (angle > 270 && angle < 360))
     {
         cast_up(var);
-        printf("enter up\n");
+        printf("enter up\n\n\n\n\n\n\n");
     }
     else
+    {
+        printf("ENTER down\n\n\n\n\n\n");
         cast_down(var);
+    }
 }
