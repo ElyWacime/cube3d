@@ -43,7 +43,6 @@ void    rotate_player_right(t_var *var)
     var->player.rot_direction = 1;
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
-    printf("angle:: %u\n\n", var->player.angle);
 }
 
 void    rotate_player_left(t_var *var)
@@ -61,5 +60,4 @@ void    rotate_player_left(t_var *var)
     init_mini_map(var);
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
-    printf("angle:: %u\n\n", var->player.angle);
 }

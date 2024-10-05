@@ -1,72 +1,5 @@
 #include "cube.h"
 
-// void cast_horizantal(t_var *var)
-// {
-//     double *p = var->player.position;
-//     double ang = 30;
-//     t_line line;
-//     int i = 0;
-//     double x = (fabs(p[1] - (px_to_map_grid(p[1])) * 32) * tan(from_deg_to_rad(ang))) + p[0];
-//     double y = px_to_map_grid(p[1]) * 32;
-//     double px = p[0];
-//     double py = p[1];
-//     // printf("x = %f %f\n", x, y);
-//     // printf("px = %f %f\n", px, py);
-//     // printf(">>>>>>>>>>>> CUrrent inter ::: %f %f\n\n\n", x,y);
-//     double skip = 32 * tan(from_deg_to_rad(ang));
-//     // double skip = 32 / tan(from_deg_to_rad(ang));
-//     while (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height)
-//     {
-//         line.ax = px;
-//         line.ay = py;
-//         line.bx = x;
-//         line.by = y;
-
-//         if (draw_line2(line, var))
-//             break;
-//         px = x;
-//         py = y;
-//         // x = (32) * tan(from_deg_to_rad(ang)) + px;
-//         x += skip;
-//         y -= 32;
-//         // printf(" Next ::; %f %f\n\n\n", x,y);
-//     }
-//     //  printf("-----------------\n\n\n");
-// }
-
-// void cast_vertical(t_var *var)
-// {
-//     double *p = var->player.position;
-//     double ang = 30;
-//     t_line line;
-//     int i = 0;
-//     double x = (px_to_map_grid(p[0]) + 1) * 32;
-//     double y = (fabs(x - p[0]) * tan(from_deg_to_rad(ang))) + p[1];
-//     double px = p[0];
-//     double py = p[1];
-//     // printf("x = %f %f\n", x, y);
-//     // printf("px = %f %f\n", px, py);
-//     // printf(">>>>>>>>>>>> CUrrent inter ::: %f %f\n\n\n", x,y);
-//     // double skip = 32 * tan(from_deg_to_rad(ang));
-//     double skip = 32 / tan(from_deg_to_rad(ang));
-//     while (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height)
-//     {
-//         line.ax = px;
-//         line.ay = py;
-//         line.bx = x;
-//         line.by = y;
-
-//         if (draw_line3(line, var))
-//             break;
-//         px = x;
-//         py = y;
-//         x += 32;
-//         y -= skip;
-//         // printf(" Next ::; %f %f\n\n\n", x,y);
-//     }
-//     //  printf("-----------------\n\n\n");
-// }
-
 int    draw_line3(t_line line, t_var *var)
 {
     double a;
@@ -105,6 +38,7 @@ int    draw_line3(t_line line, t_var *var)
     }
     return 0;
 }
+
 void    draw_line4(t_line line, t_var *var, t_uint color)
 {
     double distance;
@@ -161,6 +95,188 @@ void    draw_line4(t_line line, t_var *var, t_uint color)
     }
 
 }
+void    draw_line5(t_line line, t_var *var, t_uint color)
+{
+    double distance;
+    double x;
+    double y;
+
+
+    distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
+    x = line.ax;
+    y = line.ay;
+    if (x <= line.bx && y <= line.by)
+    {
+        while (x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            // if (check_if_wall(x, y, var))
+                // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x += (fabs(line.bx - line.ax) / distance);
+            y += (fabs(line.by - line.ay) / distance);
+        }
+    }
+    else if (x >= line.bx && y <= line.by)
+    {
+        while (x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            // if (check_if_wall(x, y, var))
+                // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x -= (fabs(line.bx - line.ax) / distance);
+            y += (fabs(line.by - line.ay) / distance);
+        }
+    }
+    else if (x >= line.bx && y >= line.by)
+    {
+        while (x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            // if (check_if_wall(x, y, var))
+                // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x -= (fabs(line.bx - line.ax) / distance);
+            y -= (fabs(line.by - line.ay) / distance);
+        }
+    }
+    else if (x <= line.bx && y >= line.by)
+    {
+        while (x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            // if (check_if_wall(x, y, var))
+                // break;
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x += (fabs(line.bx - line.ax) / distance);
+            y -= (fabs(line.by - line.ay) / distance);
+        }
+    }
+
+}
+
+// void cast_horizantal(t_var *var,t_ray direction,t_line line)
+// {
+//     double *p = var->player.position;
+//     double ang = 30;
+//     t_line line;
+//     int i = 0;
+//     double x = (fabs(p[1] - (px_to_map_grid(p[1])) * 32) * tan(from_deg_to_rad(ang))) + p[0];
+//     double y = px_to_map_grid(p[1]) * 32;
+//     double px = p[0];
+//     double py = p[1];
+//     // printf("x = %f %f\n", x, y);
+//     // printf("px = %f %f\n", px, py);
+//     // printf(">>>>>>>>>>>> CUrrent inter ::: %f %f\n\n\n", x,y);
+//     double skip = 32 * tan(from_deg_to_rad(ang));
+//     // double skip = 32 / tan(from_deg_to_rad(ang));
+//     while (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height)
+//     {
+//         line.ax = px;
+//         line.ay = py;
+//         line.bx = x;
+//         line.by = y;
+
+//         draw_line4(line, var,0x00FFFFF0);
+//         // if (draw_line3(line, var))
+//         //     break;
+//         px = x;
+//         py = y;
+//         // x = (32) * tan(from_deg_to_rad(ang)) + px;
+//         x += skip;
+//         y -= 32;
+//         // printf(" Next ::; %f %f\n\n\n", x,y);
+//     }
+//     //  printf("-----------------\n\n\n");
+// }
+
+// void cast_vertical(t_var *var,t_ray direction,t_line line)
+// {
+//     double *p = var->player.position;
+//     double ang = 30;
+//     t_line line;
+//     int i = 0;
+//     double x = (px_to_map_grid(p[0]) + 1) * 32;
+//     double y = (fabs(x - p[0]) * tan(from_deg_to_rad(ang))) + p[1];
+//     double px = p[0];
+//     double py = p[1];
+//     // printf("x = %f %f\n", x, y);
+//     // printf("px = %f %f\n", px, py);
+//     // printf(">>>>>>>>>>>> CUrrent inter ::: %f %f\n\n\n", x,y);
+//     // double skip = 32 * tan(from_deg_to_rad(ang));
+//     double skip = 32 / tan(from_deg_to_rad(ang));
+//     while (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height)
+//     {
+//         line.ax = px;
+//         line.ay = py;
+//         line.bx = x;
+//         line.by = y;
+
+//         draw_line4(line, var,0xFF00FFF0);
+//         // if (draw_line3(line, var))
+//         //     break;
+//         px = x;
+//         py = y;
+//         x += 32;
+//         y -= skip;
+//         // printf(" Next ::; %f %f\n\n\n", x,y);
+//     }
+//     //  printf("-----------------\n\n\n");
+// }
+
+t_point cast_horizantal(t_var *var,t_ray ray,t_line line)
+{
+    t_point horizon;
+    t_point colison;
+    double distance;
+    double skip;
+    double tn;
+
+    horizon.x = ((line.ax / 32) + (ray.direction_x > 0)) * 32;
+    horizon.y = line.ay;
+    colison.x = horizon.x;
+    distance =  fabs(horizon.x - line.ax);
+    tn = tan(ray.angle);
+    colison.y = (distance * tn) + line.ay;
+    skip = 32 * tn * ray.direction_y;
+
+    while ((0 <= line.ax && line.ax < var->mini_width && 0 <= line.ay && line.ay < var->mini_height))
+    {
+        colison.x = line.ax;
+        colison.y = line.ay;
+        if (check_if_wall(line.ax, line.ay, var))
+            return colison;
+        line.ax += 32 * ray.direction_x;
+        line.ay += skip;
+    }
+    return colison;
+}
+
+t_point cast_vertical(t_var *var,t_ray ray,t_line line)
+{
+    t_point horizon;
+    t_point colison;
+    double distance;
+    double skip;
+    double tn;
+
+    horizon.x = ((line.ax / 32) + (ray.direction_x > 0)) * 32;
+    horizon.y = line.ay;
+    colison.x = horizon.x;
+    distance =  fabs(horizon.x - line.ax);
+    tn = tan(ray.angle);
+    colison.y = (distance * tn) + line.ay;
+    skip = (32 / tn) * ray.direction_x;
+
+    while ((0 <= line.ax && line.ax < var->mini_width && 0 <= line.ay && line.ay < var->mini_height))
+    {
+        colison.x = line.ax;
+        colison.y = line.ay;
+        if (check_if_wall(line.ax, line.ay, var))
+            return colison;
+        line.ax += skip;
+        line.ay += 32 * ray.direction_y;
+    }
+    return colison;
+}
+
 void  cast_up_(t_var *var)
 {
     double *player = var->player.position;
@@ -229,128 +345,220 @@ void  cast_down_(t_var *var)
     draw_line(line, var, 0xFF0000FF);
 }
 
-void cast_left(t_var *var)
-{
-
-}
-void cast_down(t_var *var)
-{
-    
-}
-void cast_right(t_var *var)
-{
-    
-}
-void cast_up(t_var *var)
-{
-    
-}
-void cast_up_left(t_var *var)
-{
-
-}
-void cast_down_left(t_var *var)
-{
-    
-}
-void cast_down_right(t_var *var)
-{
-    
-}
-
-void cast_up_right(t_var *var)
-{
-
-}
-
 double mod(double a, int b)
 {
     int x = (int)a;
     return (a - (double)x) + (double)(x % b);
 }
 
-//rx = (vx - px)cos(thetha) - (vy - py)*sin(thetha)+ px
-//ry = (vy - py)cos(thetha) + (vx - px)*sin(thetha)+ py
-
-//rx = ((vx - px)*cs) - ((vy - py)*sn) + px
-//ry = ((vy - py)*cs) + ((vx - px)*sn) + py
-void range(t_var *var)
+//rotate a point m f rom center by an angle in radian
+t_point rotate_by(t_point center, t_point m, double angle)
 {
-    double vx = var->player.vect[0];
-    double vy = var->player.vect[1];
-    double px = var->player.position[0];
-    double py = var->player.position[1];
-    double thetha = var->player.angle % 360;
-    double rot = 30.0;
+    t_point z;
 
-
-    double cs = cos(from_deg_to_rad(rot));
-    double sn = sin(from_deg_to_rad(rot));
-
-    double vax = ((vx - px)*cs) - ((vy - py)*sn) + px;
-    double vay = ((vy - py)*cs) + ((vx - px)*sn) + py;
-    
-    sn = -sn;
-    double vbx = ((vx - px)*cs) - ((vy - py)*sn) + px;
-    double vby = ((vy - py)*cs) + ((vx - px)*sn) + py;
-    // printf("P(%f     %f)\nV(%f    %f) \nVa(%f   %f) \nVb(%f   %f)\n",px,py,vx,vy,vax,vay,vbx,vby);
-    t_line line;
-    line.ax = px;
-    line.ay = py;
-    line.bx = vax;
-    line.by = vay;
-    // draw_line3(line,var);//RED +
-    draw_line4(line,var,0xFF0000FF);
-    line.bx = vbx;
-    line.by = vby;
-     draw_line4(line,var,0x0000FFFF);
-    // draw_line4(line,var);//BLUE - 
-    // printf("RED  +%f  \n" , rot);
-    // printf("BLUE  -%f \n",  rot);
+    z.x = ((m.x - center.x)*cos(angle)) - ((m.y - center.y)*sin(angle)) + center.x;
+    z.y = ((m.y - center.y)*cos(angle)) + ((m.x - center.x)*sin(angle)) + center.y;
+    return z;
 }
+
+// maxim left and right rays
+// void range(t_var *var)
+// {
+//     double vx = var->player.vect[0];
+//     double vy = var->player.vect[1];
+//     double px = var->player.position[0];
+//     double py = var->player.position[1];
+//     double thetha = var->player.angle % 360;
+//     double rot = 30.0;
+//     double cs = cos(from_deg_to_rad(rot));
+//     double sn = sin(from_deg_to_rad(rot));
+//     double vax = ((vx - px)*cs) - ((vy - py)*sn) + px;
+//     double vay = ((vy - py)*cs) + ((vx - px)*sn) + py;
+//     sn = -sn;
+//     double vbx = ((vx - px)*cs) - ((vy - py)*sn) + px;
+//     double vby = ((vy - py)*cs) + ((vx - px)*sn) + py;
+//     // printf("P(%f     %f)\nV(%f    %f) \nVa(%f   %f) \nVb(%f   %f)\n",px,py,vx,vy,vax,vay,vbx,vby);
+//     t_line line;
+//     line.ax = px;
+//     line.ay = py;
+//     line.bx = vax;
+//     line.by = vay;
+//     // draw_line3(line,var);//RED +
+//     draw_line4(line,var,0xFF0000FF);
+//     line.bx = vbx;
+//     line.by = vby;
+//      draw_line4(line,var,0x0000FFFF);
+//     // draw_line4(line,var);//BLUE - 
+//     // printf("RED  +%f  \n" , rot);
+//     // printf("BLUE  -%f \n",  rot);
+// }
+
+// maxim left and right rays
+void range_2(t_var *var)
+{
+    t_point v;
+    t_point p;
+    t_point r;
+    t_line line;
+    double view;
+    
+    view = 60;
+    v.x = var->player.vect[0];
+    v.y = var->player.vect[1];
+    p.x = var->player.position[0];
+    p.y = var->player.position[1];
+    r = rotate_by(p,v,from_deg_to_rad(view/2));//RED + RIGHT
+    line.ax = p.x;
+    line.ay = p.y;
+    line.bx = r.x;
+    line.by = r.y;
+    draw_line4(line,var,0XA020F0A0);
+    r = rotate_by(p,v,from_deg_to_rad(-view/2));//BLUE - LEFT
+    line.bx = r.x;
+    line.by = r.y;
+    draw_line4(line,var,0XA020F0A0);
+}
+
+
+void one_ray(t_var *var, t_ray *ray ,unsigned int color)
+{
+    t_line line;
+
+    line.ax = ray->start.x;
+    line.ay = ray->start.y;
+    line.bx = ray->target.x;
+    line.by = ray->target.y;
+    draw_line4(line,var,color);
+}
+
+void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
+{
+    t_line line;
+    ray.direction_x = 1;
+    ray.direction_y = 1;
+    ray.angle += 360;
+    ray.angle = mod(ray.angle, 360);
+    printf("ray angle == %f\n",ray.angle);
+    printf("player angle == %u\n",var->player.angle);
+    if (0 < ray.angle  && ray.angle < 90)
+    {
+        ray.direction_y = -1;
+        printf("up right\n");
+    }
+    else if (90 < ray.angle && ray.angle < 180)
+    {
+        ray.direction_x = -1;
+        ray.direction_y = -1;
+        printf("up left\n");
+    }
+    else if (180 < ray.angle  && ray.angle < 270)
+    {
+        ray.direction_x = -1;
+        printf("down left\n");
+    }
+    else if (270 < ray.angle && ray.angle != 0)
+    {
+        printf(" down right\n");
+    }
+    else if (ray.angle == 0)
+    {
+        ray.direction_y = 0;
+        printf(" right\n");
+    }
+    else if (ray.angle == 90)
+    {
+        printf("up\n");
+        ray.direction_x = 0;
+        ray.direction_y = -1;
+    }
+    else if (ray.angle == 180)
+    {
+        ray.direction_x = -1;
+        ray.direction_y = 0;
+        printf("left\n");
+    }
+    else if (ray.angle == 270)
+    {
+        ray.direction_x = 0;
+        printf("down\n");
+    }
+    else
+        printf("------else-------\n");
+    printf(">>>>>>>>>>>>>>>>>>>>--------\n\n");
+    line.ax = ray.start.x;
+    line.ay = ray.start.y;
+    line.bx = ray.target.x;
+    line.by = ray.target.y;
+    t_point colision;
+
+    if (ray.direction_x == 0)
+    {
+        printf("<<<<<<<< x ==== 0\n");
+        // cast_horizantal(var,*ray,line);
+    }
+    else if (ray.direction_y == 0)
+    {
+        printf("<<<<<<<< y ==== 0\n");
+        // cast_vertical(var,*ray,line);
+    }
+    else
+    {
+        printf("    1****** %f %f %f %f\n",line.ax ,line.ay,line.bx ,line.by);
+        colision = cast_horizantal(var,ray,line);
+        line.bx = colision.x;
+        line.by = colision.y;
+        printf("    2****** %f %f %f %f\n",line.ax ,line.ay,line.bx ,line.by);
+        draw_line5(line,var,0xFF0000FF);
+        colision = cast_vertical(var,ray,line);
+        line.bx = colision.x;
+        line.by = colision.y;
+        printf("    3****** %f %f %f %f\n",line.ax ,line.ay,line.bx ,line.by);
+        draw_line5(line,var,0x0000FFFF);
+    }
+    // draw_line4(line,var,color);
+}
+
 
 void cast(t_var *var)
 {
-    int angle = (var->player.angle) % 360;
-    range(var);
-    if (0 < angle  && angle < 90)
+    t_ray ray;
+    t_point r;
+    t_point p;
+    t_point v;
+    int angle;
+    double view;
+    double step;
+    double i;
+    
+    i = 0;
+    view = 60;
+    step = view / ((double)WIDTH);
+    angle = (var->player.angle) % 360;
+
+    p.x = var->player.position[0];
+    p.y = var->player.position[1];
+    v.x = var->player.vect[0];
+    v.y = var->player.vect[1];
+
+    ray.start = p;
+    ray.target = v;
+    r = rotate_by(ray.start, ray.target, from_deg_to_rad(view / 2));
+    ray.target = r;
+    ray.angle = angle + (view / 2);
+    v = r;
+    
+    while (i * step  < view)
     {
-        printf("up right\n");
-        cast_up_right(var);
+        // one_ray_wall(var,ray,0XAA0000A0); // In  Progresss
+        one_ray(var,&ray,0XAA0000A0);
+        ray.angle -= (i * step);
+        r = rotate_by(ray.start, v, -from_deg_to_rad((i * step)));
+        ray.target = r;
+        i++;
     }
-    else if (90 < angle && angle < 180)
-    {
-        printf("up left\n");
-        cast_down_right(var); 
-    }
-    else if (180 < angle  && angle < 270)
-    {
-        printf("down left\n");
-        cast_down_left(var);
-    }
-    else if (270 < angle && angle != 0)
-    {
-        printf(" down right\n");
-        cast_up_left(var); 
-    }
-    else if (angle == 0)
-    {
-        printf(" right\n");
-        cast_up(var); 
-    }
-    else if (angle == 90)
-    {
-        printf("up\n");
-        cast_right(var); 
-    }
-    else if (angle == 180)
-    {
-        printf("left\n");
-        cast_left(var); 
-    }
-    else if (angle == 270)
-    {
-        printf("down\n");
-        cast_down(var); 
-    }
+    ray.target.x = var->player.vect[0];
+    ray.target.y = var->player.vect[1];
+    one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
+    range_2(var);
+    
 }

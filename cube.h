@@ -21,6 +21,27 @@
 
 typedef unsigned int t_uint;
 
+typedef struct s_point
+{
+    double x;
+    double y;
+}   t_point;
+
+typedef struct s_segment
+{
+    t_point a;
+    t_point b;
+}   t_segment;
+
+typedef struct s_ray
+{
+    t_point start;
+    t_point target;
+    double angle;
+    double direction_x;
+    double direction_y;
+}   t_ray;
+
 typedef struct s_line
 {
     double ax;
