@@ -90,7 +90,6 @@ uint32_t    transform_color_to_hexa(int *);
 void    init_mini_map(t_var *);
 void    create_mini_map_image(t_var *var);
 void    draw_vector(t_var *var);
-void    draw_line(t_line line, t_var *var);
 
 /*
 ** utils.c
@@ -106,8 +105,8 @@ double  calculate_distance(double, double, double, double);
 double  from_rad_to_deg(double);
 double  from_deg_to_rad(double);
 int     check_if_wall(double , double , t_var *);
-void    draw_line(t_line , t_var *);
-
+void    draw_line(t_line , t_var *, t_uint);
+void    quit_program(t_var *);
 /*
 ** check_map.c
 */
@@ -115,4 +114,8 @@ int     get_players_position(char **, int *, t_var *);
 void    flood_fill(char**, int, int);
 int     is_still_there_zeros(char **, int *);
 
+/*
+** rays.c
+*/
+void cast(t_var *var);
 #endif
