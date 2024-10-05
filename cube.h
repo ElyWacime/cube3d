@@ -90,7 +90,6 @@ uint32_t    transform_color_to_hexa(int *);
 void    init_mini_map(t_var *);
 void    create_mini_map_image(t_var *var);
 void    draw_vector(t_var *var);
-void    draw_line(t_line line, t_var *var);
 
 /*
 ** utils.c
@@ -106,7 +105,7 @@ double  calculate_distance(double, double, double, double);
 double  from_rad_to_deg(double);
 double  from_deg_to_rad(double);
 int     check_if_wall(double , double , t_var *);
-void    draw_line(t_line , t_var *);
+void    draw_line(t_line , t_var *, t_uint);
 
 /*
 ** check_map.c
@@ -118,4 +117,5 @@ int     is_still_there_zeros(char **, int *);
 int    draw_line2(t_line line, t_var *var);
 int    draw_line3(t_line line, t_var *var);
 void cast(t_var *var);
+void cast2(t_var *var);
 #endif
