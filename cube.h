@@ -34,7 +34,7 @@ typedef struct s_player
     double  position[2];
     double  vect[2];
     char    direction;
-    double  angle;
+    t_uint  angle;
 }   t_player;
 
 typedef struct s_var

@@ -34,7 +34,7 @@ void    rotate_player_right(t_var *var)
 
     mlx_delete_image(var->mlx, var->mini_map);
     calcul_right_rotation(var);
-    var->player.angle = ((t_uint)(var->player.angle) + (360 - 9)) % 360;
+    var->player.angle = (var->player.angle + (360 - 9)) % 360;
     vector.ax = var->player.position[0];
     vector.ay = var->player.position[1];
     vector.bx = var->player.vect[0];
@@ -42,7 +42,7 @@ void    rotate_player_right(t_var *var)
     init_mini_map(var);
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
-    printf("angle:: %f\n\n", var->player.angle);
+    printf("angle:: %u\n\n", var->player.angle);
 }
 
 void    rotate_player_left(t_var *var)
@@ -51,7 +51,7 @@ void    rotate_player_left(t_var *var)
 
     mlx_delete_image(var->mlx, var->mini_map);
     calcul_left_rotation(var);
-    var->player.angle = ((t_uint)(var->player.angle) + 9) % 360;
+    var->player.angle = (var->player.angle + 9) % 360;
     vector.ax = var->player.position[0];
     vector.ay = var->player.position[1];
     vector.bx = var->player.vect[0];
@@ -59,5 +59,5 @@ void    rotate_player_left(t_var *var)
     init_mini_map(var);
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
-    printf("angle:: %f\n\n", var->player.angle);
+    printf("angle:: %u\n\n", var->player.angle);
 }
