@@ -24,4 +24,6 @@ void    listen_to_key(struct mlx_key_data keydata, void *ptr)
 	else if (keydata.key == MLX_KEY_S
         && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
 		move_player_down(var);
+    else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+        quit_program(var);
 }

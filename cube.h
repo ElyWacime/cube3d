@@ -106,7 +106,7 @@ double  from_rad_to_deg(double);
 double  from_deg_to_rad(double);
 int     check_if_wall(double , double , t_var *);
 void    draw_line(t_line , t_var *, t_uint);
-
+void    quit_program(t_var *);
 /*
 ** check_map.c
 */

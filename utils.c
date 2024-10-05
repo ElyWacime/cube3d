@@ -1,5 +1,12 @@
 #include "cube.h"
 
+void    quit_program(t_var *var)
+{
+    mlx_delete_image(var->mlx, var->mini_map);
+    mlx_close_window(var->mlx);
+    exit(0);
+}
+
 void ft_error(void)
 {
     char *err_str;
