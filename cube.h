@@ -21,6 +21,12 @@
 
 typedef unsigned int t_uint;
 
+typedef struct s_offset
+{
+    double x;
+    double y;
+}   t_offset;
+
 typedef struct s_point
 {
     double x;
