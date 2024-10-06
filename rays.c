@@ -562,28 +562,18 @@ void one_ray(t_var *var, t_ray *ray ,unsigned int color)
 //     range_2(var);
 // }
 
-void    calculate_next_colision_up(t_var *var, t_ray *ray, double angle, t_offset *offset)
+int    calculate_next_colision_up(t_var *var, t_ray *ray, double angle)
 {
-    offset->y = 32;
-    ray->target.y = (((int)(ray->start.y)/32)*32) - 0.001;
-    offset->x = tan(from_deg_to_rad(angle)) * (ray->start.y - ray->target.y);
-    if (ray->angle < 90)
-        ray->target.x = offset->x + ray->start.x;
-    else
-        ray->target.x = - offset->x + ray->start.x;
-}
-
-void    cast_up(t_var *var, t_ray *ray)
-{
-    double angle;
-    t_offset offset;
     t_line line;
+    t_offset offset;
 
+    offset.y = 32;
+    ray->target.y = (((int)(ray->start.y)/32)*32) - 0.001;
+    offset.x = tan(from_deg_to_rad(angle)) * (ray->start.y - ray->target.y);
     if (ray->angle < 90)
-        angle = 90 - ray->angle;
+        ray->target.x = offset.x + ray->start.x;
     else
-        angle = -90 + ray->angle;
-    calculate_next_colision_up(var, ray, angle, &offset);
+        ray->target.x = - offset.x + ray->start.x;
     if (check_if_wall(ray->target.x, ray->target.y, var))
     {
         line.ax = var->player.position[0];
@@ -591,38 +581,32 @@ void    cast_up(t_var *var, t_ray *ray)
         line.bx = ray->target.x;
         line.by = ray->target.y;
         draw_line(line, var, 0xFF0000FF);
-        return ;
+        return 1;
     }
-    int i = 0;
-    while (ray->target.x < var->mini_width && ray->target.x > 0
-        && ray->target.y < var->mini_height && ray->target.y > 0
-        && i < 100)
-    {
-        i++;
-        ray->start.x = ray->target.x;
-        ray->start.y = ray->target.y;
-        calculate_next_colision_up(var, ray, angle, &offset);
-        if (check_if_wall(ray->target.x, ray->target.y, var))
-        {
-            line.ax = var->player.position[0];
-            line.ay = var->player.position[1];
-            line.bx = ray->target.x;
-            line.by = ray->target.y;
-            draw_line(line, var, 0xFF0000FF);
-            return ;
-        }
-    }
+    return 0;
 }
 
-void    calculate_next_colision_down(t_var *var, t_ray *ray, double angle, t_offset *offset)
+int    calculate_next_colision_down(t_var *var, t_ray *ray, double angle)
 {
-    offset->y = - 32;
+    t_line line;
+    t_offset offset;
+    offset.y = - 32;
     ray->target.y = (((int)(ray->start.y)/32)*32) + 32;
-    offset->x = tan(from_deg_to_rad(angle)) * (ray->start.y - ray->target.y);
+    offset.x = tan(from_deg_to_rad(angle)) * (ray->start.y - ray->target.y);
     if (ray->angle < 270)
-        ray->target.x = offset->x + ray->start.x;
+        ray->target.x = offset.x + ray->start.x;
     else
-        ray->target.x = - offset->x + ray->start.x;
+        ray->target.x = - offset.x + ray->start.x;
+    if (check_if_wall(ray->target.x, ray->target.y, var))
+    {
+        line.ax = var->player.position[0];
+        line.ay = var->player.position[1];
+        line.bx = ray->target.x;
+        line.by = ray->target.y;
+        draw_line(line, var, 0xFF0000FF);
+        return 1;
+    }
+    return 0;
 }
 
 void    cast_down(t_var *var, t_ray *ray)
@@ -635,16 +619,8 @@ void    cast_down(t_var *var, t_ray *ray)
         angle = 270 - ray->angle;
     else
         angle = -270 + ray->angle;
-    calculate_next_colision_down(var, ray, angle, &offset);
-    if (check_if_wall(ray->target.x, ray->target.y, var))
-    {
-        line.ax = ray->start.x;
-        line.ay = ray->start.y;
-        line.bx = ray->target.x;
-        line.by = ray->target.y;
-        draw_line(line, var, 0xFF0000FF);
+    if (calculate_next_colision_down(var, ray, angle))
         return ;
-    }
     int i = 0;
     while (ray->target.x < var->mini_width && ray->target.x > 0
         && ray->target.y < var->mini_height && ray->target.y > 0
@@ -653,16 +629,31 @@ void    cast_down(t_var *var, t_ray *ray)
         i++;
         ray->start.x = ray->target.x;
         ray->start.y = ray->target.y;
-        calculate_next_colision_down(var, ray, angle, &offset);
-        if (check_if_wall(ray->target.x, ray->target.y, var))
-        {
-            line.ax = var->player.position[0];
-            line.ay = var->player.position[1];
-            line.bx = ray->target.x;
-            line.by = ray->target.y;
-            draw_line(line, var, 0xFF0000FF);
+        if (calculate_next_colision_down(var, ray, angle))
             return ;
-        }
+    }
+}
+
+void    cast_up(t_var *var, t_ray *ray)
+{
+    double angle;
+
+    if (ray->angle < 90)
+        angle = 90 - ray->angle;
+    else
+        angle = -90 + ray->angle;
+    if (calculate_next_colision_up(var, ray, angle))
+        return ;
+    int i = 0;
+    while (ray->target.x < var->mini_width && ray->target.x > 0
+        && ray->target.y < var->mini_height && ray->target.y > 0
+        && i < 100)
+    {
+        i++;
+        ray->start.x = ray->target.x;
+        ray->start.y = ray->target.y;
+        if (calculate_next_colision_up(var, ray, angle))
+            return ;
     }
 }
 
