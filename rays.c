@@ -562,10 +562,11 @@ void one_ray(t_var *var, t_ray *ray ,unsigned int color)
 //     range_2(var);
 // }
 
-int    calculate_next_colision_up(t_var *var, t_ray *ray, double angle)
+t_point    calculate_next_colision_up(t_var *var, t_ray *ray, double angle)
 {
     t_line line;
     t_offset offset;
+    t_point collision = {-1, -1};
 
     offset.y = 32;
     ray->target.y = (((int)(ray->start.y)/32)*32) - 0.001;
@@ -580,16 +581,47 @@ int    calculate_next_colision_up(t_var *var, t_ray *ray, double angle)
         line.ay = var->player.position[1];
         line.bx = ray->target.x;
         line.by = ray->target.y;
+        collision.x = ray->target.x;
+        collision.y = ray->target.y;
         draw_line(line, var, 0xFF0000FF);
-        return 1;
+        return collision;
     }
-    return 0;
+    return collision;
 }
 
-int    calculate_next_colision_down(t_var *var, t_ray *ray, double angle)
+t_point    cast_up(t_var *var, t_ray *ray)
+{
+    double angle;
+    t_point collision = {-1, -1};
+
+    if (ray->angle < 90)
+        angle = 90 - ray->angle;
+    else
+        angle = -90 + ray->angle;
+    collision = calculate_next_colision_up(var, ray, angle);
+    if (collision.x > 0 && collision.y > 0)
+        return collision;
+    int i = 0;
+    while (ray->target.x < var->mini_width && ray->target.x > 0
+        && ray->target.y < var->mini_height && ray->target.y > 0
+        && i < 100)
+    {
+        i++;
+        ray->start.x = ray->target.x;
+        ray->start.y = ray->target.y;
+    collision = calculate_next_colision_up(var, ray, angle);
+    if (collision.x > 0 && collision.y > 0)
+        return collision;
+    }
+    return collision;
+}
+
+t_point    calculate_next_colision_down(t_var *var, t_ray *ray, double angle)
 {
     t_line line;
     t_offset offset;
+    t_point collision = {-1, -1};
+
     offset.y = - 32;
     ray->target.y = (((int)(ray->start.y)/32)*32) + 32;
     offset.x = tan(from_deg_to_rad(angle)) * (ray->start.y - ray->target.y);
@@ -603,24 +635,28 @@ int    calculate_next_colision_down(t_var *var, t_ray *ray, double angle)
         line.ay = var->player.position[1];
         line.bx = ray->target.x;
         line.by = ray->target.y;
+        collision.x = ray->target.x;
+        collision.y = ray->target.y;
         draw_line(line, var, 0xFF0000FF);
-        return 1;
+        return collision;
     }
-    return 0;
+    return collision;
 }
 
-void    cast_down(t_var *var, t_ray *ray)
+t_point    cast_down(t_var *var, t_ray *ray)
 {
     double angle;
     t_offset offset;
     t_line line;
+    t_point collision = {-1, -1};
 
     if (ray->angle < 270)
         angle = 270 - ray->angle;
     else
         angle = -270 + ray->angle;
-    if (calculate_next_colision_down(var, ray, angle))
-        return ;
+    collision = calculate_next_colision_down(var, ray, angle);
+    if (collision.x > 0 && collision.y > 0)
+        return collision;
     int i = 0;
     while (ray->target.x < var->mini_width && ray->target.x > 0
         && ray->target.y < var->mini_height && ray->target.y > 0
@@ -629,32 +665,11 @@ void    cast_down(t_var *var, t_ray *ray)
         i++;
         ray->start.x = ray->target.x;
         ray->start.y = ray->target.y;
-        if (calculate_next_colision_down(var, ray, angle))
-            return ;
+        collision = calculate_next_colision_down(var, ray, angle);
+        if (collision.x > 0 && collision.y > 0)
+            return collision;
     }
-}
-
-void    cast_up(t_var *var, t_ray *ray)
-{
-    double angle;
-
-    if (ray->angle < 90)
-        angle = 90 - ray->angle;
-    else
-        angle = -90 + ray->angle;
-    if (calculate_next_colision_up(var, ray, angle))
-        return ;
-    int i = 0;
-    while (ray->target.x < var->mini_width && ray->target.x > 0
-        && ray->target.y < var->mini_height && ray->target.y > 0
-        && i < 100)
-    {
-        i++;
-        ray->start.x = ray->target.x;
-        ray->start.y = ray->target.y;
-        if (calculate_next_colision_up(var, ray, angle))
-            return ;
-    }
+    return collision;
 }
 
 
