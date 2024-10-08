@@ -398,12 +398,12 @@ t_point cast_horizantal(t_var *var,t_ray ray)
 
     colison.x = ray.start.x;
     colison.y = ray.start.y;
-    printf("-------- cast_horizantal ------- \n");
+    // printf("-------- cast_horizantal ------- \n");
     if (check_if_wall_h(ray.start, ray.direction_y, var))
     // if (check_if_wall(colison.x, colison.y, var))
         return colison;
-    printf("player.angle(%d)\n",var->player.angle);
-    printf("ray.angle(%.2f)\n",ray.angle);
+    // printf("player.angle(%d)\n",var->player.angle);
+    // printf("ray.angle(%.2f)\n",ray.angle);
     ray.angle = mod(ray.angle,360);
     theta = ray.angle;
     if (90 < theta && theta < 180)
@@ -412,9 +412,8 @@ t_point cast_horizantal(t_var *var,t_ray ray)
         theta =  270 - theta;
     else if (270 < theta && theta < 360)
         theta = theta - 270;
-    printf("theta (%.2f)\n",theta);
+    // printf("theta (%.2f)\n",theta);
     tn = tan(from_deg_to_rad(theta));
-
     // {
     //     horizon.x = next_px_in_grid(ray.start.x, ray.direction_y);
     //     colison.x = next_px_in_grid(ray.start.x, ray.direction_y);
@@ -451,11 +450,11 @@ t_point cast_horizantal(t_var *var,t_ray ray)
         skip_x = (32.0 * tn) * ray.direction_x;
         skip_y = 32.0 * ray.direction_y;
     }
-    printf("tan === (%.2f)\n",tn);
-    printf("P (%.2f %.2f)   \n", ray.start.x, ray.start.y);
-    printf("H (%.2f %.2f)   \n", horizon.x ,horizon.y);
-    printf("I (%.2f %.2f)   \n", colison.x ,colison.y);
-    printf("DirectionXY(%.2f ::::  %.2f)\n",ray.direction_x ,ray.direction_y);
+    // printf("tan === (%.2f)\n",tn);
+    // printf("P (%.2f %.2f)   \n", ray.start.x, ray.start.y);
+    // printf("H (%.2f %.2f)   \n", horizon.x ,horizon.y);
+    // printf("I (%.2f %.2f)   \n", colison.x ,colison.y);
+    // printf("DirectionXY(%.2f ::::  %.2f)\n",ray.direction_x ,ray.direction_y);
     prev_colison = colison;
     while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
     {   
@@ -468,7 +467,7 @@ t_point cast_horizantal(t_var *var,t_ray ray)
     }
     // colison.x = min(colison.x,var->mini_width);
     // colison.y = min(colison.y,var->mini_height);
-    return prev_colison;
+    return colison;
 }
 
 
@@ -484,12 +483,12 @@ t_point cast_vertical(t_var *var,t_ray ray)
 
     colison.x = ray.start.x;
     colison.y = ray.start.y;
-    printf("-------- cast_vertical ------- \n");
+    // printf("-------- cast_vertical ------- \n");
     // if (check_if_wall(colison.x, colison.y, var))
     if (check_if_wall_v(ray.start, ray.direction_x, var))
         return colison;
-    printf("player.angle(%d)\n",var->player.angle);
-    printf("ray.angle(%.2f)\n",ray.angle);
+    // printf("player.angle(%d)\n",var->player.angle);
+    // printf("ray.angle(%.2f)\n",ray.angle);
     ray.angle = mod(ray.angle,360);
     theta = ray.angle;
     if (90 < theta && theta < 180)
@@ -498,37 +497,34 @@ t_point cast_vertical(t_var *var,t_ray ray)
         theta =  270 - theta;
     else if (270 < theta && theta < 360)
         theta = theta - 270;
-    printf("theta (%.2f)\n",theta);
+    // printf("theta (%.2f)\n",theta);
     tn = tan(from_deg_to_rad(theta));
-    
-    if (ray.direction_y == 1)
+    if (ray.direction_y == -1)
     {
-        horizon.x = ray.start.x;
-        colison.x = next_px_in_grid(ray.start.x, ray.direction_x);
-
-        colison.y = ray.start.y + (((fabs(horizon.x - ray.start.x ) / tn)) * ray.direction_y);
+        colison.x = next_px_in_grid(ray.start.x,ray.direction_x);
+        horizon.x = next_px_in_grid(ray.start.x,ray.direction_x);
         horizon.y = ray.start.y;
+        colison.y = ray.start.y - (fabs(horizon.x-ray.start.x) * tn);
+        skip_y = -32 *tn;
+        skip_x = 32 * ray.direction_x;
 
-        skip_x = 32.0 * ray.direction_x;
-        skip_y = (32.0 / tn) * ray.direction_y;
     }
     else
     {
-        horizon.x = next_px_in_grid(ray.start.x, ray.direction_x);
-        colison.x = colison.x;
+        skip_y = 32 / tn;
+        skip_x = 32 * ray.direction_x;
+        horizon.x = ray.start.x;
+        horizon.y = next_px_in_grid(ray.start.y,ray.direction_y);
 
-        horizon.y = ray.start.y;
-        colison.y = ray.start.y + ((fabs(ray.start.x - horizon.x) * tn) * ray.direction_y);
- 
-        skip_x = 32.0  * ray.direction_x;
-        skip_y = (32.0 * tn) * ray.direction_y;
+        colison.y = horizon.y;
+        colison.x = ray.start.x + ray.direction_x*fabs(horizon.y - ray.start.y)*tn;
     }
-    printf("Vertical Codinates\n");
-    printf("tan === (%.2f)\n",tn);
-    printf("P (%.2f %.2f)   \n", ray.start.x, ray.start.y);
-    printf("H (%.2f %.2f)   \n", horizon.x ,horizon.y);
-    printf("I (%.2f %.2f)   \n", colison.x ,colison.y);
-    printf("DirectionXY(%.2f ::::  %.2f)\n",ray.direction_x ,ray.direction_y);
+    // printf("Vertical Codinates\n");
+    // printf("tan === (%.2f)\n",tn);
+    // printf("P (%.2f %.2f)   \n", ray.start.x, ray.start.y);
+    // printf("H (%.2f %.2f)   \n", horizon.x ,horizon.y);
+    // printf("I (%.2f %.2f)   \n", colison.x ,colison.y);
+    // printf("DirectionXY(%.2f ::::  %.2f)\n",ray.direction_x ,ray.direction_y);
     prev_colison = colison;
     while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
     {   
@@ -539,9 +535,7 @@ t_point cast_vertical(t_var *var,t_ray ray)
         colison.x += skip_x;
         colison.y += skip_y;
     }
-    colison.x = min(colison.x,var->mini_width);
-    colison.y = min(colison.y,var->mini_height);
-    return prev_colison;
+    return colison;
 }
 
 t_point cast_vertical_0(t_var *var,t_ray ray,t_line line)
@@ -639,7 +633,6 @@ void  cast_down_(t_var *var)
     draw_line(line, var, 0xFF0000FF);
 }
 
-
 //rotate a point m f rom center by an angle in radian
 t_point rotate_by(t_point center, t_point m, double angle)
 {
@@ -681,7 +674,6 @@ t_point rotate_by(t_point center, t_point m, double angle)
 //     // printf("RED  +%.2f  \n" , rot);
 //     // printf("BLUE  -%.2f \n",  rot);
 // }
-
 // maxim left and right rays
 void range_2(t_var *var)
 {
@@ -708,7 +700,6 @@ void range_2(t_var *var)
     draw_line4(line,var,0XA020F0A0);
 }
 
-
 void one_ray(t_var *var, t_ray *ray ,unsigned int color)
 {
     t_line line;
@@ -719,42 +710,44 @@ void one_ray(t_var *var, t_ray *ray ,unsigned int color)
     line.by = ray->target.y;
     draw_line4(line,var,color);
 }
+double distance(t_point a, t_point b)
+{
+    return sqrt(((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y)));
+}
 
 void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
 {
     t_line line;
-    t_point colision;
+    t_point colision_h;
+    t_point colision_v;
 
     ray.direction_x = 1;
     ray.direction_y = 1;
-    ray.angle = mod(ray.angle, 360);
-    ray.angle+=360;
-    ray.angle = mod(ray.angle, 360);
-    printf("-------  one_ray_wall---\n");
+    // printf("-------  one_ray_wall---\n");
     if (0 < ray.angle  && ray.angle < 90)
     {
         ray.direction_y = -1;
-        printf("up right\n");
+        // printf("up right\n");
     }
     else if (90 < ray.angle && ray.angle < 180)
     {
         ray.direction_x = -1;
         ray.direction_y = -1;
-        printf("up left\n");
+        // printf("up left\n");
     }
     else if (180 < ray.angle  && ray.angle < 270)
     {
         ray.direction_x = -1;
-        printf("down left\n");
+        // printf("down left\n");
     }
     else if (270 < ray.angle && ray.angle != 0)
     {
-        printf(" down right\n");
+        // printf(" down right\n");
     }
     else if (ray.angle < 0)
     {
          printf("------else----Negative Angle---\n");
-         return;
+        //  return;
     }
     else
     {
@@ -763,22 +756,22 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
         if (ray.angle == 0)
         {
             ray.direction_x = 1;
-            printf(" right\n");
+            // printf(" right\n");
         }
         else if (ray.angle == 90)
         {
-            printf("up\n");
+            // printf("up\n");
             ray.direction_y = -1;
         }
         else if (ray.angle == 180)
         {
             ray.direction_x = -1;
-            printf("left\n");
+            // printf("left\n");
         }
         else if (ray.angle == 270)
         {
             ray.direction_y = 1;
-            printf("down\n");
+            // printf("down\n");
         }
     }
     line.ax = ray.start.x;
@@ -787,29 +780,44 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
     line.by = ray.target.y;
     if (ray.direction_x == 0)
     {
-        printf("<<<<<<<< x ==== 0\n");
+        // printf("<<<<<<<< x ==== 0\n");
         // cast_horizantal(var,*ray,line);
     }
     else if (ray.direction_y == 0)
     {
-        printf("<<<<<<<< y ==== 0\n");
+        // printf("<<<<<<<< y ==== 0\n");
         // cast_vertical(var,*ray,line);
     }
     else
     {
-        colision = cast_horizantal(var,ray);
-        line.bx = colision.x;
-        line.by = colision.y;
-        printf("start ****** %.2f %.2f\n\n",line.ax ,line.ay);
-        printf("Hcolision ****** %.2f %.2f\n\n",colision.x ,colision.y);
-        draw_line5(line,var,0xFF0000FF);//RED HORIZON
-        line.bx = ray.target.x;
-        line.by = ray.target.y;
-        colision = cast_vertical(var,ray);
-        line.bx = colision.x;
-        line.by = colision.y;
-        printf("Vcolision ****** %.2f %.2f\n\n",colision.x ,colision.y);
-        draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL
+        colision_h = cast_horizantal(var,ray);
+        colision_v = cast_vertical(var,ray);
+        if (distance(ray.start, colision_h) > distance(ray.start, colision_v))
+        {
+            line.bx = colision_h.x;
+            line.by = colision_h.y;
+            draw_line5(line,var,0xFF0000FF);//RED HORIZON
+            line.bx = colision_v.x;
+            line.by = colision_v.y;
+            draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL
+        }
+        else if (distance(ray.start, colision_h) < distance(ray.start, colision_v))
+        {
+            line.bx = colision_v.x;
+            line.by = colision_v.y;
+            draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL 
+            line.bx = colision_h.x;
+            line.by = colision_h.y;
+            draw_line5(line,var,0xFF0000FF);//RED HORIZON
+        }
+        else
+        {
+            line.bx = colision_v.x;
+            line.by = colision_v.y;
+            printf("V(%f %f)\n",colision_v.x,colision_v.y);
+            printf("H(%f %f)\n",colision_h.x,colision_h.y);
+            draw_line5(line,var,0x808080FF);//BLUE VERTICAL  
+        }
     }
     // draw_line4(line,var,color);
 }
@@ -838,23 +846,31 @@ void cast(t_var *var)
 
     ray.start = p;
     ray.target = v;
-    printf("------ cast --------\n");
-    printf("player angle === %d\n",angle);
+    // printf("------ cast --------\n");
+    // printf("player angle === %d\n",angle);
     r = rotate_by(ray.start, v, -from_deg_to_rad(view / 2));
     ray.angle = angle + (view / 2);
     ray.angle = mod(ray.angle , 360);
     
-    // printf("ray angle === %.2f\n",ray.angle);
-    // printf("%.2f == step\n",step);
+  
     i = 1;
-    // while (i * step  < view)//comment this will  to check progress
+    // while (i   < 50)//comment this will  to check progress
+    printf("step === %f ::: ray angle === %.2f\n",step,ray.angle);
+    while (i * step  < view)//comment this will  to check progress
     {
         r = rotate_by(p, r, from_deg_to_rad(step));
         ray.target = r;
         ray.angle -= (i * step);
+        ray.angle = mod((ray.angle) , 360);
+        ray.angle+=360;
+        ray.angle = mod((ray.angle) , 360);
+        printf("%f ::: ray angle === %.2f\n",i,ray.angle);
+        // printf("%.2f == step\n",step);
         // one_ray(var,&ray,0XAA0000A0); // comment this
         one_ray_wall(var,ray,0XAA0000A0); // In  Progresss
-        i++;
+        i+=1;
+        // if (i == 3)
+            break;
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
