@@ -12,7 +12,7 @@
 #include <stdint.h>
 
 //alias cv="make && ./cube file.cube"
-#define WIDTH 1200
+#define WIDTH 1800
 #define HEIGHT 600
 #define SQUARE_SIZE 32
 #define PI 3.14159265358979323846

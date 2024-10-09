@@ -54,15 +54,11 @@ void    draw_vector(t_var *var)
     {
         var->player.vect[0] = var->player.position[0] - 50;
         var->player.vect[1] = var->player.position[1];
-        // if (var->player.vect[1] < 0)
-        //     var->player.vect[1] = 0;
     }
     else if (var->player.direction == 'E')
     {
         var->player.vect[0] = var->player.position[0] + 50;
         var->player.vect[1] = var->player.position[1];
-        // if (var->player.vect[0] < 0)
-        //     var->player.vect[0] = 0;
     }
     vector.ax = var->player.position[0];
     vector.ay = var->player.position[1];

@@ -108,32 +108,11 @@ double  from_deg_to_rad(double val)
 {
     return ((val * PI) / 180);
 }
-
-int check_if_wall(double x, double y, t_var *var)
-{
-    int x_positon;
-    int y_position;
-
-    x_positon = px_to_map_grid((t_uint)x);
-    y_position = px_to_map_grid((t_uint)y);
-    if (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height)
-        return (var->map[y_position][x_positon] == '1'
-            || var->map[y_position][x_positon] == '\0'
-            || ft_isspace(var->map[y_position][x_positon]));
-    return 1;
-}
-
-double line_fun(double x,double a,double b)
-{
-    return (a * x) + b;
-}
-
 void    draw_line(t_line line, t_var *var, t_uint color)
 {
     double distance;
     double x;
     double y;
-
 
     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
     x = line.ax;
@@ -141,10 +120,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     if (x <= line.bx && y <= line.by)
     {
         while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        // while (x <= line.bx && y <= line.by)
         {
-            // if (check_if_wall(x, y, var))
-                // break;
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
@@ -153,10 +129,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     else if (x >= line.bx && y <= line.by)
     {
          while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        // while (x >= line.bx && y <= line.by)
         {
-            // if (check_if_wall(x, y, var))
-                // break;
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
@@ -165,10 +138,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     else if (x >= line.bx && y >= line.by)
     {
          while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        // while (x >= line.bx && y >= line.by)
         {
-            // if (check_if_wall(x, y, var))
-                // break;
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
@@ -177,16 +147,12 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     else if (x <= line.bx && y >= line.by)
     {
          while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        // while (x <= line.bx && y >= line.by)
         {
-            // if (check_if_wall(x, y, var))
-                // break;
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
         }
     }
-
 }
 
 void    color_player(t_var *var, int color)
