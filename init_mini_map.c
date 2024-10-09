@@ -6,10 +6,10 @@ void    color_wall(t_uint *tracker, t_var *var)
     t_uint j;
 
     i = tracker[1];
-    while (i < tracker[1] + 32 && i < var->mini_height)
+    while (i < tracker[1] + SQUARE_SIZE && i < var->mini_height)
     {
         j = tracker[0];
-        while (j < tracker[0] + 32 && j < var->mini_width)
+        while (j < tracker[0] + SQUARE_SIZE && j < var->mini_width)
         {
             mlx_put_pixel(var->mini_map, j, i, 0xFFFFFFFF);
             j++;
@@ -24,10 +24,10 @@ void    color_floor(t_uint *tracker, t_var *var)
     t_uint j;
 
     i = tracker[1];
-    while (i < tracker[1] + 32 && i < var->mini_height)
+    while (i < tracker[1] + SQUARE_SIZE && i < var->mini_height)
     {
         j = tracker[0];
-        while (j < tracker[0] + 32 && j < var->mini_width)
+        while (j < tracker[0] + SQUARE_SIZE && j < var->mini_width)
         {
             mlx_put_pixel(var->mini_map, j, i, 0x000000FF);
             j++;
@@ -92,8 +92,8 @@ unsigned int   calculate_mini_map_width(t_var *var)
 
 void    create_mini_map_image(t_var *var)
 {
-    var->mini_width = calculate_mini_map_width(var) * 32;
-    var->mini_height = (t_uint)(strlen_double((void **)var->map)) * 32;
+    var->mini_width = calculate_mini_map_width(var) * SQUARE_SIZE;
+    var->mini_height = (t_uint)(strlen_double((void **)var->map)) * SQUARE_SIZE;
     var->mini_map = mlx_new_image(var->mlx, var->mini_width, var->mini_height);
     if (!var->mini_map)
         ft_error();
@@ -120,9 +120,9 @@ void    init_mini_map(t_var *var)
                 color_floor(tracker, var);
             else if (var->map[i][j] == 'N')
                 color_floor(tracker, var);
-            tracker[0] += 32;
+            tracker[0] += SQUARE_SIZE;
         }
-        tracker[1] += 32;
+        tracker[1] += SQUARE_SIZE;
     }
     color_player(var, 0xFF0000FF);
     if (mlx_image_to_window(var->mlx, var->mini_map, 0, 0))

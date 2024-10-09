@@ -8,7 +8,7 @@ void    calcul_right_movement(t_var *var)
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -33,7 +33,7 @@ void    calcul_left_movement(t_var *var)
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
     if (new_position[1] <= 0 || new_position[0] <= 0)
         return ;
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -60,7 +60,7 @@ void    calcul_up_movement(t_var *var)
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
     if (new_position[1] <= 0)
         return ;
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -87,7 +87,7 @@ void    calcul_down_movement(t_var *var)
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
     if (new_position[0] <= 0)
         return ;
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];

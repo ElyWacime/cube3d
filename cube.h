@@ -14,9 +14,8 @@
 //alias cv="make && ./cube file.cube"
 #define WIDTH 1200
 #define HEIGHT 600
-
+#define SQUARE_SIZE 32
 #define PI 3.14159265358979323846
-
 #define SPEED 5.0
 
 typedef unsigned int t_uint;
@@ -37,6 +36,7 @@ typedef struct s_ray
 {
     t_point start;
     t_point target;
+    t_point direction;
     double angle;
     double direction_x;
     double direction_y;
