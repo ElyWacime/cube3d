@@ -11,7 +11,7 @@
 #include <math.h>
 #include <stdint.h>
 
-//alias cb="make && ./cube file.cube"
+//alias cv="make && ./cube file.cube"
 #define WIDTH 1200
 #define HEIGHT 600
 

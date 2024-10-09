@@ -368,7 +368,59 @@ int check_if_wall_h(t_point start, double direction_y, t_var *var)
     //     return (var->map[y][x] == '1');
     // return 1;
 }
+double str_double_len(char **str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+        i++;
+    return i;
+}
+
 int check_if_wall_v(t_point start, double direction_x, t_var *var)
+{
+    int row;
+    int col;
+    int res;
+
+    res = 0;
+    // int y = ((start.x / 32) - (direction_y == -1)) * 32;
+    // int x = (start.x / 32) * 32;
+    // x_positon = px_to_map_grid((t_uint)start.x) - (direction_x == -1);
+
+    row = px_to_map_grid((t_uint)start.y);
+    col = px_to_map_grid((t_uint)start.x) - (direction_x == -1);
+    printf("------V---------colison (%.2f %.2f)   \n", start.x ,start.y);
+    // printf("g[%d][%d]",row,col);
+    // printf("len ==== [%f]\n",str_double_len(var->map));
+    
+    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (double)ft_strlen(var->map[row]))
+    {   
+        // printf(">>>>>>>>>>>> size ===  %.0f %.0f\n",str_double_len(var->map),(double)ft_strlen(var->map[row]));
+        if (row * 32 == start.y)
+        {
+           return (var->map[row][col] == '1'
+            || var->map[row][col] == '\0'
+            || ft_isspace(var->map[row][col])
+            || var->map[row - 1][col] == '1'
+            || var->map[row - 1][col] == '\0'
+            || ft_isspace(var->map[row - 1][col])
+            ); 
+        }
+        return (var->map[row][col] == '1'
+            || var->map[row][col] == '\0'
+            || ft_isspace(var->map[row][col])
+            );
+    }
+    return 1;
+
+    // if (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height)
+    //     return (var->map[y][x] == '1');
+    // return 1;
+}
+
+int check_if_wall_v0(t_point start, double direction_x, t_var *var)///
 {
     int x_positon;
     int y_position;
@@ -386,6 +438,7 @@ int check_if_wall_v(t_point start, double direction_x, t_var *var)
     //     return (var->map[y][x] == '1');
     // return 1;
 }
+
 t_point cast_horizantal(t_var *var,t_ray ray)
 {
     t_point horizon;
@@ -470,7 +523,6 @@ t_point cast_horizantal(t_var *var,t_ray ray)
     return colison;
 }
 
-
 t_point cast_vertical(t_var *var,t_ray ray)
 {
     t_point horizon;
@@ -485,8 +537,8 @@ t_point cast_vertical(t_var *var,t_ray ray)
     colison.y = ray.start.y;
     // printf("-------- cast_vertical ------- \n");
     // if (check_if_wall(colison.x, colison.y, var))
-    if (check_if_wall_v(ray.start, ray.direction_x, var))
-        return colison;
+    // if (check_if_wall_v(ray.start, ray.direction_x, var))
+    //     return colison;
     // printf("player.angle(%d)\n",var->player.angle);
     // printf("ray.angle(%.2f)\n",ray.angle);
     ray.angle = mod(ray.angle,360);
@@ -505,19 +557,23 @@ t_point cast_vertical(t_var *var,t_ray ray)
         horizon.x = next_px_in_grid(ray.start.x,ray.direction_x);
         horizon.y = ray.start.y;
         colison.y = ray.start.y - (fabs(horizon.x-ray.start.x) * tn);
-        skip_y = -32 *tn;
         skip_x = 32 * ray.direction_x;
-
+        skip_y = -32 * tn;
     }
     else
     {
-        skip_y = 32 / tn;
-        skip_x = 32 * ray.direction_x;
+        // horizon.x = ray.start.x;
+        // horizon.y = next_px_in_grid(ray.start.y,ray.direction_y);
+        // colison.y = horizon.y;
+        // colison.x = ray.start.x + (ray.direction_x * fabs(horizon.y - ray.start.y) * tn);
+        
         horizon.x = ray.start.x;
-        horizon.y = next_px_in_grid(ray.start.y,ray.direction_y);
-
+        colison.x = next_px_in_grid(ray.start.x,ray.direction_x);
+        horizon.y = ray.start.y + ((ray.direction_y * fabs(colison.x - ray.start.x)) / tn);
         colison.y = horizon.y;
-        colison.x = ray.start.x + ray.direction_x*fabs(horizon.y - ray.start.y)*tn;
+        
+        skip_x = 32 * ray.direction_x;
+        skip_y = 32 / tn;
     }
     // printf("Vertical Codinates\n");
     // printf("tan === (%.2f)\n",tn);
@@ -525,6 +581,7 @@ t_point cast_vertical(t_var *var,t_ray ray)
     // printf("H (%.2f %.2f)   \n", horizon.x ,horizon.y);
     // printf("I (%.2f %.2f)   \n", colison.x ,colison.y);
     // printf("DirectionXY(%.2f ::::  %.2f)\n",ray.direction_x ,ray.direction_y);
+    printf("\n\n\n");
     prev_colison = colison;
     while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
     {   
@@ -792,6 +849,12 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
     {
         colision_h = cast_horizantal(var,ray);
         colision_v = cast_vertical(var,ray);
+        // // line.bx = colision_h.x;
+        // // line.by = colision_h.y;
+        // // draw_line5(line,var,0xFF0000FF);//RED HORIZON
+        // line.bx = colision_v.x;
+        // line.by = colision_v.y;
+        // draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL
         if (distance(ray.start, colision_h) > distance(ray.start, colision_v))
         {
             line.bx = colision_h.x;
@@ -814,10 +877,14 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
         {
             line.bx = colision_v.x;
             line.by = colision_v.y;
+            // printf()
+             printf("ray.target(%f  %f) \n",ray.target.x,ray.target.y);
+            printf("ray.angle (%f)\n",ray.angle);
             printf("V(%f %f)\n",colision_v.x,colision_v.y);
             printf("H(%f %f)\n",colision_h.x,colision_h.y);
             draw_line5(line,var,0x808080FF);//BLUE VERTICAL  
         }
+    
     }
     // draw_line4(line,var,color);
 }
@@ -855,7 +922,7 @@ void cast(t_var *var)
   
     i = 1;
     // while (i   < 50)//comment this will  to check progress
-    printf("step === %f ::: ray angle === %.2f\n",step,ray.angle);
+    // printf("step === %f ::: ray angle === %.2f\n",step,ray.angle);
     while (i * step  < view)//comment this will  to check progress
     {
         r = rotate_by(p, r, from_deg_to_rad(step));
@@ -864,7 +931,8 @@ void cast(t_var *var)
         ray.angle = mod((ray.angle) , 360);
         ray.angle+=360;
         ray.angle = mod((ray.angle) , 360);
-        printf("%f ::: ray angle === %.2f\n",i,ray.angle);
+        // printf("R(%f  %f) \n",r.x,r.y);
+        // printf("%f ::: ray angle === %.2f\n",i,ray.angle);
         // printf("%.2f == step\n",step);
         // one_ray(var,&ray,0XAA0000A0); // comment this
         one_ray_wall(var,ray,0XAA0000A0); // In  Progresss
