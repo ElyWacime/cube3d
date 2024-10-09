@@ -251,20 +251,18 @@ void range_2(t_var *var)
     t_point p;
     t_point r;
     t_line line;
-    double view;
-    
-    view = 60;
+
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
     p.x = var->player.position[0];
     p.y = var->player.position[1];
-    r = rotate_by(p,v,from_deg_to_rad(view/2));//RED + RIGHT
+    r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
     line.ax = p.x;
     line.ay = p.y;
     line.bx = r.x;
     line.by = r.y;
     draw_line5(line,var,0XA020F0A0);
-    r = rotate_by(p,v,from_deg_to_rad(-view/2));//BLUE - LEFT
+    r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
     line.bx = r.x;
     line.by = r.y;
     draw_line5(line,var,0XA020F0A0);
@@ -303,14 +301,12 @@ void set_direciton(t_ray *ray)
         ray->direction_y = 0;
         if (ray->angle == 0)
             ray->direction_x = 1;
+        else if (ray->angle == 270)
+            ray->direction_y = 1;
         else if (ray->angle == 90)
             ray->direction_y = -1;
         else if (ray->angle == 180)
             ray->direction_x = -1;
-        else if (ray->angle == 270)
-            ray->direction_y = 1;
-        else
-            printf("------else----Negative Angle  :: %f---\n",ray->angle );
     }
 }
 
@@ -329,32 +325,30 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
     ray.direction.y = ray.direction_y;
     if (ray.direction_x == 0)
     {
-        printf("Xdirection(%f\t%f) angle (%f)\n",ray.direction_x,ray.direction_y,ray.angle);
         colision_h = cast_horizantal(var,ray);
         line.bx = colision_h.x;
         line.by = colision_h.y;
-        draw_line5(line,var,0xFFFFFFFF);//RED HORIZON
+        // draw_line5(line,var,0xFFFFFFFF);//WHITE HORIZON
+        draw_line5(line,var,0xFF0000FF);//WHITE HORIZON
     }
     else if (ray.direction_y == 0)
     {
-        printf("Ydirection(%f\t%f) angle (%f)\n",ray.direction_x,ray.direction_y,ray.angle);
         colision_v = cast_vertical(var,ray);
         line.bx = colision_v.x;
         line.by = colision_v.y;
-        // draw_line5(line,var,0xFF0000FF);//RED VERTICAL
-        draw_line5(line,var,0xFFFFFFFF);//BLUE VERTICAL
+        // draw_line5(line,var,0xFFFFFFFF);//WHITE VERTICAL
+        draw_line5(line,var,0xFF0000FF);//WHITE VERTICAL
     }
     else
     {
-        printf("direction(%f\t%f) angle (%f)\n",ray.direction_x,ray.direction_y,ray.angle);
         colision_h = cast_horizantal(var,ray);
         colision_v = cast_vertical(var,ray);
         if (distance_square(ray.start, colision_v) < distance_square(ray.start, colision_h))
         {
             line.bx = colision_v.x;
             line.by = colision_v.y;
-            // draw_line5(line,var,0xFF0000FF);//RED VERTICAL
-            draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL
+            // draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL
+            draw_line5(line,var,0xFF0000FF);//BLUE VERTICAL
         }
         else if (distance_square(ray.start, colision_h) < distance_square(ray.start, colision_v))
         {
@@ -366,7 +360,7 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
         {
             line.bx = colision_v.x;
             line.by = colision_v.y;
-            draw_line5(line,var,0x808080FF);//BLUE VERTICAL  
+            draw_line5(line,var,0x808080FF);//GRAY VERTICAL  
         }
     }
 }
@@ -378,14 +372,11 @@ void cast(t_var *var)
     t_point p;
     t_point v;
     int angle;
-    double view;
     double step;
     double i;
     
     i = 0;
-    view = 54;
-    // step = view / ((double)var->mini_width);
-    step = view / ((double)WIDTH);
+    step = VIEW / ((double)WIDTH);
     angle = (var->player.angle) % 360;
     p.x = var->player.position[0];
     p.y = var->player.position[1];
@@ -393,25 +384,20 @@ void cast(t_var *var)
     v.y = var->player.vect[1];
     ray.start = p;
     ray.target = v;
-    r = rotate_by(ray.start, v, -from_deg_to_rad(view / 2));
-    ray.angle = angle + (view / 2);
+    r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
+    ray.angle = angle + (VIEW / 2);
     ray.angle = mod(ray.angle , 360);
     i = 1;
-    printf("player angle (%f)  step (%f)\n",(double)var->player.angle,step);
-    while (i * step  < view)//uncomment this will  to check progress
-    // while (i < 50)//comment this will  to check progress
+    while (i * step  < VIEW)
     {
         r = rotate_by(p, r, from_deg_to_rad(step));
         ray.target = r;
         ray.angle -= (step);
-        // one_ray(var,&ray,0XAA0000A0); // comment this
-        one_ray_wall(var,ray,0XAA0000A0); // In  Progresss
+        one_ray_wall(var,ray,0XAA0000A0);
         i+=1;
-        // if (i == 3)
-        //     break;
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    range_2(var);
+    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
+    // range_2(var);
 }

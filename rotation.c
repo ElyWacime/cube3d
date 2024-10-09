@@ -41,7 +41,7 @@ void    rotate_player_right(t_var *var)
     vector.by = var->player.vect[1];
     init_mini_map(var);
     var->player.rot_direction = 1;
-    draw_line(vector, var, 0x00FF00FF);
+    // draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
 
@@ -58,6 +58,6 @@ void    rotate_player_left(t_var *var)
     vector.by = var->player.vect[1];
     var->player.rot_direction = -1;
     init_mini_map(var);
-    draw_line(vector, var, 0x00FF00FF);
+    // draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }

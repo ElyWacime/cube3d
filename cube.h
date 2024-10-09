@@ -14,6 +14,7 @@
 //alias cv="make && ./cube file.cube"
 #define WIDTH 1800
 #define HEIGHT 600
+#define VIEW 54
 #define SQUARE_SIZE 32
 #define PI 3.14159265358979323846
 #define SPEED 5.0

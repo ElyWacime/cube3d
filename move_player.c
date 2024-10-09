@@ -117,7 +117,7 @@ void    move_player_down(t_var *var)
     init_mini_map(var);
     var->player.mvt_x = 0;
     var->player.mvt_y = 1;
-    draw_line(vector, var, 0x00FF00FF);
+    // draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
 
@@ -134,7 +134,7 @@ void    move_player_up(t_var *var)
     init_mini_map(var);
     var->player.mvt_x = 0;
     var->player.mvt_y = -1;
-    draw_line(vector, var, 0x00FF00FF);
+    // draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
 
@@ -151,7 +151,7 @@ void    move_player_right(t_var *var)
     init_mini_map(var);
     var->player.mvt_x = 1;
     var->player.mvt_y = 0;
-    draw_line(vector, var, 0x00FF00FF);
+    // draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
 
@@ -168,6 +168,6 @@ void    move_player_left(t_var *var)
     init_mini_map(var);
     var->player.mvt_x = -1;
     var->player.mvt_y = 0;
-    draw_line(vector, var, 0x00FF00FF);
+    // draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }

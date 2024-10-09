@@ -242,7 +242,6 @@ void    _init_window(t_var *var)
                 // mlx_put_pixel(var->img, i, j, var->color_F);
                 continue ;
             }
-             
             mlx_put_pixel(var->img, i, j, 0x0000FF00);
             // mlx_put_pixel(var->img, i, j, var->color_C);
         }
