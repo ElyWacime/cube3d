@@ -114,7 +114,7 @@ void    init_mini_map(t_var *var)
                 color_wall(tracker, var);
             else if (var->map[i][j] == '0')
                 color_floor(tracker, var);
-            else if (var->map[i][j] == 'N')
+            else if (var->map[i][j] == 'N' || var->map[i][j] == 'S' || var->map[i][j] == 'E' || var->map[i][j] == 'W')
                 color_floor(tracker, var);
             tracker[0] += SQUARE_SIZE;
         }

@@ -53,7 +53,7 @@ double mod(double a, int b)
     return (a - (1.0 * x)) + (double)(x % b);
 }
 
-double distance_square(t_point a, t_point b)
+double distance_squared(t_point a, t_point b)
 {
     return (((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y)));
 }
@@ -142,8 +142,11 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
     }
     return 1;
 }
+
 double tan_0_90(double theta)
 {
+    theta = mod(theta,360);
+    theta += 360;
     theta = mod(theta,360);
     if (90 < theta && theta < 180)
         theta = 180 - theta;
@@ -328,29 +331,26 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
         colision_h = cast_horizantal(var,ray);
         line.bx = colision_h.x;
         line.by = colision_h.y;
-        // draw_line5(line,var,0xFFFFFFFF);//WHITE HORIZON
-        draw_line5(line,var,0xFF0000FF);//WHITE HORIZON
+        draw_line5(line,var,0xFF0000FF);//WHITE HORIZON     0xFFFFFFFF
     }
     else if (ray.direction_y == 0)
     {
         colision_v = cast_vertical(var,ray);
         line.bx = colision_v.x;
         line.by = colision_v.y;
-        // draw_line5(line,var,0xFFFFFFFF);//WHITE VERTICAL
-        draw_line5(line,var,0xFF0000FF);//WHITE VERTICAL
+        draw_line5(line,var,0xFF0000FF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
         colision_h = cast_horizantal(var,ray);
         colision_v = cast_vertical(var,ray);
-        if (distance_square(ray.start, colision_v) < distance_square(ray.start, colision_h))
+        if (distance_squared(ray.start, colision_v) < distance_squared(ray.start, colision_h))
         {
             line.bx = colision_v.x;
             line.by = colision_v.y;
-            // draw_line5(line,var,0x0000FFFF);//BLUE VERTICAL
-            draw_line5(line,var,0xFF0000FF);//BLUE VERTICAL
+            draw_line5(line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
         }
-        else if (distance_square(ray.start, colision_h) < distance_square(ray.start, colision_v))
+        else if (distance_squared(ray.start, colision_h) < distance_squared(ray.start, colision_v))
         {
             line.bx = colision_h.x;
             line.by = colision_h.y;
@@ -360,7 +360,7 @@ void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
         {
             line.bx = colision_v.x;
             line.by = colision_v.y;
-            draw_line5(line,var,0x808080FF);//GRAY VERTICAL  
+            draw_line5(line,var,0xFF0000FF);//GRAY VERTICAL   0x808080FF
         }
     }
 }
@@ -398,6 +398,6 @@ void cast(t_var *var)
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    // range_2(var);
+    one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
+    range_2(var);
 }
