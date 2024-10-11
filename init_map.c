@@ -9,11 +9,11 @@ void    check_textures(char *NO, char *SO, char *WE, char *EA)
     {
         write(2, "Error\nInvalid path!", 18);
         exit(72);
+        free(NO);
+        free(SO);
+        free(WE);
+        free(EA);
     }
-    free(NO);
-    free(SO);
-    free(WE);
-    free(EA);
 }
 
 void   check_path(char *NO, char *SO, char *WE, char *EA)
@@ -30,12 +30,12 @@ void   check_path(char *NO, char *SO, char *WE, char *EA)
     if (fd1 < 0 || fd2 < 0 || fd3 < 0 || fd4 < 0)
     {
         write(2, "Error\nInvalid path!\n", 20);
-        // exit(73);
+        close(fd1);
+        close(fd2);
+        close(fd3);
+        close(fd4);
+        exit(73);
     }
-    close(fd1);
-    close(fd2);
-    close(fd3);
-    close(fd4);
 }
 
 void    parse_textures(t_var *var)
@@ -56,6 +56,7 @@ void    parse_textures(t_var *var)
     SO = var->textures[1] + 3;
     WE = var->textures[2] + 3;
     EA = var->textures[3] + 3;
+    printf("%s\t%s\t%s\t%s\t\n", NO, SO, WE, EA);
     check_path(NO, SO, WE, EA);
 }
 
@@ -121,7 +122,7 @@ uint32_t  transform_color_to_hexa(int *color)
     return _color;
 }
 
-void    extraxt_C(t_var *var)
+void    extract_F(t_var *var)
 {
     char **color;
     int _colors[3];
@@ -141,11 +142,13 @@ void    extraxt_C(t_var *var)
     var->color_C = transform_color_to_hexa(_colors);
 }
 
-void    extract_F(t_var *var)
+void    extract_C(t_var *var)
 {
     char **color;
     int _colors[3];
 
+    printf(">>>> %c\n", var->colors[1][0]);
+    printf(">>>> %d\t%d\n", var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]));
     if (var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]))
         color = ft_split(var->colors[1] + 2, ',');
     else
@@ -163,7 +166,7 @@ void    extract_F(t_var *var)
 
 void    parse_colors(t_var *var)
 {
-    extraxt_C(var);
+    extract_C(var);
     extract_F(var);
 }
 

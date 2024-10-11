@@ -4,3 +4,5 @@ cube.dSYM
 cube
 gnl/*.o
 libft/*.o
+mlx
+MLX42

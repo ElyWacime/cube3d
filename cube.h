@@ -3,19 +3,21 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include "gnl/gnl.h"
-#include "libft/libft.h"
-#include "./mlx/include/MLX42/MLX42.h"
+#include "./libft/libft.h"
+// #include "./mlx/include/MLX42/MLX42.h"
 #include <math.h>
 #include <stdint.h>
+#include "./MLX42/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube"
 #define WIDTH 1800
 #define HEIGHT 600
 #define VIEW 54
-#define SQUARE_SIZE 32
+#define SQUARE_SIZE 8
 #define PI 3.14159265358979323846
 #define SPEED 5.0
 
@@ -142,5 +144,6 @@ int     is_still_there_zeros(char **, int *);
 /*
 ** rays.c
 */
-void cast(t_var *var);
+void cast(t_var *);
+
 #endif

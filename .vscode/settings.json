@@ -5,7 +5,9 @@
         "__node_handle": "c",
         "mlx42_int.h": "c",
         "complex": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "mlx42.h": "c",
+        "gnl.h": "c"
     },
     "cmake.sourceDirectory": "/Users/welyousf/cursus/cube/mlx"
 }

@@ -86,7 +86,7 @@ char    **strdup_double(char **str)
 
 int ft_isspace(char c)
 {
-    return (c == SQUARE_SIZE || (c >= 9 && c <= 13));
+    return (c == 32 || (c >= 9 && c <= 13));
 }
 
 t_uint px_to_map_grid(t_uint x)
