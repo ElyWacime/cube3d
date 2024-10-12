@@ -4,7 +4,6 @@ void    listen_to_key(struct mlx_key_data keydata, void *ptr)
 {
     t_var *var;
     
-
     var = (t_var *)ptr;
     if (keydata.key == MLX_KEY_LEFT
         && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))

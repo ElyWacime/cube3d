@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include "gnl/gnl.h"
 #include "./libft/libft.h"
-// #include "./mlx/include/MLX42/MLX42.h"
 #include <math.h>
 #include <stdint.h>
 #include "./MLX42/include/MLX42/MLX42.h"
@@ -18,6 +17,7 @@
 #define HEIGHT 600
 #define VIEW 54
 #define SQUARE_SIZE 8
+#define CUBE_SIZE 8 * SQUARE_SIZE
 #define PI 3.14159265358979323846
 #define SPEED 5.0
 
@@ -68,13 +68,18 @@ typedef struct s_var
 {
     t_player    player;
     mlx_t       *mlx;
+    mlx_t       *mlx_3d;
     mlx_image_t *img;
+    mlx_image_t *img_3d;
     mlx_image_t *mini_map;
     char        **map;
     char        **textures;
     char        **colors;
     int         largest_line_in_map;
     int         map_len;
+    int         x_3d;
+    int         y_3d;
+
     t_uint      mini_width;
     t_uint      mini_height;
     uint32_t    color_C;
@@ -145,5 +150,5 @@ int     is_still_there_zeros(char **, int *);
 ** rays.c
 */
 void cast(t_var *);
-
+void    _init_window_3d(t_var *var);
 #endif
