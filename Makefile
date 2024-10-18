@@ -18,7 +18,7 @@ ${LIBFT}:
 	make -C ./libft
 
 %.o : %.c cube.h
-	cc ${CFLAGS} -Imlx -c $< -o $@
+	cc ${FLAGS} -Imlx -c $< -o $@
 
 clean:
 	rm -rf ${OBJ}

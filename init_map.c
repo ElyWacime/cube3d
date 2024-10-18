@@ -147,7 +147,7 @@ void    extract_C(t_var *var)
     char **color;
     int _colors[3];
 
-    printf(">>>> %c\n", var->colors[1][0]);
+    // printf(">>>> %c\n", var->colors[1][0]);
     // printf(">>>> %d\t%d\n", var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]));
     if (var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]))
         color = ft_split(var->colors[1] + 2, ',');

@@ -13,13 +13,16 @@
 #include "./MLX42/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube"
-#define WIDTH 1800
-#define HEIGHT 600
+#define SQUARE_SIZE 32
+#define WIDTH 1200
+#define HEIGHT 1200
+#define PROJECTION_WIDTH 1280
+#define PROJECTION_HEIGHT  320
 #define VIEW 54
-#define SQUARE_SIZE 8
-#define CUBE_SIZE 8 * SQUARE_SIZE
+#define CUBE_SIZE 64
 #define PI 3.14159265358979323846
 #define SPEED 5.0
+// #define SPEED 1.0
 
 typedef unsigned int t_uint;
 
@@ -40,7 +43,7 @@ typedef struct s_ray
     t_point start;
     t_point target;
     t_point direction;
-    double angle;
+    float angle;
     double direction_x;
     double direction_y;
 }   t_ray;
@@ -61,9 +64,17 @@ typedef struct s_player
     double  mvt_y;
     double  rot_direction;
     char    direction;
-    t_uint  angle;
+    float  angle;
 }   t_player;
-
+typedef struct s_cords
+{
+    t_line line;
+    t_point colision_h;
+    t_point colision_v;
+    double distance_h;
+    double distance_v;
+    double h;
+}   t_cords;
 typedef struct s_var
 {
     t_player    player;
@@ -149,6 +160,8 @@ int     is_still_there_zeros(char **, int *);
 /*
 ** rays.c
 */
+float mod(float a, int b);
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
+t_point rotate_by(t_point center, t_point m, double angle);
 #endif

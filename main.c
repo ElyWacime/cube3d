@@ -75,6 +75,8 @@ int main(int ac, char *av[])
 {
     t_var var;
 
+    // printf("floor(10) == %f\n",floor(10.00000));
+
     parsing(ac, av, &var);
     _init_window(&var);
     init_mini_map(&var);
