@@ -14,12 +14,12 @@
 
 //alias cv="make && ./cube file.cube"
 #define SQUARE_SIZE 32
-#define WIDTH 1200
-#define HEIGHT 1200
+#define WIDTH 1312
+#define HEIGHT 1312
 #define PROJECTION_WIDTH 1280
-#define PROJECTION_HEIGHT  320
+#define PROJECTION_HEIGHT  1280
 #define VIEW 54
-#define CUBE_SIZE 64
+#define CUBE_SIZE 128
 #define PI 3.14159265358979323846
 #define SPEED 5.0
 // #define SPEED 1.0
@@ -43,6 +43,7 @@ typedef struct s_ray
     t_point start;
     t_point target;
     t_point direction;
+    int is_vertical;
     float angle;
     double direction_x;
     double direction_y;
