@@ -175,10 +175,10 @@ double cos_0_90(double theta, int vertical)
     theta = mod(theta,360);
     theta += 360;
     theta = mod(theta,360);
-    printf("vertical(%d) angle : %f\n",vertical,theta);
-
     if (vertical)
     {
+        printf("vertical(%d) angle : %f\n",vertical,theta);
+
         if (0 < theta && theta < 90)
             return (cos(from_deg_to_rad(theta)));
         else if (90 < theta && theta < 180)
@@ -190,6 +190,7 @@ double cos_0_90(double theta, int vertical)
     }
     else
     {
+        printf("vertical(%d) angle : %f\n",vertical,theta);
         if (0 < theta && theta < 90)
             return (cos(from_deg_to_rad(90 - theta)));
         else if (90 < theta && theta < 180)
@@ -434,14 +435,14 @@ void one_ray_wall(t_var *var, t_ray *ray)
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
     if (cor.h == 0)
-        cor.h++;
+        cor.h+=0.1;
     tmp = cor.h;
     printf("ah ====== %f \n",tmp);
     tmp *= cos_0_90(ray->angle, ray->is_vertical);
     tmp = (double)1.0 / (double)tmp;
     printf("bh ====== %f \n",tmp);
-    // tmp *= 1.0 * CUBE_SIZE ;
-    var->y_3d = (PROJECTION_HEIGHT + cor.h) / 2;
+    tmp *= 1.0 * CUBE_SIZE ;
+    var->y_3d = (PROJECTION_HEIGHT + tmp) / 2;
     if(var->img_3d)
     {
         idx = 0;
