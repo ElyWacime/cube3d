@@ -434,14 +434,21 @@ void one_ray_wall(t_var *var, t_ray *ray)
     ray->direction.y = ray->direction_y;
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
-    if (cor.h == 0)
-        cor.h+=0.1;
     tmp = cor.h;
-    printf("ah ====== %f \n",tmp);
-    tmp *= cos_0_90(ray->angle, ray->is_vertical);
-    tmp = (double)1.0 / (double)tmp;
-    printf("bh ====== %f \n",tmp);
-    tmp *= 1.0 * CUBE_SIZE ;
+    // tmp *= cos_0_90(ray->angle, ray->is_vertical);//cos(thetha_ray - thata_player)
+    tmp =  (CUBE_SIZE * PROJECTION_HEIGHT) / (tmp * 2 * tan(from_deg_to_rad(VIEW/2)));
+
+    // tmp = (2 * tan(from_deg_to_rad(VIEW/2)) * PROJECTION_WIDTH) / (2 *tan(from_deg_to_rad(VIEW/2)));
+    // if (cor.h == 0)
+    //     cor.h+=0.1;
+    // tmp = cor.h;
+    // printf("ah ====== %f \n",tmp);
+    // tmp *= cos_0_90(ray->angle, ray->is_vertical);
+    // tmp = (double)1.0 / (double)tmp;
+    // printf("bh ====== %f \n",tmp);
+    // tmp *= 1.0 * CUBE_SIZE ;
+
+
     var->y_3d = (PROJECTION_HEIGHT + tmp) / 2;
     if(var->img_3d)
     {
