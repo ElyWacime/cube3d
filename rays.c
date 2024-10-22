@@ -177,7 +177,7 @@ double cos_0_90(double theta, int vertical)
     theta = mod(theta,360);
     if (vertical)
     {
-        printf("vertical(%d) angle : %f\n",vertical,theta);
+        // printf("vertical(%d) angle : %f\n",vertical,theta);
 
         if (0 < theta && theta < 90)
             return (cos(from_deg_to_rad(theta)));
@@ -190,7 +190,7 @@ double cos_0_90(double theta, int vertical)
     }
     else
     {
-        printf("vertical(%d) angle : %f\n",vertical,theta);
+        // printf("vertical(%d) angle : %f\n",vertical,theta);
         if (0 < theta && theta < 90)
             return (cos(from_deg_to_rad(90 - theta)));
         else if (90 < theta && theta < 180)
@@ -214,7 +214,7 @@ t_point rotate_by(t_point center, t_point m, double angle)
 
 t_point cast_vertical(t_var *var,t_ray *ray)
 {
-    t_point horizon;
+    // t_point horizon;
     t_point colison;
     double skip_x;
     double skip_y;
@@ -227,8 +227,8 @@ t_point cast_vertical(t_var *var,t_ray *ray)
     {
         colison.x = next_px_in_grid(ray->start.x,ray->direction_x);
         colison.y = ray->start.y - (fabs(colison.x-ray->start.x) * tn);
-        horizon.x = next_px_in_grid(ray->start.x,ray->direction_x);
-        horizon.y = ray->start.y;
+        // horizon.x = next_px_in_grid(ray->start.x,ray->direction_x);
+        // horizon.y = ray->start.y;
         skip_x = SQUARE_SIZE *  ray->direction_x;
         skip_y = - SQUARE_SIZE * tn;
     }
@@ -236,9 +236,8 @@ t_point cast_vertical(t_var *var,t_ray *ray)
     {
         colison.x = next_px_in_grid(ray->start.x,ray->direction_x);
         colison.y = ray->start.y + ((ray->direction_y * fabs(colison.x - ray->start.x)) / tn);
-        
-        horizon.x = ray->start.x;
-        horizon.y = colison.y;
+        // horizon.x = ray->start.x;
+        // horizon.y = colison.y;
         skip_x = SQUARE_SIZE *  ray->direction_x;
         skip_y = SQUARE_SIZE / tn;
     }
@@ -249,7 +248,6 @@ t_point cast_vertical(t_var *var,t_ray *ray)
         colison.x += skip_x;
         colison.y += skip_y;
     }
-    (void)horizon;
     return colison;
 }
 //rotate a point m f rom center by an angle in radian
@@ -404,13 +402,8 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             cor->line.bx = cor->colision_h.x;
             cor->line.by = cor->colision_h.y;
             ray->is_vertical = 0;
-            // printf(" ----H ====== %f player.angle === %f\n",cor->h,var->player.angle);
-            // printf(" A >>> ray.angle == %f\n",ray.angle);
             ray->angle = mod_360(ray->angle);
-            // printf(" B >>> ray.angle == %f\n",ray.angle);
             draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
-            // sleep(2);
-            // exit(0);
         }
         else
         {
@@ -425,7 +418,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
 {
     t_cords cor;
     int idx = 0;
+    int idy = 0;
     double tmp;
+    double dp;
+    int j = 0;
+    double x;
+    int a;
+
     set_direciton(ray);
     cor.line.ax = ray->start.x;
     cor.line.ay = ray->start.y;
@@ -433,34 +432,40 @@ void one_ray_wall(t_var *var, t_ray *ray)
     cor.line.by = ray->target.y;
     ray->direction.x = ray->direction_x;
     ray->direction.y = ray->direction_y;
+    dp = HEIGHT / (2 * tan_0_90((VIEW/2)));
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
     tmp = cor.h;
-    // tmp *= cos_0_90(ray->angle, ray->is_vertical);//cos(thetha_ray - thata_player)
-    tmp =  (CUBE_SIZE * PROJECTION_HEIGHT) / (tmp * 2 * tan(from_deg_to_rad(VIEW/2)));
+    // printf("dp :: %f \n",dp);
+    // printf("h :: %f \n",tmp);
+    tmp *= cos_0_90(ray->angle, ray->is_vertical);//cos(thetha_ray - thata_player)
+    // printf("h * cos() :: %f \n",tmp);
+    x = (CUBE_SIZE) / tmp;
+    // printf("x == :: %f \n",x * dp);
+    tmp =  (CUBE_SIZE) / (tmp * 2 * tan(from_deg_to_rad(VIEW/2)));
+    tmp = x * dp;
+    // printf("HEIGHT :: %d tmp :: %f  y3d ::: %d\n\n\n",HEIGHT,tmp, var->y_3d );
+    a = (HEIGHT - tmp) / 2;
+    // printf("A(%f , %f)  B(%f , %f)\n",cor.line.ax,cor.line.ay,cor.line.bx,cor.line.by);
 
-    // tmp = (2 * tan(from_deg_to_rad(VIEW/2)) * PROJECTION_WIDTH) / (2 *tan(from_deg_to_rad(VIEW/2)));
-    // if (cor.h == 0)
-    //     cor.h+=0.1;
-    // tmp = cor.h;
-    // printf("ah ====== %f \n",tmp);
-    // tmp *= cos_0_90(ray->angle, ray->is_vertical);
-    // tmp = (double)1.0 / (double)tmp;
-    // printf("bh ====== %f \n",tmp);
-    // tmp *= 1.0 * CUBE_SIZE ;
-
-
-    var->y_3d = (PROJECTION_HEIGHT + tmp) / 2;
     if(var->img_3d)
     {
-        idx = 0;
-        while (idx < cor.h)
+        // printf("Y Start  %d --- to %d\n",idx,a);
+        // printf("X Start  %d --- to %d\n",idx,a);
+        idy = var->x_3d;
+        // while (j < CUBE_SIZE)
         {
-            if (var->x_3d  < WIDTH &&  0 < var->y_3d  - idx && var->y_3d  - idx < HEIGHT)
-                mlx_put_pixel(var->img_3d,var->x_3d , var->y_3d - idx, 0xFF00FFFF);
-            else 
-                break;
-            idx++;
+            idx = HEIGHT - a;
+            while (idx > a)
+            {
+                if (0 < var->x_3d && var->x_3d  < WIDTH &&  0 < idx && idx < HEIGHT)
+                    mlx_put_pixel(var->img_3d, idy, idx, 0xFF00FFFF);
+                else 
+                    break;
+                // idy++;
+                idx--;
+            }
+            j++;
         }
         var->x_3d+=1;
     }
@@ -477,7 +482,7 @@ void cast(t_var *var)
     float i;
     
     i = 0;
-    step = (1.0 * VIEW ) / PROJECTION_WIDTH;
+    step = (1.0 * VIEW ) / WIDTH;
     angle = mod(var->player.angle,360);
     p.x = var->player.position[0];
     p.y = var->player.position[1];
@@ -508,7 +513,3 @@ void cast(t_var *var)
     // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
     // range_2(var);
 }
-// player(864.000000 192.000000) angle : 90.000000
-
-//player(862.200834 194.801804) angle : 90.000000
-// player(856.442420 196.037966) angle : 90.000000

@@ -13,13 +13,11 @@
 #include "./MLX42/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube"
-#define SQUARE_SIZE 32
-#define WIDTH 1312
-#define HEIGHT 1312
-#define PROJECTION_WIDTH 1280
-#define PROJECTION_HEIGHT  1280
+#define SQUARE_SIZE 8
+#define WIDTH 640
+#define HEIGHT 640
 #define VIEW 54
-#define CUBE_SIZE 128
+#define CUBE_SIZE 8
 #define PI 3.14159265358979323846
 #define SPEED 5.0
 // #define SPEED 1.0
