@@ -11,7 +11,7 @@ void    listen_to_key(struct mlx_key_data keydata, void *ptr)
     else if (keydata.key == MLX_KEY_RIGHT
         && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
         rotate_player_right(var);
-	if (keydata.key == MLX_KEY_W
+	else if (keydata.key == MLX_KEY_W
         && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
         move_player_up(var);
 	else if (keydata.key == MLX_KEY_A

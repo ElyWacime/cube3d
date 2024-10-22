@@ -65,6 +65,7 @@ void    draw_vector(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     // draw_line(vector, var, 0x00FF00FF);
+    (void)vector;
 }
 
 unsigned int   calculate_mini_map_width(t_var *var)

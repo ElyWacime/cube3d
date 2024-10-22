@@ -249,6 +249,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
         colison.x += skip_x;
         colison.y += skip_y;
     }
+    (void)horizon;
     return colison;
 }
 //rotate a point m f rom center by an angle in radian
