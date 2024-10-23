@@ -49,16 +49,18 @@ void    draw_line5(t_line line, t_var *var, t_uint color)
 
 float mod_360(float a)
 {
-    while (a > 360)
-        a-= 360;
-    return (a);
+    // while (a > 360)
+    //     a-= 360;
+    // return (a);
+    return fmod(a,360);
 }
 
 float mod(float a, int b)
 {   
-    while (a >= b)
-        a-= b;
-    return (a);
+    // while (a >= b)
+    //     a-= b;
+    // return (a);
+    return fmod(a,b);
 }
 
 // >>>>>????h ====== 4096.000000 player.angle === 351.000000 ray.angle == 360.000000
@@ -170,38 +172,37 @@ double tan_0_90(double theta)
     return tan(from_deg_to_rad(theta));
 }
 
-double cos_0_90(double theta, int vertical)
-{
-    theta = mod(theta,360);
-    theta += 360;
-    theta = mod(theta,360);
-    if (vertical)
-    {
-        // printf("vertical(%d) angle : %f\n",vertical,theta);
-
-        if (0 < theta && theta < 90)
-            return (cos(from_deg_to_rad(theta)));
-        else if (90 < theta && theta < 180)
-            return (cos(from_deg_to_rad(180 - theta)));
-        else  if (180 < theta && theta < 270)
-            return (cos(from_deg_to_rad(theta - 180)));
-        else if (270 < theta && theta < 360)
-            return (cos(from_deg_to_rad(360 - theta)));
-    }
-    else
-    {
-        // printf("vertical(%d) angle : %f\n",vertical,theta);
-        if (0 < theta && theta < 90)
-            return (cos(from_deg_to_rad(90 - theta)));
-        else if (90 < theta && theta < 180)
-            return (cos(from_deg_to_rad(theta - 90)));
-        else  if (180 < theta && theta < 270)
-            return (cos(from_deg_to_rad(270 - theta)));
-        else if (270 < theta && theta < 360)
-            return (cos(from_deg_to_rad(theta - 270)));
-    }
-    return 1;
-}
+// double cos_0_90(double theta, int vertical)
+// {
+//     theta = mod(theta,360);
+//     theta += 360;
+//     theta = mod(theta,360);
+//     if (vertical)
+//     {
+//         // printf("vertical(%d) angle : %f\n",vertical,theta);
+//         if (0 < theta && theta < 90)
+//             return (cos(from_deg_to_rad(theta)));
+//         else if (90 < theta && theta < 180)
+//             return (cos(from_deg_to_rad(180 - theta)));
+//         else  if (180 < theta && theta < 270)
+//             return (cos(from_deg_to_rad(theta - 180)));
+//         else if (270 < theta && theta < 360)
+//             return (cos(from_deg_to_rad(360 - theta)));
+//     }
+//     else
+//     {
+//         // printf("vertical(%d) angle : %f\n",vertical,theta);
+//         if (0 < theta && theta < 90)
+//             return (cos(from_deg_to_rad(90 - theta)));
+//         else if (90 < theta && theta < 180)
+//             return (cos(from_deg_to_rad(theta - 90)));
+//         else  if (180 < theta && theta < 270)
+//             return (cos(from_deg_to_rad(270 - theta)));
+//         else if (270 < theta && theta < 360)
+//             return (cos(from_deg_to_rad(theta - 270)));
+//     }
+//     return 1;
+// }
 
 t_point rotate_by(t_point center, t_point m, double angle)
 {
@@ -241,7 +242,8 @@ t_point cast_vertical(t_var *var,t_ray *ray)
         skip_x = SQUARE_SIZE *  ray->direction_x;
         skip_y = SQUARE_SIZE / tn;
     }
-    while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
+    // while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
+    while ((0 <= colison.x && colison.x < WIDTH && 0 <= colison.y && colison.y < HEIGHT))
     {   
         if (check_if_wall_v(colison, ray->direction, var))
             return colison;
@@ -369,19 +371,19 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
     ray->is_vertical = 1;
     if (ray->direction_x == 0)
     {
-        // cor->colision_h = cast_horizantal(var,ray);
-        // cor->line.bx = cor->colision_h.x;
-        // cor->line.by = cor->colision_h.y;
-        // cor->h  = cor->distance_h;
-        // draw_line5(cor->line,var,0xFF0000FF);//WHITE HORIZON     0xFFFFFFFF
+        cor->colision_h = cast_horizantal(var,ray);
+        cor->line.bx = cor->colision_h.x;
+        cor->line.by = cor->colision_h.y;
+        cor->h  = cor->distance_h;
+        draw_line5(cor->line,var,0xFF0000FF);//WHITE HORIZON     0xFFFFFFFF
     }
     else if (ray->direction_y == 0)
     {
-        // cor->colision_v = cast_vertical(var,ray);
-        // cor->line.bx = cor->colision_v.x;
-        // cor->line.by = cor->colision_v.y;
-        // cor->h  = cor->distance_v;
-        // draw_line5(cor->line,var,0xFF0000FF);//WHITE VERTICAL    0xFFFFFFFF    
+        cor->colision_v = cast_vertical(var,ray);
+        cor->line.bx = cor->colision_v.x;
+        cor->line.by = cor->colision_v.y;
+        cor->h  = cor->distance_v;
+        draw_line5(cor->line,var,0xFF0000FF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
@@ -436,37 +438,24 @@ void one_ray_wall(t_var *var, t_ray *ray)
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
     tmp = cor.h;
-    // printf("dp :: %f \n",dp);
-    // printf("h :: %f \n",tmp);
-    tmp *= cos_0_90(ray->angle, ray->is_vertical);//cos(thetha_ray - thata_player)
-    // printf("h * cos() :: %f \n",tmp);
+    tmp *= cos(from_deg_to_rad(ray->angle - var->player.angle));
     x = (CUBE_SIZE) / tmp;
-    // printf("x == :: %f \n",x * dp);
     tmp =  (CUBE_SIZE) / (tmp * 2 * tan(from_deg_to_rad(VIEW/2)));
     tmp = x * dp;
-    // printf("HEIGHT :: %d tmp :: %f  y3d ::: %d\n\n\n",HEIGHT,tmp, var->y_3d );
     a = (HEIGHT - tmp) / 2;
-    // printf("A(%f , %f)  B(%f , %f)\n",cor.line.ax,cor.line.ay,cor.line.bx,cor.line.by);
-
     if(var->img_3d)
     {
-        // printf("Y Start  %d --- to %d\n",idx,a);
-        // printf("X Start  %d --- to %d\n",idx,a);
         idy = var->x_3d;
-        // while (j < CUBE_SIZE)
+        idx = HEIGHT - a;
+        while (idx > a)
         {
-            idx = HEIGHT - a;
-            while (idx > a)
-            {
-                if (0 < var->x_3d && var->x_3d  < WIDTH &&  0 < idx && idx < HEIGHT)
-                    mlx_put_pixel(var->img_3d, idy, idx, 0xFF00FFFF);
-                else 
-                    break;
-                // idy++;
-                idx--;
-            }
-            j++;
+            if (0 < var->x_3d && var->x_3d  < WIDTH &&  0 < idx && idx < HEIGHT)
+                mlx_put_pixel(var->img_3d, idy, idx, 0xFF00FFFF);
+            else 
+                break;
+            idx--;
         }
+        j++;
         var->x_3d+=1;
     }
 }
