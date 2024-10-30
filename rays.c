@@ -466,16 +466,12 @@ void one_ray_wall______s(t_var *var, t_ray *ray)
 void one_ray_wall(t_var *var, t_ray *ray)
 {
     t_cords cor;
-    int idy = 0;
-    int idx = 0;
-    double tmp;
-    double dp;
-    int j = 0;
-    double x;
     int a;
-    double distance_correction=0;
-    double distance_to_projection=0;
-    double wall_projection_height=0;
+    int idy;
+    int idx;
+    double distance_correction;
+    double distance_to_projection;
+    double wall_projection_height;
 
     set_direciton(ray);
     cor.line.ax = ray->start.x;
@@ -490,31 +486,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
     distance_correction = cor.h;
     distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
     wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
-    if (wall_projection_height > HEIGHT)
-        wall_projection_height = HEIGHT;
     a = (HEIGHT - wall_projection_height) / 2;
+    if (a <= 0)
+        a = 1;
     if(var->img_3d)
     {
-        // printf("----HEIGHT - distance_correction === %f HEIGHT ==== %d distance_correction ==== %f_____------\n",HEIGHT - distance_correction,HEIGHT, distance_correction);
         idx = var->x_3d;
         idy = HEIGHT - a;
-        if (a == 0)
-        {
-            // printf("{cor.h ==== %f} {distance_correction ==== %f} \n",cor.h,distance_correction);
-            // printf("(idx === %d) (idy ==== %d) (a ==== %d)\n",idx,idy,a);
-            // printf("{HEIGHT ==== %d} {proj ==== %f} \n",HEIGHT, wall_projection_height);
-            // printf(">>>>>>>>> (idx === %d) (idy ==== %d) (a ==== %d)\n",idx,idy,a);
-            idy = HEIGHT - 1;
-            while (idy >= 0)
-            {
-                if (0 <= idx && idx  < WIDTH)
-                    mlx_put_pixel(var->img_3d, idx, idy, 0xFF00FFFF);
-                else 
-                    break;
-                idy--;
-            }
-        }
-        else
         {
             while (idy > a)
             {
