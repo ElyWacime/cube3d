@@ -413,56 +413,6 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
     cor->distance_to_wall =  cor->h;
 }
 
-void one_ray_wall______s(t_var *var, t_ray *ray)
-{
-    t_cords cor;
-    int idx = 0;
-    int idy = 0;
-    double distance_correction=0;
-    double distance_to_projection=0;
-    int j = 0;
-    double wall_projection=0;
-    int a=0;
-
-    set_direciton(ray);
-    cor.line.ax = ray->start.x;
-    cor.line.ay = ray->start.y;
-    cor.line.bx = ray->target.x;
-    cor.line.by = ray->target.y;
-    ray->direction.x = ray->direction_x;
-    ray->direction.y = ray->direction_y;
-    distance_to_projection = WIDTH / (2 * tan(from_deg_to_rad(VIEW/2)));
-    cast_v_h(var ,ray, &cor);
-    cor.distance_to_wall = sqrt(cor.distance_to_wall);
-    distance_correction = cor.distance_to_wall;
-    distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
-    printf("{distance ==== %f} {distance_correction ==== %f} \n", cor.distance_to_wall,distance_correction);
-
-    wall_projection = (CUBE_SIZE * distance_to_projection) / distance_correction;
-    a = (HEIGHT - wall_projection) / 2;
-    if (a < 0)
-    {
-        a = 0;
-        printf("(HEIGHT - wall_projection) === %f {HEIGHT ==== %d} {wall_projection ==== %f} \n",HEIGHT - wall_projection, HEIGHT, wall_projection);
-    }
-    if(var->img_3d)
-    {
-        idx = var->x_3d;
-        idy = HEIGHT - a;
-        printf("(idx === %d) (idy ==== %d) (a ==== %d) \n",idx,idy,a);
-        while (idy > a)
-        {
-            if (0 < idx && idx  < WIDTH &&  0 < idy && idy < HEIGHT)
-                mlx_put_pixel(var->img_3d, idy, idy, 0xFF00FFFF);
-            else 
-                break;
-            idx--;
-        }
-        j++;
-        var->x_3d++;
-    }
-}
-
 void one_ray_wall(t_var *var, t_ray *ray)
 {
     t_cords cor;
@@ -486,7 +436,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
     distance_correction = cor.h;
     distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
     wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
-    a = (HEIGHT - wall_projection_height) / 2;
+    a = ((HEIGHT - wall_projection_height) / 2);
     if (a <= 0)
         a = 1;
     if(var->img_3d)
@@ -497,63 +447,16 @@ void one_ray_wall(t_var *var, t_ray *ray)
             while (idy > a)
             {
                 if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
+                {
+                    ///
                     mlx_put_pixel(var->img_3d, idx, idy, 0xFF00FFFF);
+                }
                 else 
                     break;
                 idy--;
             }
         }
         var->x_3d++;
-    }
-}
-
-
-void one_ray_wall___(t_var *var, t_ray *ray)
-{
-    t_cords cor;
-    int idx = 0;
-    int idy = 0;
-    double tmp;
-    double dp;
-    int j = 0;
-    double x;
-    int a;
-
-    set_direciton(ray);
-    cor.line.ax = ray->start.x;
-    cor.line.ay = ray->start.y;
-    cor.line.bx = ray->target.x;
-    cor.line.by = ray->target.y;
-    ray->direction.x = ray->direction_x;
-    ray->direction.y = ray->direction_y;
-    dp = HEIGHT / (2 * tan_0_90((VIEW/2)));
-    cast_v_h(var ,ray, &cor);
-    cor.h = sqrt(cor.h);
-    tmp = cor.h;
-    tmp *= cos(from_deg_to_rad(ray->angle - var->player.angle));
-    x = (CUBE_SIZE) / tmp;
-    tmp =  (CUBE_SIZE) / (tmp * 2 * tan(from_deg_to_rad(VIEW/2)));
-    tmp = x * dp;
-    a = (HEIGHT - tmp) / 2;
-    if (a < 0)
-        a = 0;
-    if(var->img_3d)
-    {
-        // printf("----______idy === %d idx ==== %d a ==== %d_____------\n",idy,idx,a);
-        // printf("----HEIGHT - tmp === %f HEIGHT ==== %d tmp ==== %f_____------\n",HEIGHT - tmp,HEIGHT, tmp);
-        idy = var->x_3d;
-        idx = HEIGHT - a;
-        while (idx > a)
-        {
-            // printf("lllllll---_\n");
-            if (0 < var->x_3d && var->x_3d  < WIDTH &&  0 < idx && idx < HEIGHT)
-                mlx_put_pixel(var->img_3d, idy, idx, 0xFF00FFFF);
-            else 
-                break;
-            idx--;
-        }
-        j++;
-        var->x_3d+=1;
     }
 }
 
