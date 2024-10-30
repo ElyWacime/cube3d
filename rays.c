@@ -11,6 +11,7 @@ void    draw_line5(t_line line, t_var *var, t_uint color)
     y = line.ay;
     if (x <= line.bx && y <= line.by)
     {
+        // printf("A(%f %f) B(%f %f)\n",line.ax,line.by,line.bx,line.by);
         while (x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
@@ -62,11 +63,6 @@ float mod(float a, int b)
     // return (a);
     return fmod(a,b);
 }
-
-// >>>>>????h ====== 4096.000000 player.angle === 351.000000 ray.angle == 360.000000
-// a === 360.000000 b ==== 360
-// x === 359 floor(a) == 359.000000
-// ????h ====== 4096.000000 player.angle === 351.000000 ray.angle == 360.000000
 
 double distance_squared(t_point a, t_point b)
 {
@@ -414,9 +410,127 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
         }
     }
+    cor->distance_to_wall =  cor->h;
+}
+
+void one_ray_wall______s(t_var *var, t_ray *ray)
+{
+    t_cords cor;
+    int idx = 0;
+    int idy = 0;
+    double distance_correction=0;
+    double distance_to_projection=0;
+    int j = 0;
+    double wall_projection=0;
+    int a=0;
+
+    set_direciton(ray);
+    cor.line.ax = ray->start.x;
+    cor.line.ay = ray->start.y;
+    cor.line.bx = ray->target.x;
+    cor.line.by = ray->target.y;
+    ray->direction.x = ray->direction_x;
+    ray->direction.y = ray->direction_y;
+    distance_to_projection = WIDTH / (2 * tan(from_deg_to_rad(VIEW/2)));
+    cast_v_h(var ,ray, &cor);
+    cor.distance_to_wall = sqrt(cor.distance_to_wall);
+    distance_correction = cor.distance_to_wall;
+    distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
+    printf("{distance ==== %f} {distance_correction ==== %f} \n", cor.distance_to_wall,distance_correction);
+
+    wall_projection = (CUBE_SIZE * distance_to_projection) / distance_correction;
+    a = (HEIGHT - wall_projection) / 2;
+    if (a < 0)
+    {
+        a = 0;
+        printf("(HEIGHT - wall_projection) === %f {HEIGHT ==== %d} {wall_projection ==== %f} \n",HEIGHT - wall_projection, HEIGHT, wall_projection);
+    }
+    if(var->img_3d)
+    {
+        idx = var->x_3d;
+        idy = HEIGHT - a;
+        printf("(idx === %d) (idy ==== %d) (a ==== %d) \n",idx,idy,a);
+        while (idy > a)
+        {
+            if (0 < idx && idx  < WIDTH &&  0 < idy && idy < HEIGHT)
+                mlx_put_pixel(var->img_3d, idy, idy, 0xFF00FFFF);
+            else 
+                break;
+            idx--;
+        }
+        j++;
+        var->x_3d++;
+    }
 }
 
 void one_ray_wall(t_var *var, t_ray *ray)
+{
+    t_cords cor;
+    int idy = 0;
+    int idx = 0;
+    double tmp;
+    double dp;
+    int j = 0;
+    double x;
+    int a;
+    double distance_correction=0;
+    double distance_to_projection=0;
+    double wall_projection_height=0;
+
+    set_direciton(ray);
+    cor.line.ax = ray->start.x;
+    cor.line.ay = ray->start.y;
+    cor.line.bx = ray->target.x;
+    cor.line.by = ray->target.y;
+    ray->direction.x = ray->direction_x;
+    ray->direction.y = ray->direction_y;
+    distance_to_projection = HEIGHT / (2 * tan(from_deg_to_rad(VIEW/2)));
+    cast_v_h(var ,ray, &cor);
+    cor.h = sqrt(cor.h);
+    distance_correction = cor.h;
+    distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
+    wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
+    if (wall_projection_height > HEIGHT)
+        wall_projection_height = HEIGHT;
+    a = (HEIGHT - wall_projection_height) / 2;
+    if(var->img_3d)
+    {
+        // printf("----HEIGHT - distance_correction === %f HEIGHT ==== %d distance_correction ==== %f_____------\n",HEIGHT - distance_correction,HEIGHT, distance_correction);
+        idx = var->x_3d;
+        idy = HEIGHT - a;
+        if (a == 0)
+        {
+            // printf("{cor.h ==== %f} {distance_correction ==== %f} \n",cor.h,distance_correction);
+            // printf("(idx === %d) (idy ==== %d) (a ==== %d)\n",idx,idy,a);
+            // printf("{HEIGHT ==== %d} {proj ==== %f} \n",HEIGHT, wall_projection_height);
+            // printf(">>>>>>>>> (idx === %d) (idy ==== %d) (a ==== %d)\n",idx,idy,a);
+            idy = HEIGHT - 1;
+            while (idy >= 0)
+            {
+                if (0 <= idx && idx  < WIDTH)
+                    mlx_put_pixel(var->img_3d, idx, idy, 0xFF00FFFF);
+                else 
+                    break;
+                idy--;
+            }
+        }
+        else
+        {
+            while (idy > a)
+            {
+                if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
+                    mlx_put_pixel(var->img_3d, idx, idy, 0xFF00FFFF);
+                else 
+                    break;
+                idy--;
+            }
+        }
+        var->x_3d++;
+    }
+}
+
+
+void one_ray_wall___(t_var *var, t_ray *ray)
 {
     t_cords cor;
     int idx = 0;
@@ -443,12 +557,17 @@ void one_ray_wall(t_var *var, t_ray *ray)
     tmp =  (CUBE_SIZE) / (tmp * 2 * tan(from_deg_to_rad(VIEW/2)));
     tmp = x * dp;
     a = (HEIGHT - tmp) / 2;
+    if (a < 0)
+        a = 0;
     if(var->img_3d)
     {
+        // printf("----______idy === %d idx ==== %d a ==== %d_____------\n",idy,idx,a);
+        // printf("----HEIGHT - tmp === %f HEIGHT ==== %d tmp ==== %f_____------\n",HEIGHT - tmp,HEIGHT, tmp);
         idy = var->x_3d;
         idx = HEIGHT - a;
         while (idx > a)
         {
+            // printf("lllllll---_\n");
             if (0 < var->x_3d && var->x_3d  < WIDTH &&  0 < idx && idx < HEIGHT)
                 mlx_put_pixel(var->img_3d, idy, idx, 0xFF00FFFF);
             else 
@@ -482,23 +601,24 @@ void cast(t_var *var)
     r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
     ray.angle = angle + (VIEW / 2);
     ray.angle = mod(ray.angle , 360);
-    i = 1;
+    i = 0;
     var->x_3d = 0;
     var->y_3d = HEIGHT - 50;
-    while (i * step  < VIEW)
+    while (i < WIDTH)
     {
         var->player.angle = mod(var->player.angle,360);
-        r = rotate_by(p, r, from_deg_to_rad(step));
         ray.target = r;
         ray.angle = ray.angle + 360 - (step);
         ray.angle = mod(ray.angle , 360);
         one_ray_wall(var,&ray);
+        r = rotate_by(p, r, from_deg_to_rad(step));
         i+=1;
     }
-    printf("player(%f %f) **angle : %f\n",var->player.position[0],var->player.position[1],var->player.angle);
+    // printf("player(%f %f) **angle : %f\n",var->player.position[0],var->player.position[1],var->player.angle);
     // printf("start(%f %f) target(%f %f) angle : %f\n",ray.start.x,ray.start.y,ray.target.x,ray.target.y,ray.angle);
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
     // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
     // range_2(var);
 }
+

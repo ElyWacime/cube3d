@@ -1,6 +1,7 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 FLAGS = -Wall -Wextra -Werror 
+FLAGS = -fsanitize=address -g
 CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube

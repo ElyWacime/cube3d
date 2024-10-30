@@ -73,6 +73,7 @@ typedef struct s_cords
     double distance_h;
     double distance_v;
     double h;
+    double distance_to_wall;
 }   t_cords;
 typedef struct s_var
 {
