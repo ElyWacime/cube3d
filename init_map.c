@@ -7,7 +7,7 @@ void    check_textures(char *NO, char *SO, char *WE, char *EA)
         || ft_strncmp(WE, "WE ", 3)
         || ft_strncmp(EA, "EA ", 3))
     {
-        write(2, "Error\nInvalid path!", 18);
+        write(2, "Error 1\nInvalid path!", 20);
         exit(72);
         free(NO);
         free(SO);
@@ -29,7 +29,7 @@ void   check_path(char *NO, char *SO, char *WE, char *EA)
     fd4 = open(EA, O_RDONLY);
     if (fd1 < 0 || fd2 < 0 || fd3 < 0 || fd4 < 0)
     {
-        write(2, "Error\nInvalid path!\n", 20);
+        write(2, "Error 2\nInvalid path!\n", 20);
         close(fd1);
         close(fd2);
         close(fd3);
@@ -45,9 +45,11 @@ void    parse_textures(t_var *var)
     char *WE;
     char *EA;
 
+
+    // printf(">>>>\t%d\t||\t%s\n", strlen_double((void**)var->textures), *var->textures);
     if (strlen_double((void**)var->textures) < 4)
     {
-        write(2, "Error\nInvalid path!", 18);
+        write(2, "Error 3\nInvalid path!", 20);
         exit(71);
     }
     check_textures(var->textures[0], var->textures[1],
@@ -70,6 +72,7 @@ void    get_texures(t_var *var, int fd)
     tmp = NULL;
     while (++i < 4)
     {
+        printf("ENTER\n");
         line = gnl(fd);
         if (!line)
         {
@@ -77,9 +80,11 @@ void    get_texures(t_var *var, int fd)
             exit(5);
         }
         tmp = ft_strjoin(tmp, line);
+        printf("inside loop: %s\tline: %s\n", tmp, line);
         free(line);
     }
     var->textures = ft_split(tmp, '\n');
+    printf(">>>>>>>>%s\n\n\n\n\n\n", tmp);
     parse_textures(var);
     free(tmp);
 }

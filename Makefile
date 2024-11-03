@@ -6,7 +6,7 @@ NAME = cube
 LIBFT = ./libft/libft.a
 MLX = ./mlx/build/libmlx42.a
 MLX_LINUX = ./MLX42/build/libmlx42.a
-GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/"
+GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 # GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 
 all : ${NAME}
