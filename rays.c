@@ -442,20 +442,31 @@ void one_ray_wall(t_var *var, t_ray *ray)
     if(var->img_3d)
     {
         idx = var->x_3d;
-        idy = HEIGHT - a;
+        idy = 0;
+        while (idy < a && a > 1)
         {
-            while (idy > a)
+            if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
-                if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
-                {
-                    ///
-                    mlx_put_pixel(var->img_3d, idx, idy, 0xFF00FFFF);
-                }
-                else 
-                    break;
-                idy--;
+                mlx_put_pixel(var->img_3d, idx, idy, 0xA0D8EFFF);
             }
+            else 
+                break;
+            idy++;
         }
+        idy = HEIGHT - a;
+
+        while (idy > a)
+        {
+            if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
+            {
+                ///
+                mlx_put_pixel(var->img_3d, idx, idy, 0xAD00FAFF);
+            }
+            else 
+                break;
+            idy--;
+        }
+
         var->x_3d++;
     }
 }
