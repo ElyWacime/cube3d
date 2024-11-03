@@ -11,6 +11,7 @@ void    draw_line5(t_line line, t_var *var, t_uint color)
     y = line.ay;
     if (x <= line.bx && y <= line.by)
     {
+        // printf("A(%f %f) B(%f %f)\n",line.ax,line.by,line.bx,line.by);
         while (x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
@@ -47,10 +48,20 @@ void    draw_line5(t_line line, t_var *var, t_uint color)
     }
 }
 
-double mod(double a, int b)
+float mod_360(float a)
 {
-    int x = (int)a;
-    return (a - (1.0 * x)) + (double)(x % b);
+    // while (a > 360)
+    //     a-= 360;
+    // return (a);
+    return fmod(a,360);
+}
+
+float mod(float a, int b)
+{   
+    // while (a >= b)
+    //     a-= b;
+    // return (a);
+    return fmod(a,b);
 }
 
 double distance_squared(t_point a, t_point b)
@@ -157,87 +168,38 @@ double tan_0_90(double theta)
     return tan(from_deg_to_rad(theta));
 }
 
-t_point cast_vertical(t_var *var,t_ray ray)
-{
-    t_point horizon;
-    t_point colison;
-    double skip_x;
-    double skip_y;
-    double tn;
+// double cos_0_90(double theta, int vertical)
+// {
+//     theta = mod(theta,360);
+//     theta += 360;
+//     theta = mod(theta,360);
+//     if (vertical)
+//     {
+//         // printf("vertical(%d) angle : %f\n",vertical,theta);
+//         if (0 < theta && theta < 90)
+//             return (cos(from_deg_to_rad(theta)));
+//         else if (90 < theta && theta < 180)
+//             return (cos(from_deg_to_rad(180 - theta)));
+//         else  if (180 < theta && theta < 270)
+//             return (cos(from_deg_to_rad(theta - 180)));
+//         else if (270 < theta && theta < 360)
+//             return (cos(from_deg_to_rad(360 - theta)));
+//     }
+//     else
+//     {
+//         // printf("vertical(%d) angle : %f\n",vertical,theta);
+//         if (0 < theta && theta < 90)
+//             return (cos(from_deg_to_rad(90 - theta)));
+//         else if (90 < theta && theta < 180)
+//             return (cos(from_deg_to_rad(theta - 90)));
+//         else  if (180 < theta && theta < 270)
+//             return (cos(from_deg_to_rad(270 - theta)));
+//         else if (270 < theta && theta < 360)
+//             return (cos(from_deg_to_rad(theta - 270)));
+//     }
+//     return 1;
+// }
 
-    colison.x = ray.start.x;
-    colison.y = ray.start.y;
-    tn = tan_0_90(ray.angle);
-    if (ray.direction_y == -1)
-    {
-        colison.x = next_px_in_grid(ray.start.x,ray.direction_x);
-        colison.y = ray.start.y - (fabs(colison.x-ray.start.x) * tn);
-        horizon.x = next_px_in_grid(ray.start.x,ray.direction_x);
-        horizon.y = ray.start.y;
-        skip_x = SQUARE_SIZE *  ray.direction_x;
-        skip_y = - SQUARE_SIZE * tn;
-    }
-    else
-    {
-        colison.x = next_px_in_grid(ray.start.x,ray.direction_x);
-        colison.y = ray.start.y + ((ray.direction_y * fabs(colison.x - ray.start.x)) / tn);
-        
-        horizon.x = ray.start.x;
-        horizon.y = colison.y;
-        skip_x = SQUARE_SIZE *  ray.direction_x;
-        skip_y = SQUARE_SIZE / tn;
-    }
-    while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
-    {   
-        if (check_if_wall_v(colison, ray.direction, var))
-            return colison;
-        colison.x += skip_x;
-        colison.y += skip_y;
-    }
-    return colison;
-}
-
-t_point cast_horizantal(t_var *var,t_ray ray)
-{
-    t_point horizon;
-    t_point colison;
-    t_point direction;
-    double skip_x;
-    double skip_y;
-    double tn;
-
-    colison.x = ray.start.x;
-    colison.y = ray.start.y;
-    tn = tan_0_90(ray.angle);
-    if (ray.direction_y == -1)
-    {
-        horizon.y = ray.start.y;
-        colison.y = next_px_in_grid(ray.start.y, ray.direction_y);
-        colison.x = ray.start.x + (ray.direction_x * ((fabs(horizon.y - colison.y) / tn)));
-        horizon.x = colison.x;
-        skip_x = (SQUARE_SIZE / tn) * ray.direction_x;
-        skip_y = SQUARE_SIZE * ray.direction_y;
-    }
-    else
-    {
-        horizon.y = next_px_in_grid(ray.start.y, ray.direction_y);
-        colison.y = horizon.y;
-        horizon.x = ray.start.x;
-        colison.x = ray.start.x + (fabs(ray.start.y - horizon.y) * tn * ray.direction_x);
-        skip_x = (SQUARE_SIZE * tn) * ray.direction_x;
-        skip_y = SQUARE_SIZE * ray.direction_y;
-    }
-    while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
-    {   
-        if (check_if_wall_h(colison, ray.direction, var))
-            return colison;
-        colison.x += skip_x;
-        colison.y += skip_y;
-    }
-    return colison;
-}
-
-//rotate a point m f rom center by an angle in radian
 t_point rotate_by(t_point center, t_point m, double angle)
 {
     t_point z;
@@ -245,6 +207,86 @@ t_point rotate_by(t_point center, t_point m, double angle)
     z.x = ((m.x - center.x)*cos(angle)) - ((m.y - center.y)*sin(angle)) + center.x;
     z.y = ((m.y - center.y)*cos(angle)) + ((m.x - center.x)*sin(angle)) + center.y;
     return z;
+}
+
+t_point cast_vertical(t_var *var,t_ray *ray)
+{
+    // t_point horizon;
+    t_point colison;
+    double skip_x;
+    double skip_y;
+    double tn;
+
+    colison.x = ray->start.x;
+    colison.y = ray->start.y;
+    tn = tan_0_90(ray->angle);
+    if (ray->direction_y == -1)
+    {
+        colison.x = next_px_in_grid(ray->start.x,ray->direction_x);
+        colison.y = ray->start.y - (fabs(colison.x-ray->start.x) * tn);
+        // horizon.x = next_px_in_grid(ray->start.x,ray->direction_x);
+        // horizon.y = ray->start.y;
+        skip_x = SQUARE_SIZE *  ray->direction_x;
+        skip_y = - SQUARE_SIZE * tn;
+    }
+    else
+    {
+        colison.x = next_px_in_grid(ray->start.x,ray->direction_x);
+        colison.y = ray->start.y + ((ray->direction_y * fabs(colison.x - ray->start.x)) / tn);
+        // horizon.x = ray->start.x;
+        // horizon.y = colison.y;
+        skip_x = SQUARE_SIZE *  ray->direction_x;
+        skip_y = SQUARE_SIZE / tn;
+    }
+    // while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
+    while ((0 <= colison.x && colison.x < WIDTH && 0 <= colison.y && colison.y < HEIGHT))
+    {   
+        if (check_if_wall_v(colison, ray->direction, var))
+            return colison;
+        colison.x += skip_x;
+        colison.y += skip_y;
+    }
+    return colison;
+}
+//rotate a point m f rom center by an angle in radian
+
+t_point cast_horizantal(t_var *var,t_ray *ray)
+{
+    t_point horizon;
+    t_point colison;
+    double skip_x;
+    double skip_y;
+    double tn;
+
+    colison.x = ray->start.x;
+    colison.y = ray->start.y;
+    tn = tan_0_90(ray->angle);
+    if (ray->direction_y == -1)
+    {
+        horizon.y = ray->start.y;
+        colison.y = next_px_in_grid(ray->start.y, ray->direction_y);
+        colison.x = ray->start.x + (ray->direction_x * ((fabs(horizon.y - colison.y) / tn)));
+        horizon.x = colison.x;
+        skip_x = (SQUARE_SIZE / tn) * ray->direction_x;
+        skip_y = SQUARE_SIZE * ray->direction_y;
+    }
+    else
+    {
+        horizon.y = next_px_in_grid(ray->start.y, ray->direction_y);
+        colison.y = horizon.y;
+        horizon.x = ray->start.x;
+        colison.x = ray->start.x + (fabs(ray->start.y - horizon.y) * tn * ray->direction_x);
+        skip_x = (SQUARE_SIZE * tn) * ray->direction_x;
+        skip_y = SQUARE_SIZE * ray->direction_y;
+    }
+    while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
+    {   
+        if (check_if_wall_h(colison, ray->direction, var))
+            return colison;
+        colison.x += skip_x;
+        colison.y += skip_y;
+    }
+    return colison;
 }
 
 // maxim left and right rays
@@ -313,55 +355,108 @@ void set_direciton(t_ray *ray)
     }
 }
 
-void one_ray_wall(t_var *var, t_ray ray ,unsigned int color)
+double min(double a,double b)
 {
-    t_line line;
-    t_point colision_h;
-    t_point colision_v;
+    if (a < b)
+        return a;
+    return b;   
+}
 
-    set_direciton(&ray);
-    line.ax = ray.start.x;
-    line.ay = ray.start.y;
-    line.bx = ray.target.x;
-    line.by = ray.target.y;
-    ray.direction.x = ray.direction_x;
-    ray.direction.y = ray.direction_y;
-    if (ray.direction_x == 0)
+void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
+{
+    ray->is_vertical = 1;
+    if (ray->direction_x == 0)
     {
-        colision_h = cast_horizantal(var,ray);
-        line.bx = colision_h.x;
-        line.by = colision_h.y;
-        draw_line5(line,var,0xFF0000FF);//WHITE HORIZON     0xFFFFFFFF
+        cor->colision_h = cast_horizantal(var,ray);
+        cor->line.bx = cor->colision_h.x;
+        cor->line.by = cor->colision_h.y;
+        cor->h  = cor->distance_h;
+        draw_line5(cor->line,var,0xFF0000FF);//WHITE HORIZON     0xFFFFFFFF
     }
-    else if (ray.direction_y == 0)
+    else if (ray->direction_y == 0)
     {
-        colision_v = cast_vertical(var,ray);
-        line.bx = colision_v.x;
-        line.by = colision_v.y;
-        draw_line5(line,var,0xFF0000FF);//WHITE VERTICAL    0xFFFFFFFF    
+        cor->colision_v = cast_vertical(var,ray);
+        cor->line.bx = cor->colision_v.x;
+        cor->line.by = cor->colision_v.y;
+        cor->h  = cor->distance_v;
+        draw_line5(cor->line,var,0xFF0000FF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
-        colision_h = cast_horizantal(var,ray);
-        colision_v = cast_vertical(var,ray);
-        if (distance_squared(ray.start, colision_v) < distance_squared(ray.start, colision_h))
+        cor->colision_v = cast_vertical(var,ray);
+        cor->colision_h = cast_horizantal(var,ray);
+        cor->distance_v = distance_squared(ray->start, cor->colision_v);
+        cor->distance_h = distance_squared(ray->start, cor->colision_h);
+        cor->h  = cor->distance_v;
+        if (cor->distance_v < cor->distance_h)
         {
-            line.bx = colision_v.x;
-            line.by = colision_v.y;
-            draw_line5(line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
+            cor->line.bx = cor->colision_v.x;
+            cor->line.by = cor->colision_v.y;
+            draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
         }
-        else if (distance_squared(ray.start, colision_h) < distance_squared(ray.start, colision_v))
+        else if (cor->distance_h < cor->distance_v)
         {
-            line.bx = colision_h.x;
-            line.by = colision_h.y;
-            draw_line5(line,var,0xFF0000FF);//RED HORIZON
+            cor->h  = cor->distance_h;
+            cor->line.bx = cor->colision_h.x;
+            cor->line.by = cor->colision_h.y;
+            ray->is_vertical = 0;
+            ray->angle = mod_360(ray->angle);
+            draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
         }
         else
         {
-            line.bx = colision_v.x;
-            line.by = colision_v.y;
-            draw_line5(line,var,0xFF0000FF);//GRAY VERTICAL   0x808080FF
+            cor->line.bx = cor->colision_v.x;
+            cor->line.by = cor->colision_v.y;
+            draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
         }
+    }
+    cor->distance_to_wall =  cor->h;
+}
+
+void one_ray_wall(t_var *var, t_ray *ray)
+{
+    t_cords cor;
+    int a;
+    int idy;
+    int idx;
+    double distance_correction;
+    double distance_to_projection;
+    double wall_projection_height;
+
+    set_direciton(ray);
+    cor.line.ax = ray->start.x;
+    cor.line.ay = ray->start.y;
+    cor.line.bx = ray->target.x;
+    cor.line.by = ray->target.y;
+    ray->direction.x = ray->direction_x;
+    ray->direction.y = ray->direction_y;
+    distance_to_projection = HEIGHT / (2 * tan(from_deg_to_rad(VIEW/2)));
+    cast_v_h(var ,ray, &cor);
+    cor.h = sqrt(cor.h);
+    distance_correction = cor.h;
+    distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
+    wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
+    a = ((HEIGHT - wall_projection_height) / 2);
+    if (a <= 0)
+        a = 1;
+    if(var->img_3d)
+    {
+        idx = var->x_3d;
+        idy = HEIGHT - a;
+        {
+            while (idy > a)
+            {
+                if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
+                {
+                    ///
+                    mlx_put_pixel(var->img_3d, idx, idy, 0xFF00FFFF);
+                }
+                else 
+                    break;
+                idy--;
+            }
+        }
+        var->x_3d++;
     }
 }
 
@@ -371,13 +466,13 @@ void cast(t_var *var)
     t_point r;
     t_point p;
     t_point v;
-    int angle;
-    double step;
-    double i;
+    float angle;
+    float step;
+    float i;
     
     i = 0;
-    step = VIEW / ((double)WIDTH);
-    angle = (var->player.angle) % 360;
+    step = (1.0 * VIEW ) / WIDTH;
+    angle = mod(var->player.angle,360);
     p.x = var->player.position[0];
     p.y = var->player.position[1];
     v.x = var->player.vect[0];
@@ -387,17 +482,24 @@ void cast(t_var *var)
     r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
     ray.angle = angle + (VIEW / 2);
     ray.angle = mod(ray.angle , 360);
-    i = 1;
-    while (i * step  < VIEW)
+    i = 0;
+    var->x_3d = 0;
+    var->y_3d = HEIGHT - 50;
+    while (i < WIDTH)
     {
-        r = rotate_by(p, r, from_deg_to_rad(step));
+        var->player.angle = mod(var->player.angle,360);
         ray.target = r;
-        ray.angle -= (step);
-        one_ray_wall(var,ray,0XAA0000A0);
+        ray.angle = ray.angle + 360 - (step);
+        ray.angle = mod(ray.angle , 360);
+        one_ray_wall(var,&ray);
+        r = rotate_by(p, r, from_deg_to_rad(step));
         i+=1;
     }
+    // printf("player(%f %f) **angle : %f\n",var->player.position[0],var->player.position[1],var->player.angle);
+    // printf("start(%f %f) target(%f %f) angle : %f\n",ray.start.x,ray.start.y,ray.target.x,ray.target.y,ray.angle);
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    range_2(var);
+    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
+    // range_2(var);
 }
+

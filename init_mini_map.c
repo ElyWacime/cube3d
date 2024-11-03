@@ -65,6 +65,7 @@ void    draw_vector(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     // draw_line(vector, var, 0x00FF00FF);
+    (void)vector;
 }
 
 unsigned int   calculate_mini_map_width(t_var *var)
@@ -93,15 +94,19 @@ void    create_mini_map_image(t_var *var)
     var->mini_map = mlx_new_image(var->mlx, var->mini_width, var->mini_height);
     if (!var->mini_map)
         ft_error();
+    if (var->img_3d)
+        mlx_delete_image(var->mlx, var->img_3d);
+    var->img_3d = mlx_new_image(var->mlx, WIDTH, HEIGHT);
+    mlx_image_to_window(var->mlx, var->img_3d, 0, 0);
 }
 
 void    init_mini_map(t_var *var)
 {
-    create_mini_map_image(var);
     int i;
     int j;
     t_uint tracker[2];
 
+    create_mini_map_image(var);
     tracker[1] = 0;
     i = -1;
     while (var->map[++i])

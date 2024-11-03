@@ -152,8 +152,8 @@ void    extract_C(t_var *var)
     char **color;
     int _colors[3];
 
-    printf(">>>> %c\n", var->colors[1][0]);
-    printf(">>>> %d\t%d\n", var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]));
+    // printf(">>>> %c\n", var->colors[1][0]);
+    // printf(">>>> %d\t%d\n", var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]));
     if (var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]))
         color = ft_split(var->colors[1] + 2, ',');
     else
@@ -226,6 +226,14 @@ char **create_map(char *file_cub, t_var *var)
     free(_map);
     return (map);
 }
+void    _init_window_3d(t_var *var)
+{
+	
+    if (var->img_3d)
+        mlx_image_to_window(var->mlx, var->img_3d, 0, 0);
+    else
+        ft_error();
+}
 
 void    _init_window(t_var *var)
 {
@@ -233,28 +241,35 @@ void    _init_window(t_var *var)
     int j;
 
 	var->mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
-	if (!var->mlx)
-		ft_error();
-	var->img = mlx_new_image(var->mlx, WIDTH, HEIGHT);
-    if (!var->img)
-		ft_error();
-	i = -1;
-    while (++i < WIDTH)
-    {
-        j = -1;
-        while (++j < HEIGHT)
+	if (var->mlx)
+	{
+        var->img = mlx_new_image(var->mlx, WIDTH, HEIGHT);
+        var->img_3d = mlx_new_image(var->mlx, WIDTH, HEIGHT);
+        if (var->img)
         {
-            if (j > HEIGHT / 2)
+            i = -1;
+            while (++i < WIDTH)
             {
-                mlx_put_pixel(var->img, i, j, 0x0000FF00);
-                // mlx_put_pixel(var->img, i, j, var->color_F);
-                continue ;
+                j = -1;
+                while (++j < HEIGHT)
+                {
+                    if (j > HEIGHT / 2)
+                    {
+                        mlx_put_pixel(var->img, i, j, 0x0000FF00);
+                        // mlx_put_pixel(var->img, i, j, var->color_F);
+                        continue ;
+                    }
+                    mlx_put_pixel(var->img, i, j, 0x0000FF00);
+                    // mlx_put_pixel(var->img, i, j, var->color_C);
+                }
             }
-            mlx_put_pixel(var->img, i, j, 0x0000FF00);
-            // mlx_put_pixel(var->img, i, j, var->color_C);
+            mlx_image_to_window(var->mlx, var->img, 0, 0);
         }
+        else
+            ft_error();
     }
-	if (!var->img
-        || (mlx_image_to_window(var->mlx, var->img, 0, 0) < 0))
-		ft_error();
+    else
+        ft_error();
 }
+
+
