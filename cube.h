@@ -14,8 +14,8 @@
 
 //alias cv="make && ./cube file.cube"
 #define SQUARE_SIZE 8
-#define WIDTH 2560 
-#define HEIGHT 1280
+#define WIDTH 1280 // 2560  
+#define HEIGHT 640 // 1280 
 #define VIEW 54
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
@@ -74,6 +74,7 @@ typedef struct s_cords
     double distance_v;
     double h;
     double distance_to_wall;
+    int is_collision_horizontal;
 }   t_cords;
 typedef struct s_var
 {
