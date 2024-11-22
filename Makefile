@@ -13,9 +13,13 @@ GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/
 
 all : ${NAME}
 
+# ${NAME}: ${OBJ} ${LIBFT}
+# 	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw -pthread -lm -o ${NAME}
+# # ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
+
 ${NAME}: ${OBJ} ${LIBFT}
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw -pthread -lm -o ${NAME}
-# ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
+# ${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw -pthread -lm -o ${NAME}
+	${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}:
 	make -C ./libft
