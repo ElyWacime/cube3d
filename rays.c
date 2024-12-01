@@ -404,12 +404,12 @@ void one_ray_wall(t_var *var, t_ray *ray)
     wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
     a = ((HEIGHT - wall_projection_height) / 2);
     if (a <= 0)
-        a = 1;
+        a = 0;
     if(var->img_3d)
     {
         idx = var->x_3d;
         idy = 0;
-        while (idy < a && a > 1)
+        while (a > 0 && idy < a)  //Draw Sky
         {
             if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
@@ -419,11 +419,11 @@ void one_ray_wall(t_var *var, t_ray *ray)
                 break;
             idy++;
         }
-        idy = HEIGHT - a;
+        idy = a;
         uint32_t color = 0xAD00FAFF;
         if (cor.is_collision_horizontal == 1)
             color =0xAD00FA48;
-        while (idy > a)
+        while (idy < HEIGHT - a)
         {
             if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
@@ -432,7 +432,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
             }
             else 
                 break;
-            idy--;
+            idy++;
         }
 
         var->x_3d++;
