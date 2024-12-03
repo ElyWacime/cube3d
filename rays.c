@@ -388,6 +388,9 @@ void one_ray_wall(t_var *var, t_ray *ray)
     double distance_correction;
     double distance_to_projection;
     double wall_projection_height;
+    // char *path = "/textures/rome1.webp";
+    // int offset = 0;
+        uint32_t color = 0xAD00FAFF;
 
     set_direciton(ray);
     cor.line.ax = ray->start.x;
@@ -420,14 +423,17 @@ void one_ray_wall(t_var *var, t_ray *ray)
             idy++;
         }
         idy = a;
-        uint32_t color = 0xAD00FAFF;
+        
         if (cor.is_collision_horizontal == 1)
+        {
             color =0xAD00FA48;
+        }
         while (idy < HEIGHT - a)
         {
             if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
-                ///
+            //   mlx_texture_t *b =   mlx_load_png(path);
+            //   b->pixels[offset];
                 mlx_put_pixel(var->img_3d, idx, idy,color );
             }
             else 
