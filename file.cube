@@ -1,7 +1,7 @@
-NO ./textures/rome1.webp
-SO ./textures/rome2.webp
-WE ./textures/rome3.webp
-EA ./textures/rome4.webp
+NO ./path_to_the_north_texture
+SO ./path_to_the_south_texture
+WE ./path_to_the_west_texture
+EA ./path_to_the_east_texture
 
 F 0,0,0
 C 255,0,0

@@ -12,7 +12,6 @@
 #include <stdint.h>
 #include "./MLX42/include/MLX42/MLX42.h"
 
-// alias maek="make" mkae="make" mkea="make" meak="make" meka="make" amke="make" amek="make" akme="make" akem="make" aemk="make" aekm="make" kmae="make" kmea="make" kame="make" kaem="make" kema="make" keam="make" emak="make" emka="make" eamk="make" eakm="make" ekma="make" ekam="make"
 //alias cv="make && ./cube file.cube"
 #define SQUARE_SIZE 8
 #define WIDTH 1280 // 2560  

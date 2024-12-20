@@ -487,4 +487,3 @@ void cast(t_var *var)
     // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
     // range_2(var);
 }
-
