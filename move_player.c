@@ -8,7 +8,7 @@ void    calcul_right_movement(t_var *var)
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -31,7 +31,9 @@ void    calcul_left_movement(t_var *var)
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (new_position[1] <= 0 || new_position[0] <= 0)
+        return ;
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -42,6 +44,8 @@ void    calcul_left_movement(t_var *var)
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
+    if (new_position[1] <= 0 || new_position[0] <= 0)
+        return ;
     var->player.vect[0] = new_position[0];
     var->player.vect[1] = new_position[1];
 }
@@ -54,7 +58,9 @@ void    calcul_up_movement(t_var *var)
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (new_position[1] <= 0)
+        return ;
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -65,6 +71,8 @@ void    calcul_up_movement(t_var *var)
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
+    if (new_position[1] <= 0)
+        return ;
     var->player.vect[0] = new_position[0];
     var->player.vect[1] = new_position[1];
 }
@@ -77,7 +85,9 @@ void    calcul_down_movement(t_var *var)
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
-    if (var->map[(t_uint)new_position[1] / 32][(t_uint)new_position[0] / 32] != '1')
+    if (new_position[0] <= 0)
+        return ;
+    if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
@@ -88,9 +98,111 @@ void    calcul_down_movement(t_var *var)
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.vect[1])
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
+    if (new_position[0] <= 0)
+        return ;
     var->player.vect[0] = new_position[0];
     var->player.vect[1] = new_position[1];
 }
+
+// void    calcul_right_movement(t_var *var)
+// {
+//     double  new_position[2];
+//     int row;
+//     int col;
+
+//     new_position[0] = (var->player.position[0]) 
+//         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//     new_position[1] = (var->player.position[1])
+//         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//     col = ((t_uint)new_position[0] - 0.0001) / SQUARE_SIZE;
+//     row = ((t_uint)new_position[1] - 0.0001) / SQUARE_SIZE;
+//     if (new_position[1] > 0 &&  new_position[0] > 0 && var->map[row][col] != '1')
+//     {
+//         var->player.position[0] = new_position[0];
+//         var->player.position[1] = new_position[1];
+//         new_position[0] = (var->player.vect[0]) 
+//             + (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//         new_position[1] = (var->player.vect[1])
+//             + (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//         var->player.vect[0] = new_position[0];
+//         var->player.vect[1] = new_position[1];
+//     }
+// }
+
+// void    calcul_left_movement(t_var *var)
+// {
+//     double  new_position[2];
+//     int row;
+//     int col;
+
+//     new_position[0] = (var->player.position[0])
+//         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//     new_position[1] = (var->player.position[1])
+//         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//     col = ((t_uint)new_position[0] - 0.0001) / SQUARE_SIZE;
+//     row = ((t_uint)new_position[1] - 0.0001) / SQUARE_SIZE;
+//     if (new_position[1] > 0 &&  new_position[0] > 0 && var->map[row][col] != '1')
+//     {
+//         var->player.position[0] = new_position[0];
+//         var->player.position[1] = new_position[1];
+//         new_position[0] = (var->player.vect[0])
+//             - (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//         new_position[1] = (var->player.vect[1])
+//             - (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//         var->player.vect[0] = new_position[0];
+//         var->player.vect[1] = new_position[1];
+//     }
+// }
+
+// void    calcul_up_movement(t_var *var)
+// {
+//     double  new_position[2];
+//     int row;
+//     int col;
+
+//     new_position[0] = (var->player.position[0])
+//         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//     new_position[1] = (var->player.position[1])
+//         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//     col = ((t_uint)new_position[0] - 0.0001) / SQUARE_SIZE;
+//     row = ((t_uint)new_position[1] - 0.0001) / SQUARE_SIZE;
+//     if (new_position[1] > 0 &&  new_position[0] > 0 && var->map[row][col] != '1')
+//     {
+//         var->player.position[0] = new_position[0];
+//         var->player.position[1] = new_position[1];
+//         new_position[0] = (var->player.vect[0])
+//             + (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//         new_position[1] = (var->player.vect[1])
+//             - (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//         var->player.vect[0] = new_position[0];
+//         var->player.vect[1] = new_position[1];
+//     }
+// }
+
+// void    calcul_down_movement(t_var *var)
+// {
+//     double  new_position[2];
+//     int row;
+//     int col;
+
+//     new_position[0] = (var->player.position[0])
+//         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//     new_position[1] = (var->player.position[1])
+//         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//     col = ((t_uint)new_position[0] - 0.0001) / SQUARE_SIZE;
+//     row = ((t_uint)new_position[1] - 0.0001) / SQUARE_SIZE;
+//     if (new_position[1] > 0 &&  new_position[0] > 0 && var->map[row][col] != '1')
+//     {
+//         var->player.position[0] = new_position[0];
+//         var->player.position[1] = new_position[1];
+//         new_position[0] = (var->player.vect[0])
+//             - (SPEED * cos(from_deg_to_rad(var->player.angle)));
+//         new_position[1] = (var->player.vect[1])
+//             + (SPEED * sin(from_deg_to_rad(var->player.angle)));
+//         var->player.vect[0] = new_position[0];
+//         var->player.vect[1] = new_position[1];
+//     }
+// }
 
 void    move_player_down(t_var *var)
 {
@@ -103,6 +215,8 @@ void    move_player_down(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     init_mini_map(var);
+    var->player.mvt_x = 0;
+    var->player.mvt_y = 1;
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
@@ -118,6 +232,8 @@ void    move_player_up(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     init_mini_map(var);
+    var->player.mvt_x = 0;
+    var->player.mvt_y = -1;
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
@@ -133,6 +249,8 @@ void    move_player_right(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     init_mini_map(var);
+    var->player.mvt_x = 1;
+    var->player.mvt_y = 0;
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }
@@ -148,6 +266,8 @@ void    move_player_left(t_var *var)
     vector.bx = var->player.vect[0];
     vector.by = var->player.vect[1];
     init_mini_map(var);
+    var->player.mvt_x = -1;
+    var->player.mvt_y = 0;
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
 }

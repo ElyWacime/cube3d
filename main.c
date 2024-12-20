@@ -54,6 +54,7 @@ void parsing(int ac, char *av[], t_var *var)
         exit(3);
     }
     parse_arguments(av[1]);
+    free_double((void **)var->map);
     var->map = create_map(av[1], var);
     _map = strdup_double(var->map);
     to_print = _map;
@@ -63,8 +64,8 @@ void parsing(int ac, char *av[], t_var *var)
         to_print++;
     }
     get_players_position(var->map, position, var);
-    var->player.position[0] = position[1] * 32;
-    var->player.position[1] = position[0] * 32;
+    var->player.position[0] = position[1] * SQUARE_SIZE;
+    var->player.position[1] = position[0] * SQUARE_SIZE;
     while (is_still_there_zeros(_map, zero_position))
         flood_fill(_map, zero_position[1], zero_position[0]);
     is_map_all_ones(_map);
@@ -75,10 +76,20 @@ int main(int ac, char *av[])
 {
     t_var var;
 
+    var.img = NULL;
+    var.mlx = NULL;
+    var.mlx_3d = NULL;
+    var.img = NULL;
+    var.img_3d = NULL;
+    var.mini_map = NULL;
+    var.map = NULL;
+    var.textures = NULL;
+    var.colors = NULL;
     parsing(ac, av, &var);
     _init_window(&var);
     init_mini_map(&var);
     draw_vector(&var);
+    cast(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_loop(var.mlx);
     return 0;

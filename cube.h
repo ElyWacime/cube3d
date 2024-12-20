@@ -3,23 +3,49 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include "gnl/gnl.h"
-#include "libft/libft.h"
-#include "./mlx/include/MLX42/MLX42.h"
+#include "./libft/libft.h"
 #include <math.h>
 #include <stdint.h>
+#include "./MLX42/include/MLX42/MLX42.h"
 
-
-#define WIDTH 2500
-#define HEIGHT 1200
-
+//alias cv="make && ./cube file.cube"
+#define SQUARE_SIZE 8
+#define WIDTH 1280 // 2560  
+#define HEIGHT 640 // 1280 
+#define VIEW 54
+#define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-
 #define SPEED 5.0
+// #define SPEED 1.0
 
 typedef unsigned int t_uint;
+
+typedef struct s_point
+{
+    double x;
+    double y;
+}   t_point;
+
+typedef struct s_segment
+{
+    t_point a;
+    t_point b;
+}   t_segment;
+
+typedef struct s_ray
+{
+    t_point start;
+    t_point target;
+    t_point direction;
+    int is_vertical;
+    float angle;
+    double direction_x;
+    double direction_y;
+}   t_ray;
 
 typedef struct s_line
 {
@@ -33,21 +59,39 @@ typedef struct s_player
 {
     double  position[2];
     double  vect[2];
+    double  mvt_x;
+    double  mvt_y;
+    double  rot_direction;
     char    direction;
-    double  angle;
+    float  angle;
 }   t_player;
-
+typedef struct s_cords
+{
+    t_line line;
+    t_point colision_h;
+    t_point colision_v;
+    double distance_h;
+    double distance_v;
+    double h;
+    double distance_to_wall;
+    int is_collision_horizontal;
+}   t_cords;
 typedef struct s_var
 {
     t_player    player;
     mlx_t       *mlx;
+    mlx_t       *mlx_3d;
     mlx_image_t *img;
+    mlx_image_t *img_3d;
     mlx_image_t *mini_map;
     char        **map;
     char        **textures;
     char        **colors;
     int         largest_line_in_map;
     int         map_len;
+    int         x_3d;
+    int         y_3d;
+
     t_uint      mini_width;
     t_uint      mini_height;
     uint32_t    color_C;
@@ -117,5 +161,8 @@ int     is_still_there_zeros(char **, int *);
 /*
 ** rays.c
 */
-void cast(t_var *var);
+float mod(float a, int b);
+void cast(t_var *);
+void    _init_window_3d(t_var *var);
+t_point rotate_by(t_point center, t_point m, double angle);
 #endif
