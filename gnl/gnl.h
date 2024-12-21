@@ -9,7 +9,7 @@
 # include <stdlib.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include "../libft/libft.h"
+#include "../libft2/libft.h"
 
 char    *gnl(int fd);
 
