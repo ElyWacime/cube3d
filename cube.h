@@ -10,7 +10,7 @@
 #include "./libft2/libft.h"
 #include <math.h>
 #include <stdint.h>
-#include "./MLX42/include/MLX42/MLX42.h"
+#include "./MLX43/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube"
 #define SQUARE_SIZE 8

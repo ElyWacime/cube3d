@@ -7,7 +7,7 @@ OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = ./libft2/libft.a
 MLX = ./mlx/build/libmlx42.a
-MLX_LINUX = ./MLX42/build/libmlx42.a
+MLX_LINUX = ./MLX43/build/libmlx42.a
 GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 # GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 
@@ -50,7 +50,7 @@ re : fclean all
 # NAME = cube
 # LIBFT = ./libft2/libft.a
 # MLX = ./mlx/build/libmlx42.a
-# MLX_LINUX = ./MLX42/build/libmlx42.a
+# MLX_LINUX = ./MLX43/build/libmlx42.a
 # GLFW_LINUX = -Iinclude -ldl -lglfw -pthread -lm
 # # GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 # # GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
