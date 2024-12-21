@@ -5,7 +5,7 @@ FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
-LIBFT = ./libft/libft.a
+LIBFT = ./libft2/libft.a
 MLX = ./mlx/build/libmlx42.a
 MLX_LINUX = ./MLX42/build/libmlx42.a
 GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/"
@@ -18,7 +18,7 @@ ${NAME}: ${OBJ} ${LIBFT}
 # ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}:
-	make -C ./libft
+	make -C ./libft2
 
 %.o : %.c cube.h
 	cc ${FLAGS} -Imlx -c $< -o $@
@@ -27,7 +27,7 @@ clean:
 	rm -rf ${OBJ}
 
 cleanlib:
-	make fclean -C ./libft
+	make fclean -C ./libft2
 
 fclean: clean cleanlib
 	rm -rf ${NAME}
@@ -48,7 +48,7 @@ re : fclean all
 # CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c
 # OBJ = $(CFILES:.c=.o)
 # NAME = cube
-# LIBFT = ./libft/libft.a
+# LIBFT = ./libft2/libft.a
 # MLX = ./mlx/build/libmlx42.a
 # MLX_LINUX = ./MLX42/build/libmlx42.a
 # GLFW_LINUX = -Iinclude -ldl -lglfw -pthread -lm
@@ -63,7 +63,7 @@ re : fclean all
 # # ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
 # ${LIBFT}:
-# 	make -C ./libft
+# 	make -C ./libft2
 
 # %.o : %.c cube.h
 # 	cc ${FLAGS} -Imlx -c $< -o $@
@@ -72,7 +72,7 @@ re : fclean all
 # 	rm -rf ${OBJ}
 
 # cleanlib:
-# 	make fclean -C ./libft
+# 	make fclean -C ./libft2
 
 # fclean: clean cleanlib
 # 	rm -rf ${NAME}

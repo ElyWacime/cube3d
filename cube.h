@@ -7,7 +7,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include "gnl/gnl.h"
-#include "./libft/libft.h"
+#include "./libft2/libft.h"
 #include <math.h>
 #include <stdint.h>
 #include "./MLX42/include/MLX42/MLX42.h"
