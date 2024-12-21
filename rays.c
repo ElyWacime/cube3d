@@ -327,12 +327,16 @@ double min(double a,double b)
 
 void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
 {
-    ray->is_vertical = 1;
+    // ray->is_vertical = 1;
     cor->is_collision_horizontal = 1;
     if (ray->direction_x == 0)
     {
         cor->is_collision_horizontal = 0;
         cor->colision_h = cast_horizantal(var,ray);
+        if (ray->angle == 0)
+            ray->textures_index = 0;
+        else
+            ray->textures_index = 2;
         cor->line.bx = cor->colision_h.x;
         cor->line.by = cor->colision_h.y;
         cor->h  = cor->distance_h;
@@ -341,6 +345,10 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
     else if (ray->direction_y == 0)
     {
         cor->colision_v = cast_vertical(var,ray);
+        if (ray->angle == 90)
+            ray->textures_index = 1;
+        else
+            ray->textures_index = 3;
         cor->line.bx = cor->colision_v.x;
         cor->line.by = cor->colision_v.y;
         cor->h  = cor->distance_v;
@@ -365,11 +373,11 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             cor->h  = cor->distance_h;
             cor->line.bx = cor->colision_h.x;
             cor->line.by = cor->colision_h.y;
-            ray->is_vertical = 0;
+            // ray->is_vertical = 0;
             ray->angle = fmod(ray->angle,360);
             draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
         }
-        else
+        else // to remove never enter !!!
         {
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
@@ -377,6 +385,21 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
     }
     cor->distance_to_wall =  cor->h;
+    if (cor->is_collision_horizontal == 0)
+    {
+        if ((270 < ray->angle && ray->angle < 360) ||
+            (0 < ray->angle && ray->angle < 90))
+            ray->textures_index = 0;
+        else
+            ray->textures_index = 2;
+    }
+    else
+    {
+        if (0 < ray->angle && ray->angle < 180)
+            ray->textures_index = 1;
+        else
+            ray->textures_index = 3;
+    }
 }
 
 void one_ray_wall(t_var *var, t_ray *ray)
@@ -411,30 +434,38 @@ void one_ray_wall(t_var *var, t_ray *ray)
     if(var->img_3d)
     {
         idx = var->x_3d;
-        idy = 0;
-        while (a > 0 && idy < a)  //Draw Sky
-        {
-            if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
-            {
-                mlx_put_pixel(var->img_3d, idx, idy, 0xA0D8EFB4);
-            }
-            else 
-                break;
-            idy++;
-        }
+        // idy = 0;
+        // while (a > 0 && idy < a)  //Draw Sky
+        // {
+        //     if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
+        //     {
+        //         // jmlx_put_pixel(var->img_3d, idx, idy, 0xA0D8EFB4);
+        //     }
+        //     else 
+        //         break;
+        //     idy++;
+        // }
         idy = a;
         
         if (cor.is_collision_horizontal == 1)
         {
-            color =0xAD00FA48;
+            color =0xAD00FAFF;
         }
+        // #####################################
         while (idy < HEIGHT - a)
         {
             if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
             //   mlx_texture_t *b =   mlx_load_png(path);
             //   b->pixels[offset];
-                mlx_put_pixel(var->img_3d, idx, idy,color );
+            if (ray->textures_index == 0)
+                mlx_put_pixel(var->img_3d, idx, idy,0xFFFF00FF);
+            else if (ray->textures_index == 1)
+                mlx_put_pixel(var->img_3d, idx, idy,0x00FF00FF);
+            else if (ray->textures_index == 2)
+                mlx_put_pixel(var->img_3d, idx, idy,0x0000FFFF);
+            else if (ray->textures_index == 3)
+                mlx_put_pixel(var->img_3d, idx, idy,color);
             }
             else 
                 break;
@@ -444,6 +475,72 @@ void one_ray_wall(t_var *var, t_ray *ray)
         var->x_3d++;
     }
 }
+
+// int    get_texture(t_ray ray)
+// {
+//     if (ray.verical_hit == 0)
+//     {
+//         if (ray.ray_up)
+//             return (3);
+//         else if (ray.ray_down)
+//             return (0);
+//     }
+//     else
+//     {
+//         if (ray.ray_right)
+//             return (2);
+//         else if (ray.ray_left)
+//             return (1);
+//     }
+//     return (0);
+// }
+
+// void    print_wall(t_all_data *data, float wall_height, int starting_x,
+//         int starting_y)
+// {
+//     double            offset_x;
+//     double            offset_y;
+//     unsigned int    color;
+//     int                i;
+//     int                texture_num;
+//     int                texture_width;
+//     int                texture_height;
+//     int                x;
+//     int                y;
+//     int                distance_from_top;
+//     int                j;
+
+//     i = 0;
+//     offset_x = 0;
+//     offset_y = 0;
+//     texture_num = get_texture(data->rays[starting_x]);
+//     color = 0;
+//     texture_width = data->news[texture_num]->width;
+//     texture_height = data->news[texture_num]->height;
+//     if (!data->rays[starting_x].verical_hit)
+//     {
+//         offset_x = fmod(data->rays[starting_x].wall_x, data->minimap.tile);
+//         offset_x *= texture_width / data->minimap.tile;
+//     }
+//     else
+//     {
+//         offset_x = fmod(data->rays[starting_x].wall_y, data->minimap.tile);
+//         offset_x *= texture_width / data->minimap.tile;
+//     }
+//     while (i < wall_height)
+//     {
+//         x = starting_x;
+//         y = starting_y + i;
+//         distance_from_top = y - starting_y;
+//         offset_y = distance_from_top * texture_height / wall_height;
+//         mlx_get_color_at(data->news[texture_num]->data, offset_x, offset_y,
+//                 &color);
+//         j = 0;
+//         if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
+//             custom_mlx_pixel_put(&data->game_img, x, y, color);
+//         i++;
+//     }
+// }
 
 void cast(t_var *var)
 {

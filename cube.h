@@ -41,7 +41,8 @@ typedef struct s_ray
     t_point start;
     t_point target;
     t_point direction;
-    int is_vertical;
+    int     textures_index;
+    // int is_vertical;
     float angle;
     double direction_x;
     double direction_y;
