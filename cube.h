@@ -7,15 +7,15 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include "gnl/gnl.h"
-#include "./libft/libft.h"
+#include "./libft2/libft.h"
 #include <math.h>
 #include <stdint.h>
-#include "./MLX42/include/MLX42/MLX42.h"
+#include "./MLX43/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube"
 #define SQUARE_SIZE 8
-#define WIDTH 2560 
-#define HEIGHT 1280
+#define WIDTH 1280 // 2560  
+#define HEIGHT 640 // 1280 
 #define VIEW 54
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
@@ -41,7 +41,8 @@ typedef struct s_ray
     t_point start;
     t_point target;
     t_point direction;
-    int is_vertical;
+    int     textures_index;
+    // int is_vertical;
     float angle;
     double direction_x;
     double direction_y;
@@ -74,6 +75,7 @@ typedef struct s_cords
     double distance_v;
     double h;
     double distance_to_wall;
+    int is_collision_horizontal;
 }   t_cords;
 typedef struct s_var
 {

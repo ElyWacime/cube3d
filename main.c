@@ -54,6 +54,7 @@ void parsing(int ac, char *av[], t_var *var)
         exit(3);
     }
     parse_arguments(av[1]);
+    free_double((void **)var->map);
     var->map = create_map(av[1], var);
     _map = strdup_double(var->map);
     to_print = _map;
@@ -75,8 +76,15 @@ int main(int ac, char *av[])
 {
     t_var var;
 
-    // printf("floor(10) == %f\n",floor(10.00000));
-
+    var.img = NULL;
+    var.mlx = NULL;
+    var.mlx_3d = NULL;
+    var.img = NULL;
+    var.img_3d = NULL;
+    var.mini_map = NULL;
+    var.map = NULL;
+    var.textures = NULL;
+    var.colors = NULL;
     parsing(ac, av, &var);
     _init_window(&var);
     init_mini_map(&var);
