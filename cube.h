@@ -166,4 +166,13 @@ float mod(float a, int b);
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
 t_point rotate_by(t_point center, t_point m, double angle);
+
+/*
+** textures.c
+*/
+int north_textures(t_var *var, int idx, int idy);
+int south_textures(t_var *var, int idx, int idy);
+int east_textures(t_var *var, int idx, int idy);
+int west_textures(t_var *var, int idx, int idy);
+
 #endif
