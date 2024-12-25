@@ -97,6 +97,11 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
+
+    mlx_texture_t *south;
+    mlx_texture_t *north;
+    mlx_texture_t *east;
+    mlx_texture_t *west;
 }   t_var;
 
 /*
