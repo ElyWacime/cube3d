@@ -19,7 +19,7 @@
 #define VIEW 54
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-#define SPEED 5.0
+#define SPEED 2.5
 // #define SPEED 1.0
 
 typedef unsigned int t_uint;
@@ -85,6 +85,10 @@ typedef struct s_var
     mlx_image_t *img;
     mlx_image_t *img_3d;
     mlx_image_t *mini_map;
+    mlx_texture_t *north;
+    mlx_texture_t *east;
+    mlx_texture_t *west;
+    mlx_texture_t *south;
     char        **map;
     char        **textures;
     char        **colors;
