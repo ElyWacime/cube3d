@@ -411,9 +411,6 @@ void one_ray_wall(t_var *var, t_ray *ray)
     double distance_correction;
     double distance_to_projection;
     double wall_projection_height;
-    // char *path = "/textures/rome1.webp";
-    // int offset = 0;
-    // uint32_t color = 0xAD00FAFF;
 
     set_direciton(ray);
     cor.line.ax = ray->start.x;
@@ -446,87 +443,49 @@ void one_ray_wall(t_var *var, t_ray *ray)
         //     idy++;
         // }
         idy = a;
-        // printf("width ===== %d\n",var->east->width);
-        // printf("height ===== %d\n",var->east->height);
-        // exit(0);
-        // double ofsset;
-        // double ofsset2;
-
-        // if (cor.is_collision_horizontal == 1)
-        // {
-        //     // color =0xAD00FAFF;
-        //     ofsset = fmod(cor.colision_h.x ,SQUARE_SIZE);
-        //     ofsset*=var->east->width;
-        //     ofsset2 = (cor.h / var->east->width) * var->east->width;
-        // }
-        // else
-        // {
-        //     ofsset = fmod(cor.colision_h.y ,SQUARE_SIZE);
-        //     ofsset*=var->east->height;
-        //     ofsset2 = (cor.h / var->east->height) * var->east->height;
-
-        // }
-        // ofsset/=SQUARE_SIZE;
-        // ofsset = (int)floor(ofsset);
-        // ofsset2 = (int)floor(ofsset2);
-        // #####################################
         size_t color_text;
-        // uint8_t* cl = NULL;
-        // int of_index = ofsset + ofsset2;
-        // of_index = ofsset;
-        // printf(">of_index>>>>> %d\n",of_index);
-        // if (ray->textures_index == 0)
-        // {
-        //     // if (cor.is_collision_horizontal == 1)
-        //     //     ofsset*=var->east->width;
-        //     // else
-        //     //     ofsset*=var->east->height;
-        //     // exit(0);
-        //     //  cl = var->east[of_index].pixels;
-        // }
-        // printf(">----------->>>>> %d\n",of_index);
-
-        int i = 0;
+        int ofssetx;
+        int ofssety;
+        int pix;
         while (idy < HEIGHT - a)
         {
             if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
                 if (ray->textures_index == 0)
                 {
-                    int ofssetx = (((fmod(cor.colision_v.y,SQUARE_SIZE)) * var->east->height)) / SQUARE_SIZE;
-                    int ofssety = ((double)((idy - a) * var->east->width)) / (HEIGHT - (2*a));
-                    int pix = ((ofssety * var->east->height) + ofssetx) * 4;
+                    ofssetx = (((fmod(cor.colision_v.y,SQUARE_SIZE)) * var->east->height)) / SQUARE_SIZE;
+                    ofssety = ((double)((idy - a) * var->east->width)) / (HEIGHT - (2*a));
+                    pix = ((ofssety * var->east->height) + ofssetx) * 4;
                     color_text =   var->east->pixels[pix + 3] + (256* var->east->pixels[pix + 2]) + (256*256* var->east->pixels[pix + 1]) +  (256*256*256* var->east->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
                 }
                 else if (ray->textures_index == 1)
                 {
-                    int ofssetx = (((fmod(cor.colision_h.x,SQUARE_SIZE)) * var->north->width)) / SQUARE_SIZE;
-                    int ofssety = ((double)((idy - a) * var->north->height)) / (HEIGHT - (2*a));
-                    int pix = ((ofssety * var->north->width) + ofssetx) * 4;
+                    ofssetx = (((fmod(cor.colision_h.x,SQUARE_SIZE)) * var->north->width)) / SQUARE_SIZE;
+                    ofssety = ((double)((idy - a) * var->north->height)) / (HEIGHT - (2*a));
+                    pix = ((ofssety * var->north->width) + ofssetx) * 4;
                     color_text =   var->north->pixels[pix + 3] + (256* var->north->pixels[pix + 2]) + (256*256* var->north->pixels[pix + 1]) +  (256*256*256* var->north->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
                 }
                 else if (ray->textures_index == 2)
                 {
-                    int ofssetx = (((fmod(cor.colision_v.y,SQUARE_SIZE)) * var->west->width)) / SQUARE_SIZE;
-                    int ofssety = ((double)((idy - a) * var->west->height)) / (HEIGHT - (2*a));
-                    int pix = ((ofssety * var->west->width) + ofssetx) * 4;
+                    ofssetx = (((fmod(cor.colision_v.y,SQUARE_SIZE)) * var->west->width)) / SQUARE_SIZE;
+                    ofssety = ((double)((idy - a) * var->west->height)) / (HEIGHT - (2*a));
+                    pix = ((ofssety * var->west->width) + ofssetx) * 4;
                     color_text =   var->west->pixels[pix + 3] + (256* var->west->pixels[pix + 2]) + (256*256* var->west->pixels[pix + 1]) +  (256*256*256* var->west->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
                 }
                 else if (ray->textures_index == 3)
                 {
-                    int ofssetx = (((fmod(cor.colision_h.x,SQUARE_SIZE)) * var->south->width)) / SQUARE_SIZE;
-                    int ofssety = ((double)((idy - a) * var->south->height)) / (HEIGHT - (2*a));
-                    int pix = ((ofssety * var->south->width) + ofssetx) * 4;
+                    ofssetx = (((fmod(cor.colision_h.x,SQUARE_SIZE)) * var->south->width)) / SQUARE_SIZE;
+                    ofssety = ((double)((idy - a) * var->south->height)) / (HEIGHT - (2*a));
+                    pix = ((ofssety * var->south->width) + ofssetx) * 4;
                     color_text =   var->south->pixels[pix + 3] + (256* var->south->pixels[pix + 2]) + (256*256* var->south->pixels[pix + 1]) +  (256*256*256* var->south->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
                 }
             }
             else 
                 break;
-            i+=4;
             idy++;
         }
         var->x_3d++;
