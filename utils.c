@@ -120,7 +120,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     y = line.ay;
     if (x <= line.bx && y <= line.by)
     {
-        while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ((0 <= x && x < x + distance && 0 <= y && y < + distance))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
@@ -129,7 +129,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     }
     else if (x >= line.bx && y <= line.by)
     {
-         while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+         while ((0 <= x && x < x + distance && 0 <= y && y < + distance))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
@@ -138,7 +138,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     }
     else if (x >= line.bx && y >= line.by)
     {
-         while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+         while ((0 <= x && x < x + distance && 0 <= y && y < + distance))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
@@ -147,7 +147,7 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     }
     else if (x <= line.bx && y >= line.by)
     {
-         while ((0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+         while ((0 <= x && x < x + distance && 0 <= y && y < + distance))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);

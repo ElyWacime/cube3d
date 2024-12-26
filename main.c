@@ -90,18 +90,10 @@ int main(int ac, char *av[])
     init_mini_map(&var);
     draw_vector(&var);
     var.north =   mlx_load_png("./textures/rome1.png");
-    // int i = 0;
-    // // for (i = 0;i < var.north->height * var.north->width; i++);
-    // printf("%d\n", i);
-    // do {
-    //     printf("%u\t%d\n", var.north->pixels[i], i);
-    //     i++;
-
-    // } while (i);
-    // exit(0);
     var.south =   mlx_load_png("./textures/rome2.png");
     var.east =   mlx_load_png("./textures/rome3.png");
     var.west =   mlx_load_png("./textures/rome4.png");
+
     cast(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_loop(var.mlx);

@@ -16,10 +16,10 @@
 #define SQUARE_SIZE 8
 #define WIDTH 1280 // 2560  
 #define HEIGHT 640 // 1280 
-#define VIEW 54
+#define VIEW 63
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-#define SPEED 5.0
+#define SPEED 2.5
 // #define SPEED 1.0
 
 typedef unsigned int t_uint;
