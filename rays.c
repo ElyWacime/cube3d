@@ -379,6 +379,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
         else // to remove never enter !!!
         {
+            printf(">>>>>>>>>hfuehe\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
             draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
@@ -406,6 +407,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
 {
     t_cords cor;
     int a;
+    int correct_a;
     int idy;
     int idx;
     double distance_correction;
@@ -426,8 +428,16 @@ void one_ray_wall(t_var *var, t_ray *ray)
     distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
     wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
     a = ((HEIGHT - wall_projection_height) / 2);
+    double image_offset = 0 ;
+    int end;
+    correct_a = 0;
     if (a <= 0)
+    {
+        correct_a = -a;
         a = 0;
+    }
+    end = HEIGHT - a;
+    // a = correct_a;
     if(var->img_3d)
     {
         idx = var->x_3d;
@@ -447,14 +457,21 @@ void one_ray_wall(t_var *var, t_ray *ray)
         int ofssetx;
         int ofssety;
         int pix;
-        while (idy < HEIGHT - a)
+        int idy_;
+        while (idy < end)
         {
             if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
             {
                 if (ray->textures_index == 0)
                 {
                     ofssetx = (((fmod(cor.colision_v.y,SQUARE_SIZE)) * var->east->height)) / SQUARE_SIZE;
-                    ofssety = ((double)((idy - a) * var->east->width)) / (HEIGHT - (2*a));
+                    if (correct_a > 0)
+                    {
+                        image_offset = (correct_a * var->east->width) / (wall_projection_height);
+                        ofssety =  (((var->east->width - (2 * image_offset)) * idy) / HEIGHT) + image_offset;
+                    }
+                    else
+                        ofssety = ((double)((idy - a) * var->east->width)) / (HEIGHT - (2*a));
                     pix = ((ofssety * var->east->height) + ofssetx) * 4;
                     color_text =   var->east->pixels[pix + 3] + (256* var->east->pixels[pix + 2]) + (256*256* var->east->pixels[pix + 1]) +  (256*256*256* var->east->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
@@ -462,7 +479,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
                 else if (ray->textures_index == 1)
                 {
                     ofssetx = (((fmod(cor.colision_h.x,SQUARE_SIZE)) * var->north->width)) / SQUARE_SIZE;
-                    ofssety = ((double)((idy - a) * var->north->height)) / (HEIGHT - (2*a));
+                    if (correct_a > 0)
+                    {
+                        image_offset = (correct_a * var->north->height) / (wall_projection_height);
+                        ofssety =  (((var->north->height - (2 * image_offset)) * idy) / HEIGHT) + image_offset;
+                    }
+                    else
+                        ofssety = ((double)((idy - a) * var->north->height)) / (HEIGHT - (2*a));
                     pix = ((ofssety * var->north->width) + ofssetx) * 4;
                     color_text =   var->north->pixels[pix + 3] + (256* var->north->pixels[pix + 2]) + (256*256* var->north->pixels[pix + 1]) +  (256*256*256* var->north->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
@@ -470,7 +493,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
                 else if (ray->textures_index == 2)
                 {
                     ofssetx = (((fmod(cor.colision_v.y,SQUARE_SIZE)) * var->west->width)) / SQUARE_SIZE;
-                    ofssety = ((double)((idy - a) * var->west->height)) / (HEIGHT - (2*a));
+                    if (correct_a > 0)
+                    {
+                        image_offset = (correct_a * var->west->height) / (wall_projection_height);
+                        ofssety =  (((var->west->height - (2 * image_offset)) * idy) / HEIGHT) + image_offset;
+                    }
+                    else
+                        ofssety = ((double)((idy - a) * var->west->height)) / (HEIGHT - (2*a));
                     pix = ((ofssety * var->west->width) + ofssetx) * 4;
                     color_text =   var->west->pixels[pix + 3] + (256* var->west->pixels[pix + 2]) + (256*256* var->west->pixels[pix + 1]) +  (256*256*256* var->west->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
@@ -478,7 +507,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
                 else if (ray->textures_index == 3)
                 {
                     ofssetx = (((fmod(cor.colision_h.x,SQUARE_SIZE)) * var->south->width)) / SQUARE_SIZE;
-                    ofssety = ((double)((idy - a) * var->south->height)) / (HEIGHT - (2*a));
+                    if (correct_a > 0)
+                    {
+                        image_offset = (correct_a * var->south->height) / (wall_projection_height);
+                        ofssety =  (((var->south->height - (2 * image_offset)) * idy) / HEIGHT) + image_offset;
+                    }
+                    else
+                        ofssety = ((double)((idy - a) * var->south->height)) / (HEIGHT - (2*a));
                     pix = ((ofssety * var->south->width) + ofssetx) * 4;
                     color_text =   var->south->pixels[pix + 3] + (256* var->south->pixels[pix + 2]) + (256*256* var->south->pixels[pix + 1]) +  (256*256*256* var->south->pixels[pix + 0]);
                     mlx_put_pixel(var->img_3d, idx, idy,color_text);
