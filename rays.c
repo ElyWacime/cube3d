@@ -447,10 +447,10 @@ void one_ray_wall(t_var *var, t_ray *ray)
         // }
         idy = a;
         
-        if (cor.is_collision_horizontal == 1)
-        {
-            color =0xAD00FAFF;
-        }
+        // if (cor.is_collision_horizontal == 1)
+        // {
+        //     color =0xAD00FAFF;
+        // }
         // #####################################
         while (idy < HEIGHT - a)
         {
@@ -461,7 +461,8 @@ void one_ray_wall(t_var *var, t_ray *ray)
             if (ray->textures_index == 0)
                 mlx_put_pixel(var->img_3d, idx, idy,0xFFFF00FF);
             else if (ray->textures_index == 1)
-                mlx_put_pixel(var->img_3d, idx, idy,0x00FF00FF);
+                north_textures(var, idx, idy, &cor, a);
+                // mlx_put_pixel(var->img_3d, idx, idy,0x00FF00FF);
             else if (ray->textures_index == 2)
                 mlx_put_pixel(var->img_3d, idx, idy,0x0000FFFF);
             else if (ray->textures_index == 3)
@@ -471,7 +472,6 @@ void one_ray_wall(t_var *var, t_ray *ray)
                 break;
             idy++;
         }
-
         var->x_3d++;
     }
 }

@@ -175,9 +175,9 @@ t_point rotate_by(t_point center, t_point m, double angle);
 /*
 ** textures.c
 */
-int north_textures(t_var *var, int idx, int idy);
-int south_textures(t_var *var, int idx, int idy);
-int east_textures(t_var *var, int idx, int idy);
-int west_textures(t_var *var, int idx, int idy);
+int north_textures(t_var *var, int idx, int idy, t_cords *cor, int);
+int south_textures(t_var *var, int idx, int idy, t_cords *cor);
+int east_textures(t_var *var, int idx, int idy, t_cords *cor);
+int west_textures(t_var *var, int idx, int idy, t_cords *cor);
 
 #endif
