@@ -45,8 +45,6 @@ void    parse_textures(t_var *var)
     char *WE;
     char *EA;
 
-
-    // printf(">>>>\t%d\t||\t%s\n", strlen_double((void**)var->textures), *var->textures);
     if (strlen_double((void**)var->textures) < 4)
     {
         write(2, "Error 3\nInvalid path!", 20);

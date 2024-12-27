@@ -14,13 +14,12 @@
 
 //alias cv="make && ./cube file.cube"
 #define SQUARE_SIZE 8
-#define WIDTH 1280 // 2560  
-#define HEIGHT 640 // 1280 
+#define WIDTH 1280 // 2560   //     1080
+#define HEIGHT 640 // 1280  //      896
 #define VIEW 63
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-#define SPEED 2.5
-// #define SPEED 1.0
+#define SPEED 2
 
 typedef unsigned int t_uint;
 
@@ -30,11 +29,22 @@ typedef struct s_point
     double y;
 }   t_point;
 
-typedef struct s_segment
+typedef struct s_one_ray_wall
 {
-    t_point a;
-    t_point b;
-}   t_segment;
+    int a;
+    int correct_a;
+    int idy;
+    int idx;
+    double distance_correction;
+    double distance_to_projection;
+    double wall_projection_height;
+    int ofssetx;
+    int ofssety;
+    int pix;
+    int idy_;
+    double image_offset ;
+}   t_ray_wall;
+
 
 typedef struct s_ray
 {
@@ -42,7 +52,6 @@ typedef struct s_ray
     t_point target;
     t_point direction;
     int     textures_index;
-    // int is_vertical;
     float angle;
     double direction_x;
     double direction_y;
@@ -60,12 +69,10 @@ typedef struct s_player
 {
     double  position[2];
     double  vect[2];
-    double  mvt_x;
-    double  mvt_y;
-    double  rot_direction;
     char    direction;
     float  angle;
 }   t_player;
+
 typedef struct s_cords
 {
     t_line line;
@@ -77,6 +84,7 @@ typedef struct s_cords
     double distance_to_wall;
     int is_collision_horizontal;
 }   t_cords;
+
 typedef struct s_var
 {
     t_player    player;
@@ -85,6 +93,10 @@ typedef struct s_var
     mlx_image_t *img;
     mlx_image_t *img_3d;
     mlx_image_t *mini_map;
+    mlx_texture_t *north;
+    mlx_texture_t *east;
+    mlx_texture_t *west;
+    mlx_texture_t *south;
     char        **map;
     char        **textures;
     char        **colors;
@@ -97,11 +109,6 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
-
-    mlx_texture_t *south;
-    mlx_texture_t *north;
-    mlx_texture_t *east;
-    mlx_texture_t *west;
 }   t_var;
 
 /*
@@ -167,7 +174,6 @@ int     is_still_there_zeros(char **, int *);
 /*
 ** rays.c
 */
-float mod(float a, int b);
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
 t_point rotate_by(t_point center, t_point m, double angle);
@@ -175,9 +181,9 @@ t_point rotate_by(t_point center, t_point m, double angle);
 /*
 ** textures.c
 */
-int north_textures(t_var *var, int idx, int idy, t_cords *cor, int);
-int south_textures(t_var *var, int idx, int idy, t_cords *cor);
-int east_textures(t_var *var, int idx, int idy, t_cords *cor);
-int west_textures(t_var *var, int idx, int idy, t_cords *cor);
+size_t north_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
+size_t south_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
+size_t east_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
+size_t west_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
 
 #endif

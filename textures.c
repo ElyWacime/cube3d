@@ -1,63 +1,57 @@
 #include "cube.h"
 
-int north_textures(t_var *var, int idx, int idy, t_cords *cor, int a)
+size_t north_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 {
-    int x;
-    int y;
-    x = ((fmod(cor->colision_h.x, SQUARE_SIZE)) * var->north->width) / SQUARE_SIZE;
-    y = (((idy - a) / (HEIGHT - 2*a)) * var->north->height);
-    // y = (idy * var->north->height * var->north->width) / (HEIGHT - a);
-    int pix = (x * y);
-    int color = var->north->pixels[pix];
-    int color1 = var->north->pixels[pix+1];
-    int color2 = var->north->pixels[pix+2];
-    int color3 = var->north->pixels[pix+3];
-    uint32_t transformed_color = (color * 256 * 256 * 256) + (color1 * 256 * 256) + (color2 * 256) + color3;
-    // printf("height: %zu\twidth: %zu\n", var->north->height, var->north->width);
-    printf("pix =   %d: \t\t%d\t%d\t%d\t%d\t\t cor_colision_h_x = %f \t\t fmod(cor->colision_h.x, SQUARE_SIZE) : %f \t\t x = %d \t y = %d \t\t HEIGHT - 2*a = %d \t\t idy = %d a = %d\n",
-            pix, color, color1, color2, color3, cor->colision_h.x, fmod(cor->colision_h.x, SQUARE_SIZE), x, y, HEIGHT - 2*a, idy, a);
-    mlx_put_pixel(var->img_3d, idx, idy, transformed_color);
-    // double offset;
-    // double image_with;
-    // double actual_pixel;
-    // int pix;
-    // offset = fmod(cor->colision_h.y, SQUARE_SIZE);
-    // if (offset >= 0 && offset <= (int)var->north->width 
-    //     && idy >= 0 && idy <= (int)var->north->height)
-    // {
-    //     pix = (idy * var->north->bytes_per_pixel) * var->north->width
-    //         + (offset * var->north->bytes_per_pixel);
-    //     int color = var->north->pixels[pix++];
-    //     int color1 = var->north->pixels[pix++];
-    //     int color2 = var->north->pixels[pix++];
-    //     int color3 = var->north->pixels[pix];
-    //     int transformed_color = color << 24 | color1 << 16 | color2 << 8 | color3;
-    //     mlx_put_pixel(var->img_3d, idx, idy, transformed_color);
-    // }
-
-    // image_with = var->north->width;
-    // actual_pixel = (((offset * image_with) / SQUARE_SIZE) + (idy * image_with));
-    // size_t color = var->north->pixels[(int)actual_pixel];
-    // size_t color1 = var->north->pixels[(int)actual_pixel+1];
-    // size_t color2 = var->north->pixels[(int)actual_pixel+2];
-    // size_t color3 = var->north->pixels[(int)actual_pixel+3];
-    // int transformed_color = color << 24 | color1 << 16 | color2 << 8 | color3;
-    // mlx_put_pixel(var->img_3d, idx, idy, transformed_color);
-
-    return 0;
+    ra_wl->ofssetx = (((fmod(cor->colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
+    if (ra_wl->correct_a > 0)
+    {
+        ra_wl->image_offset = (ra_wl->correct_a * var->north->height) / (ra_wl->wall_projection_height);
+        ra_wl->ofssety =  (((var->north->height - (2 * ra_wl->image_offset)) * ra_wl->idy) / HEIGHT) + ra_wl->image_offset;
+    }
+    else
+        ra_wl->ofssety = ((double)((ra_wl->idy - ra_wl->a) * var->north->height)) / (HEIGHT - (2*ra_wl->a));
+    ra_wl->pix = ((ra_wl->ofssety * var->north->width) + ra_wl->ofssetx) * 4;
+    return   var->north->pixels[ra_wl->pix + 3] + (256* var->north->pixels[ra_wl->pix + 2]) + (256*256* var->north->pixels[ra_wl->pix + 1]) +  (256*256*256* var->north->pixels[ra_wl->pix + 0]);
 }
 
-// int south_textures(t_var *var, int idx, int idy, t_cords *cor)
-// {
-//     return 0;   
-// }
+size_t south_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
+{
+    ra_wl->ofssetx = (((fmod(cor->colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+    if (ra_wl->correct_a > 0)
+    {
+        ra_wl->image_offset = (ra_wl->correct_a * var->south->height) / (ra_wl->wall_projection_height);
+        ra_wl->ofssety =  (((var->south->height - (2 * ra_wl->image_offset)) * ra_wl->idy) / HEIGHT) + ra_wl->image_offset;
+    }
+    else
+        ra_wl->ofssety = ((double)((ra_wl->idy - ra_wl->a) * var->south->height)) / (HEIGHT - (2*ra_wl->a));
+    ra_wl->pix = ((ra_wl->ofssety * var->south->width) + ra_wl->ofssetx) * 4;
+    return  var->south->pixels[ra_wl->pix + 3] + (256* var->south->pixels[ra_wl->pix + 2]) + (256*256* var->south->pixels[ra_wl->pix + 1]) +  (256*256*256* var->south->pixels[ra_wl->pix + 0]);
+}
 
-// int east_textures(t_var *var, int idx, int idy, t_cords *cor)
-// {
-//     return 0;   
-// }
+size_t east_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
+{
+    ra_wl->ofssetx = (((fmod(cor->colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+    if (ra_wl->correct_a > 0)
+    {
+        ra_wl->image_offset = (ra_wl->correct_a * var->east->width) / (ra_wl->wall_projection_height);
+        ra_wl->ofssety =  (((var->east->width - (2 * ra_wl->image_offset)) * ra_wl->idy) / HEIGHT) + ra_wl->image_offset;
+    }
+    else
+        ra_wl->ofssety = ((double)((ra_wl->idy - ra_wl->a) * var->east->width)) / (HEIGHT - (2*ra_wl->a));
+    ra_wl->pix = ((ra_wl->ofssety * var->east->height) + ra_wl->ofssetx) * 4;
+    return   var->east->pixels[ra_wl->pix + 3] + (256* var->east->pixels[ra_wl->pix + 2]) + (256*256* var->east->pixels[ra_wl->pix + 1]) +  (256*256*256* var->east->pixels[ra_wl->pix + 0]);
+}
 
-// int west_textures(t_var *var, int idx, int idy, t_cords *cor)
-// {
-//     return 0;   
-// }
+size_t west_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
+{
+    ra_wl->ofssetx = (((fmod(cor->colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+    if (ra_wl->correct_a > 0)
+    {
+        ra_wl->image_offset = (ra_wl->correct_a * var->west->height) / (ra_wl->wall_projection_height);
+        ra_wl->ofssety =  (((var->west->height - (2 * ra_wl->image_offset)) * ra_wl->idy) / HEIGHT) + ra_wl->image_offset;
+    }
+    else
+        ra_wl->ofssety = ((double)((ra_wl->idy - ra_wl->a) * var->west->height)) / (HEIGHT - (2*ra_wl->a));
+    ra_wl->pix = ((ra_wl->ofssety * var->west->width) + ra_wl->ofssetx) * 4;
+    return  var->west->pixels[ra_wl->pix + 3] + (256* var->west->pixels[ra_wl->pix + 2]) + (256*256* var->west->pixels[ra_wl->pix + 1]) +  (256*256*256* var->west->pixels[ra_wl->pix + 0]);
+}
