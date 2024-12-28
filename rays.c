@@ -144,7 +144,7 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
 float my_fmod(float theta,int mod)
 {
     int i;
-    
+
     i = theta;
     return theta - ((i / mod) * mod );
 }
@@ -427,18 +427,29 @@ void one_ray_wall(t_var *var, t_ray *ray)
         if (ray->textures_index == 0)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->east->width) / (ra_wl.wall_projection_height);
+
         }
         else if (ray->textures_index == 1)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->north->height ;
+
         }
         else if (ray->textures_index == 2)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->west->height) / (ra_wl.wall_projection_height);
+
         }
         else if (ray->textures_index == 3)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->south->height) / (ra_wl.wall_projection_height);
         }
         while (ra_wl.idy < HEIGHT - ra_wl.a)
         {
