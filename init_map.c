@@ -70,7 +70,7 @@ void    get_texures(t_var *var, int fd)
     tmp = NULL;
     while (++i < 4)
     {
-        printf("ENTER\n");
+        // printf("ENTER\n");
         line = gnl(fd);
         if (!line)
         {
@@ -78,11 +78,11 @@ void    get_texures(t_var *var, int fd)
             exit(5);
         }
         tmp = ft_strjoin(tmp, line);
-        printf("inside loop: %s\tline: %s\n", tmp, line);
+        // printf("inside loop: %s\tline: %s\n", tmp, line);
         free(line);
     }
     var->textures = ft_split(tmp, '\n');
-    printf(">>>>>>>>%s\n\n\n\n\n\n", tmp);
+    // printf(">>>>>>>>%s\n\n\n\n\n\n", tmp);
     parse_textures(var);
     free(tmp);
 }

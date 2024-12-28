@@ -12,8 +12,8 @@
 #include <stdint.h>
 #include "./MLX43/include/MLX42/MLX42.h"
 
-//alias cv="make && ./cube file.cube"
-//alias cv="make && ./cube creepy.cube"
+//alias cv="make && ./cube file.cube" && alias cr="make && ./cube creepy.cube"
+//
 #define SQUARE_SIZE 8
 #define WIDTH 1280 // 2560   //     1080
 #define HEIGHT 640 // 1280  //      896
