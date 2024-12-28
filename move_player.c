@@ -142,14 +142,14 @@ void    calcul_down_movement(t_var *var)
 
 void    move_player_down(t_var *var)
 {
-    t_line  vector;
+    // t_line  vector;
 
     mlx_delete_image(var->mlx, var->mini_map);
     calcul_down_movement(var);
-    vector.ax = var->player.position[0];
-    vector.ay = var->player.position[1];
-    vector.bx = var->player.vect[0];
-    vector.by = var->player.vect[1];
+    // vector.ax = var->player.position[0];
+    // vector.ay = var->player.position[1];
+    // vector.bx = var->player.vect[0];
+    // vector.by = var->player.vect[1];
     init_mini_map(var);
     // draw_line(vector, var, 0x00FF00FF);
     cast(var);
@@ -157,14 +157,14 @@ void    move_player_down(t_var *var)
 
 void    move_player_up(t_var *var)
 {
-    t_line  vector;
+    // t_line  vector;
 
     mlx_delete_image(var->mlx, var->mini_map);
     calcul_up_movement(var);
-    vector.ax = var->player.position[0];
-    vector.ay = var->player.position[1];
-    vector.bx = var->player.vect[0];
-    vector.by = var->player.vect[1];
+    // vector.ax = var->player.position[0];
+    // vector.ay = var->player.position[1];
+    // vector.bx = var->player.vect[0];
+    // vector.by = var->player.vect[1];
     init_mini_map(var);
     // draw_line(vector, var, 0x00FF00FF);
     cast(var);
@@ -172,14 +172,14 @@ void    move_player_up(t_var *var)
 
 void    move_player_right(t_var *var)
 {
-    t_line  vector;
+    // t_line  vector;
 
     mlx_delete_image(var->mlx, var->mini_map);
     calcul_right_movement(var);
-    vector.ax = var->player.position[0];
-    vector.ay = var->player.position[1];
-    vector.bx = var->player.vect[0];
-    vector.by = var->player.vect[1];
+    // vector.ax = var->player.position[0];
+    // vector.ay = var->player.position[1];
+    // vector.bx = var->player.vect[0];
+    // vector.by = var->player.vect[1];
     init_mini_map(var);
     // draw_line(vector, var, 0x00FF00FF);
     cast(var);
@@ -187,14 +187,14 @@ void    move_player_right(t_var *var)
 
 void    move_player_left(t_var *var)
 {
-    t_line  vector;
+    // t_line  vector;
 
     mlx_delete_image(var->mlx, var->mini_map);
     calcul_left_movement(var);
-    vector.ax = var->player.position[0];
-    vector.ay = var->player.position[1];
-    vector.bx = var->player.vect[0];
-    vector.by = var->player.vect[1];
+    // vector.ax = var->player.position[0];
+    // vector.ay = var->player.position[1];
+    // vector.bx = var->player.vect[0];
+    // vector.by = var->player.vect[1];
     init_mini_map(var);
     // draw_line(vector, var, 0x00FF00FF);
     cast(var);

@@ -64,8 +64,8 @@ void parsing(int ac, char *av[], t_var *var)
         to_print++;
     }
     get_players_position(var->map, position, var);
-    var->player.position[0] = position[1] * SQUARE_SIZE;
-    var->player.position[1] = position[0] * SQUARE_SIZE;
+    var->player.position[0] = position[1] * SQUARE_SIZE - SQUARE_SIZE / 2;
+    var->player.position[1] = position[0] * SQUARE_SIZE - SQUARE_SIZE / 2;
     while (is_still_there_zeros(_map, zero_position))
         flood_fill(_map, zero_position[1], zero_position[0]);
     is_map_all_ones(_map);

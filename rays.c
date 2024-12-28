@@ -409,6 +409,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
     ra_wl.a = ((HEIGHT - ra_wl.wall_projection_height) / 2);
     ra_wl.correct_a = -ra_wl.a * (ra_wl.a <= 0);
     ra_wl.a *= (ra_wl.a > 0);
+    // unsigned int color;
     if(var->img_3d)
     {
         ra_wl.idx = var->x_3d;
@@ -424,11 +425,15 @@ void one_ray_wall(t_var *var, t_ray *ray)
         //     idy++;
         // }
         ra_wl.idy = ra_wl.a;
+        if (ray->textures_index == 0 || ray->textures_index == 2)
+            ra_wl.ofssetx = (((fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+        else
+            ra_wl.ofssetx = (((fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
         while (ra_wl.idy < HEIGHT - ra_wl.a)
         {
             if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
             {
-                if (ray->textures_index == 0)
+                if (ray->textures_index == 0) 
                     mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,&cor));
                 else if (ray->textures_index == 1)
                     mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,&cor));
