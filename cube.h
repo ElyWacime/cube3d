@@ -182,9 +182,9 @@ t_point rotate_by(t_point center, t_point m, double angle);
 /*
 ** textures.c
 */
-size_t north_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
-size_t south_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
-size_t east_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
-size_t west_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
+size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 double my_fmod(double theta,int mod);
 #endif

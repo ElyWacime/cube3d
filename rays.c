@@ -412,10 +412,6 @@ void one_ray_wall(t_var *var, t_ray *ray)
     ra_wl.distance_to_projection = HEIGHT / (tan(from_deg_to_rad(VIEW/2)));
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
-    // printf("cor.h = %f\n",cor.h);
-    // if (cor.h == 0)
-    //     cor.h = 1.6;  
-    // printf(">>>>cor.h = %f\n",cor.h);
     ra_wl.distance_correction = cor.h;
     ra_wl.distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
     ra_wl.wall_projection_height = (ra_wl.distance_to_projection * CUBE_SIZE) / (ra_wl.distance_correction);
@@ -426,45 +422,31 @@ void one_ray_wall(t_var *var, t_ray *ray)
     {
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
-        if (ray->textures_index == 1)
-            north_textures(var,&ra_wl,&cor);
-        else
+        if (ray->textures_index == 0)
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+        else if (ray->textures_index == 1)
+            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
+        else if (ray->textures_index == 2)
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+        else if (ray->textures_index == 3)
+            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+        while (ra_wl.idy < HEIGHT - ra_wl.a)
         {
-            while (ra_wl.idy < HEIGHT - ra_wl.a)
+            if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
             {
-                if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
-                {
-                    if (ray->textures_index == 0)
-                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,&cor));
-                    else if (ray->textures_index == 2)
-                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,&cor));
-                    else if (ray->textures_index == 3)
-                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,&cor));
-                }
-                else 
-                    break;
-                (ra_wl.idy)++;
+                if (ray->textures_index == 0)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 1)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 2)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 3)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,ra_wl.ofssetx));
             }
+            else 
+                break;
+                (ra_wl.idy)++;
         }
-            
-         
-        // while (ra_wl.idy < HEIGHT - ra_wl.a)
-        // {
-        //     if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
-        //     {
-        //         if (ray->textures_index == 0)
-        //             mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,&cor));
-        //         else if (ray->textures_index == 1)
-        //             mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,&cor));
-        //         else if (ray->textures_index == 2)
-        //             mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,&cor));
-        //         else if (ray->textures_index == 3)
-        //             mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,&cor));
-        //     }
-        //     else 
-        //         break;
-        //     (ra_wl.idy)++;
-        // }
         var->x_3d++;
     }
 }
