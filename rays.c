@@ -11,7 +11,7 @@ void draw_line5(t_line line, t_var *var, t_uint color)
     y = line.ay;
     if (x <= line.bx && y <= line.by)
     {
-        while (i < 10 && x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
@@ -21,7 +21,7 @@ void draw_line5(t_line line, t_var *var, t_uint color)
     }
     else if (x >= line.bx && y <= line.by)
     {
-        while (i < 10 && x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
@@ -31,7 +31,7 @@ void draw_line5(t_line line, t_var *var, t_uint color)
     }
     else if (x >= line.bx && y >= line.by)
     {
-        while (i < 10 && x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
@@ -41,7 +41,7 @@ void draw_line5(t_line line, t_var *var, t_uint color)
     }
     else if (x <= line.bx && y >= line.by)
     {
-        while (i < 10 && x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
@@ -92,7 +92,6 @@ int check_if_wall_h(t_point start, t_point direction, t_var *var)
 {
     int row;
     int col;
-
     row = px_to_map_grid((t_uint)start.y) - (direction.y == -1);
     col = px_to_map_grid((t_uint)start.x);
     if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (double)ft_strlen(var->map[row]))
@@ -142,11 +141,17 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
     return 1;
 }
 
+double my_fmod(double theta,int mod)
+{
+    int i;
+    i = theta;
+    return (i % mod) + (theta - i);
+}
 double tan_0_90(double theta)
 {
-    theta = fmod(theta,360);
+    theta = my_fmod(theta,360);
     theta += 360;
-    theta = fmod(theta,360);
+    theta = my_fmod(theta,360);
     if (90 < theta && theta < 180)
         theta = 180 - theta;
     else  if (180 < theta && theta < 270)
@@ -174,6 +179,8 @@ t_point cast_vertical(t_var *var,t_ray *ray)
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
+    // if (check_if_wall_v(colison, ray->direction, var))
+    //     return colison;
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
@@ -209,6 +216,8 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
+    // if (check_if_wall_h(colison, ray->direction, var))
+        // return colison;
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
@@ -278,9 +287,9 @@ void set_direciton(t_ray *ray)
 {
     ray->direction_x = 1;
     ray->direction_y = 1;
-    ray->angle = fmod(ray->angle, 360);
+    ray->angle = my_fmod(ray->angle, 360);
     ray->angle += 360;
-    ray->angle = fmod(ray->angle,360);
+    ray->angle = my_fmod(ray->angle,360);
     if (0 < ray->angle  && ray->angle < 90)
         ray->direction_y = -1;
     else if (90 < ray->angle && ray->angle < 180)
@@ -357,7 +366,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         else if (cor->distance_h < cor->distance_v)
         {
             cor->h  = cor->distance_h;
-            ray->angle = fmod(ray->angle,360);
+            ray->angle = my_fmod(ray->angle,360);
             // cor->line.by = cor->colision_h.y;
             // cor->line.bx = cor->colision_h.x;
             // draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
@@ -365,9 +374,9 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         else
         {
             printf("Vertical === Horizontal\n");
-            // cor->line.bx = cor->colision_v.x;
-            // cor->line.by = cor->colision_v.y;
-            // draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
+            cor->line.bx = cor->colision_v.x;
+            cor->line.by = cor->colision_v.y;
+            draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
         }
     }
     cor->distance_to_wall =  cor->h;
@@ -403,6 +412,10 @@ void one_ray_wall(t_var *var, t_ray *ray)
     ra_wl.distance_to_projection = HEIGHT / (tan(from_deg_to_rad(VIEW/2)));
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
+    // printf("cor.h = %f\n",cor.h);
+    // if (cor.h == 0)
+    //     cor.h = 1.6;  
+    // printf(">>>>cor.h = %f\n",cor.h);
     ra_wl.distance_correction = cor.h;
     ra_wl.distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
     ra_wl.wall_projection_height = (ra_wl.distance_to_projection * CUBE_SIZE) / (ra_wl.distance_correction);
@@ -458,7 +471,7 @@ void cast(t_var *var)
     
     i = 0;
     step = (1.0 * VIEW ) / WIDTH;
-    angle = fmod(var->player.angle,360);
+    angle = my_fmod(var->player.angle,360);
     p.x = var->player.position[0];
     p.y = var->player.position[1];
     v.x = var->player.vect[0];
@@ -467,16 +480,16 @@ void cast(t_var *var)
     ray.target = v;
     r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
     ray.angle = angle + (VIEW / 2);
-    ray.angle = fmod(ray.angle , 360);
+    ray.angle = my_fmod(ray.angle , 360);
     i = 0;
     var->x_3d = 0;
     var->y_3d = HEIGHT - 50;
     while (i < WIDTH)
     {
-        var->player.angle = fmod(var->player.angle,360);
+        var->player.angle = my_fmod(var->player.angle,360);
         ray.target = r;
         ray.angle = ray.angle + 360 - (step);
-        ray.angle = fmod(ray.angle , 360);
+        ray.angle = my_fmod(ray.angle , 360);
         one_ray_wall(var,&ray);
         r = rotate_by(p, r, from_deg_to_rad(step));
         i+=1;

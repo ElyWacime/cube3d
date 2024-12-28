@@ -13,6 +13,7 @@
 #include "./MLX43/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube"
+//alias cv="make && ./cube creepy.cube"
 #define SQUARE_SIZE 8
 #define WIDTH 1280 // 2560   //     1080
 #define HEIGHT 640 // 1280  //      896
@@ -185,5 +186,5 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor);
-
+double my_fmod(double theta,int mod);
 #endif

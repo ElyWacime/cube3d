@@ -2,7 +2,7 @@
 
 size_t north_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 {
-    ra_wl->ofssetx = (((fmod(cor->colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
+    ra_wl->ofssetx = (((my_fmod(cor->colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
     if (ra_wl->correct_a > 0)
     {
         ra_wl->image_offset = (ra_wl->correct_a * var->north->height) / (ra_wl->wall_projection_height);
@@ -16,7 +16,7 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 {
-    ra_wl->ofssetx = (((fmod(cor->colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+    ra_wl->ofssetx = (((my_fmod(cor->colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
     if (ra_wl->correct_a > 0)
     {
         ra_wl->image_offset = (ra_wl->correct_a * var->south->height) / (ra_wl->wall_projection_height);
@@ -30,7 +30,7 @@ size_t south_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 {
-    ra_wl->ofssetx = (((fmod(cor->colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+    ra_wl->ofssetx = (((my_fmod(cor->colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
     if (ra_wl->correct_a > 0)
     {
         ra_wl->image_offset = (ra_wl->correct_a * var->east->width) / (ra_wl->wall_projection_height);
@@ -44,7 +44,7 @@ size_t east_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, t_cords *cor)
 {
-    ra_wl->ofssetx = (((fmod(cor->colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+    ra_wl->ofssetx = (((my_fmod(cor->colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
     if (ra_wl->correct_a > 0)
     {
         ra_wl->image_offset = (ra_wl->correct_a * var->west->height) / (ra_wl->wall_projection_height);
