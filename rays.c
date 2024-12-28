@@ -2,9 +2,9 @@
 
 void draw_line5(t_line line, t_var *var, t_uint color)
 {
-    double distance;
-    double x;
-    double y;
+    float distance;
+    float x;
+    float y;
     int i = 0;
     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
     x = line.ax;
@@ -52,12 +52,12 @@ void draw_line5(t_line line, t_var *var, t_uint color)
 }
 
 
-double distance_squared(t_point a, t_point b)
+float distance_squared(t_point a, t_point b)
 {
     return (((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y)));
 }
 
-double str_double_len(char **str)
+float str_double_len(char **str)
 {
     int i;
 
@@ -67,7 +67,7 @@ double str_double_len(char **str)
     return i;
 }
 
-double next_px_in_grid(double p, int d)
+float next_px_in_grid(float p, int d)
 {
     int a;
 
@@ -94,7 +94,7 @@ int check_if_wall_h(t_point start, t_point direction, t_var *var)
     int col;
     row = px_to_map_grid((t_uint)start.y) - (direction.y == -1);
     col = px_to_map_grid((t_uint)start.x);
-    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (double)ft_strlen(var->map[row]))
+    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (float)ft_strlen(var->map[row]))
     {   
         if (col * SQUARE_SIZE == start.x)
         {
@@ -121,7 +121,7 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
 
     row = px_to_map_grid((t_uint)start.y);
     col = px_to_map_grid((t_uint)start.x) - (direction.x == -1);
-    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (double)ft_strlen(var->map[row]))
+    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (float)ft_strlen(var->map[row]))
     {   
         if (row * SQUARE_SIZE == start.y)
         {
@@ -141,13 +141,13 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
     return 1;
 }
 
-double my_fmod(double theta,int mod)
+float my_fmod(float theta,int mod)
 {
     int i;
     i = theta;
     return (i % mod) + (theta - i);
 }
-double tan_0_90(double theta)
+float tan_0_90(float theta)
 {
     theta = my_fmod(theta,360);
     theta += 360;
@@ -161,7 +161,7 @@ double tan_0_90(double theta)
     return tan(from_deg_to_rad(theta));
 }
 
-t_point rotate_by(t_point center, t_point m, double angle)
+t_point rotate_by(t_point center, t_point m, float angle)
 {
     t_point z;
 
@@ -173,9 +173,9 @@ t_point rotate_by(t_point center, t_point m, double angle)
 t_point cast_vertical(t_var *var,t_ray *ray)
 {
     t_point colison;
-    double skip_x;
-    double skip_y;
-    double tn;
+    float skip_x;
+    float skip_y;
+    float tn;
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
@@ -210,9 +210,9 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 {
     t_point horizon;
     t_point colison;
-    double skip_x;
-    double skip_y;
-    double tn;
+    float skip_x;
+    float skip_y;
+    float tn;
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
@@ -314,7 +314,7 @@ void set_direciton(t_ray *ray)
     }
 }
 
-double min(double a,double b)
+float min(float a,float b)
 {
     if (a < b)
         return a;

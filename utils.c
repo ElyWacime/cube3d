@@ -95,25 +95,25 @@ t_uint px_to_map_grid(t_uint x)
     return (x / SQUARE_SIZE);
 }
 
-double  calculate_distance(double a, double b, double a1, double b1)
+float  calculate_distance(float a, float b, float a1, float b1)
 {
     return (sqrt(((a - a1) * (a - a1)) + ((b - b1) * (b - b1))));
 }
 
-double  from_rad_to_deg(double val)
+float  from_rad_to_deg(float val)
 {
     return ((val * 180) / PI);
 }
 
-double  from_deg_to_rad(double val)
+float  from_deg_to_rad(float val)
 {
     return ((val * PI) / 180);
 }
 void    draw_line(t_line line, t_var *var, t_uint color)
 {
-    double distance;
-    double x;
-    double y;
+    float distance;
+    float x;
+    float y;
 
     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
     x = line.ax;

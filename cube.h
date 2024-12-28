@@ -26,8 +26,8 @@ typedef unsigned int t_uint;
 
 typedef struct s_point
 {
-    double x;
-    double y;
+    float x;
+    float y;
 }   t_point;
 
 typedef struct s_one_ray_wall
@@ -36,14 +36,14 @@ typedef struct s_one_ray_wall
     int correct_a;
     int idy;
     int idx;
-    double distance_correction;
-    double distance_to_projection;
-    double wall_projection_height;
+    float distance_correction;
+    float distance_to_projection;
+    float wall_projection_height;
     int ofssetx;
     int ofssety;
     int pix;
     int idy_;
-    double image_offset ;
+    float image_offset ;
 }   t_ray_wall;
 
 
@@ -54,22 +54,22 @@ typedef struct s_ray
     t_point direction;
     int     textures_index;
     float angle;
-    double direction_x;
-    double direction_y;
+    float direction_x;
+    float direction_y;
 }   t_ray;
 
 typedef struct s_line
 {
-    double ax;
-    double ay;
-    double bx;
-    double by;
+    float ax;
+    float ay;
+    float bx;
+    float by;
 }   t_line;
 
 typedef struct s_player
 {
-    double  position[2];
-    double  vect[2];
+    float  position[2];
+    float  vect[2];
     char    direction;
     float  angle;
 }   t_player;
@@ -79,10 +79,10 @@ typedef struct s_cords
     t_line line;
     t_point colision_h;
     t_point colision_v;
-    double distance_h;
-    double distance_v;
-    double h;
-    double distance_to_wall;
+    float distance_h;
+    float distance_v;
+    float h;
+    float distance_to_wall;
     int is_collision_horizontal;
 }   t_cords;
 
@@ -159,10 +159,10 @@ char    **strdup_double(char**);
 int     strlen_double(void**);
 void    print_map(t_var *var);
 t_uint  px_to_map_grid(t_uint x);
-double  calculate_distance(double, double, double, double);
-double  from_rad_to_deg(double);
-double  from_deg_to_rad(double);
-int     check_if_wall(double , double , t_var *);
+float  calculate_distance(float, float, float, float);
+float  from_rad_to_deg(float);
+float  from_deg_to_rad(float);
+int     check_if_wall(float , float , t_var *);
 void    draw_line(t_line , t_var *, t_uint);
 void    quit_program(t_var *);
 /*
@@ -177,7 +177,7 @@ int     is_still_there_zeros(char **, int *);
 */
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
-t_point rotate_by(t_point center, t_point m, double angle);
+t_point rotate_by(t_point center, t_point m, float angle);
 
 /*
 ** textures.c
@@ -186,5 +186,5 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
-double my_fmod(double theta,int mod);
+float my_fmod(float theta,int mod);
 #endif
