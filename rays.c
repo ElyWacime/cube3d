@@ -422,14 +422,15 @@ void one_ray_wall(t_var *var, t_ray *ray)
     {
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
-        if (ray->textures_index == 0)
-            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
-        else if (ray->textures_index == 1)
-            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
-        else if (ray->textures_index == 2)
-            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
-        else if (ray->textures_index == 3)
-            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+        ra_wl.ofssetx = 1;
+        // if (ray->textures_index == 0)
+        //     ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+        // else if (ray->textures_index == 1)
+        //     ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
+        // else if (ray->textures_index == 2)
+        //     ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+        // else if (ray->textures_index == 3)
+        //     ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
         while (ra_wl.idy < HEIGHT - ra_wl.a)
         {
             if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
@@ -445,9 +446,9 @@ void one_ray_wall(t_var *var, t_ray *ray)
             }
             else 
                 break;
-                (ra_wl.idy)++;
+            ++(ra_wl.idy);
         }
-        var->x_3d++;
+        ++var->x_3d;
     }
 }
 
@@ -460,9 +461,8 @@ void cast(t_var *var)
     t_point v;
     float angle;
     float step;
-    float i;
+    int i;
     
-    i = 0;
     step = (1.0 * VIEW ) / WIDTH;
     angle = my_fmod(var->player.angle,360);
     p.x = var->player.position[0];
@@ -486,7 +486,7 @@ void cast(t_var *var)
         ray.angle = my_fmod(ray.angle , 360);
         one_ray_wall(var,&ray);
         r = rotate_by(p, r, from_deg_to_rad(step));
-        i+=1;
+        ++i;
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
