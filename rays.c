@@ -144,8 +144,9 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
 float my_fmod(float theta,int mod)
 {
     int i;
+    
     i = theta;
-    return (i % mod) + (theta - i);
+    return theta - ((i / mod) * mod );
 }
 float tan_0_90(float theta)
 {
@@ -422,15 +423,23 @@ void one_ray_wall(t_var *var, t_ray *ray)
     {
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
-        ra_wl.ofssetx = 1;
-        // if (ray->textures_index == 0)
-        //     ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
-        // else if (ray->textures_index == 1)
-        //     ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
-        // else if (ray->textures_index == 2)
-        //     ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
-        // else if (ray->textures_index == 3)
-        //     ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+        // ra_wl.ofssetx = 1;
+        if (ray->textures_index == 0)
+        {
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+        }
+        else if (ray->textures_index == 1)
+        {
+            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
+        }
+        else if (ray->textures_index == 2)
+        {
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+        }
+        else if (ray->textures_index == 3)
+        {
+            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+        }
         while (ra_wl.idy < HEIGHT - ra_wl.a)
         {
             if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
