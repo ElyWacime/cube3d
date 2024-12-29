@@ -364,7 +364,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
         else
         {
-            printf("Vertical === Horizontal\n");
+            // printf("Vertical === Horizontal\n");
             // cor->line.bx = cor->colision_v.x;
             // cor->line.by = cor->colision_v.y;
             // draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
@@ -434,13 +434,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
             if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
             {
                 if (ray->textures_index == 0) 
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,&cor));
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl));
                 else if (ray->textures_index == 1)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,&cor));
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl));
                 else if (ray->textures_index == 2)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,&cor));
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl));
                 else if (ray->textures_index == 3)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,&cor));
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl));
             }
             else 
                 break;
@@ -468,7 +468,7 @@ void cast(t_var *var)
     p.y = var->player.position[1];
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
-    printf("player x = %f y = %f\n",p.x,p.y);
+    // printf("player x = %f y = %f\n",p.x,p.y);
     ray.start = p;
     ray.target = v;
     r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
@@ -476,7 +476,7 @@ void cast(t_var *var)
     ray.angle = fmod(ray.angle , 360);
     i = 0;
     var->x_3d = 0;
-    var->y_3d = HEIGHT - 50;
+    var->y_3d = HEIGHT;
     while (i < WIDTH)
     {
         var->player.angle = fmod(var->player.angle,360);
@@ -486,7 +486,6 @@ void cast(t_var *var)
         one_ray_wall(var,&ray);
         r = rotate_by(p, r, from_deg_to_rad(step));
         i+=1;
-
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
