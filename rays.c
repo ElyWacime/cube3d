@@ -468,6 +468,7 @@ void cast(t_var *var)
     p.y = var->player.position[1];
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
+    printf("player x = %f y = %f\n",p.x,p.y);
     ray.start = p;
     ray.target = v;
     r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
