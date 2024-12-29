@@ -3,13 +3,20 @@
 void    calcul_right_movement(t_var *var)
 {
     double  new_position[2];
-
+    int direction;
     new_position[0] = (var->player.position[0]) 
         + (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
     if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
+        direction = 1;
+        if ((0 < var->player.angle  && var->player.angle < 90) || (270 < var->player.angle && var->player.angle < 360))
+            direction = -1;
+        if ((new_position[0] /SQUARE_SIZE) * SQUARE_SIZE == new_position[0])
+            new_position[0] +=direction * 0.01;
+        if ((new_position[1] /SQUARE_SIZE) * SQUARE_SIZE == new_position[1])
+            new_position[1] +=direction * 0.01;
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
     }
@@ -26,7 +33,7 @@ void    calcul_right_movement(t_var *var)
 void    calcul_left_movement(t_var *var)
 {
     double  new_position[2];
-
+    int direction;
     new_position[0] = (var->player.position[0])
         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
@@ -35,6 +42,13 @@ void    calcul_left_movement(t_var *var)
         return ;
     if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
+        direction = 1;
+        if ((0 < var->player.angle  && var->player.angle < 90) || (270 < var->player.angle && var->player.angle < 360))
+            direction = -1;
+        if ((new_position[0] /SQUARE_SIZE) * SQUARE_SIZE == new_position[0])
+            new_position[0] +=direction * 0.01;
+        if ((new_position[1] /SQUARE_SIZE) * SQUARE_SIZE == new_position[1])
+            new_position[1] +=direction * 0.01;
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
     }
@@ -49,47 +63,11 @@ void    calcul_left_movement(t_var *var)
     var->player.vect[0] = new_position[0];
     var->player.vect[1] = new_position[1];
 }
-// void    calcul_up_movement(t_var *var)
-// {
-//     double  new_position[2];
-//     t_ray ray;
-//     t_point r;
-//     t_point n_p;
-
-//     set_direciton(&ray);
-//     r.x = ray.direction_x;
-//     r.y = ray.direction_y;
-//     new_position[0] = (var->player.position[0])
-//         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
-//     new_position[1] = (var->player.position[1])
-//         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
-//         n_p.x = new_position[0];
-//         n_p.y = new_position[1];
-//     if (check_if_wall_v(r, n_p ,var) || check_if_wall_h(r, n_p ,var))
-//         exit(0);
-//     if (new_position[1] <= 0)
-//         return ;
-//     if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
-//     {
-//         var->player.position[0] = new_position[0];
-//         var->player.position[1] = new_position[1];
-//     }
-//     else
-//         return ;
-//     new_position[0] = (var->player.vect[0])
-//         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
-//     new_position[1] = (var->player.vect[1])
-//         - (SPEED * sin(from_deg_to_rad(var->player.angle)));
-//     if (new_position[1] <= 0)
-//         return ;
-//     var->player.vect[0] = new_position[0];
-//     var->player.vect[1] = new_position[1];
-// }
 
 void    calcul_up_movement(t_var *var)
 {
     double  new_position[2];
-
+    int direction;
     new_position[0] = (var->player.position[0])
         + (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
@@ -98,6 +76,13 @@ void    calcul_up_movement(t_var *var)
         return ;
     if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
+        direction = 1;
+        if (var->player.angle < 180)
+            direction = -1;
+        if ((new_position[0] /SQUARE_SIZE) * SQUARE_SIZE == new_position[0])
+            new_position[0] +=direction * 0.01;
+        if ((new_position[1] /SQUARE_SIZE) * SQUARE_SIZE == new_position[1])
+            new_position[1] +=direction * 0.01;
         var->player.position[0] = new_position[0];
         var->player.position[1] = new_position[1];
     }
@@ -116,7 +101,7 @@ void    calcul_up_movement(t_var *var)
 void    calcul_down_movement(t_var *var)
 {
     double  new_position[2];
-
+    int direction;
     new_position[0] = (var->player.position[0])
         - (SPEED * cos(from_deg_to_rad(var->player.angle)));
     new_position[1] = (var->player.position[1])
@@ -125,8 +110,15 @@ void    calcul_down_movement(t_var *var)
         return ;
     if (var->map[(t_uint)new_position[1] / SQUARE_SIZE][(t_uint)new_position[0] / SQUARE_SIZE] != '1')
     {
-        var->player.position[0] = new_position[0];
+        direction = 1;
+        if (var->player.angle > 180)
+            direction = -1;
+        if ((new_position[0] /SQUARE_SIZE) * SQUARE_SIZE == new_position[0])
+            new_position[0] +=direction * 0.01;
+        if ((new_position[1] /SQUARE_SIZE) * SQUARE_SIZE == new_position[1])
+            new_position[1] +=direction * 0.01;
         var->player.position[1] = new_position[1];
+        var->player.position[0] = new_position[0];
     }
     else
         return ;
