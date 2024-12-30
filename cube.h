@@ -13,10 +13,11 @@
 #include "./MLX43/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cube" && alias cr="make && ./cube creepy.cube"
-//
+//  Resolution:	5120 x 2880 (5K/UHD+ - Ultra High Definition Plus)
+//   UI Looks like:	2560 x 1440
 #define SQUARE_SIZE 8
-#define WIDTH 1280 // 2560   //     1080
-#define HEIGHT 640 // 1280  //      896
+#define WIDTH 2560 // 2560   //     1080
+#define HEIGHT 1440 // 1280  //      896
 #define VIEW 63
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
