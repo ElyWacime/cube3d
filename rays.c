@@ -426,31 +426,29 @@ void one_ray_wall(t_var *var, t_ray *ray)
         // ra_wl.ofssetx = 1;
         if (ray->textures_index == 0)
         {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->height)) / CUBE_SIZE;
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
             if (ra_wl.correct_a > 0)
                 ra_wl.image_offset = (ra_wl.correct_a * var->east->width) / (ra_wl.wall_projection_height);
-
         }
         else if (ray->textures_index == 1)
         {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->height)) / CUBE_SIZE;
+            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
             if (ra_wl.correct_a > 0)
-                ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->north->height ;
-
+                ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->north->width ;
         }
         else if (ray->textures_index == 2)
         {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+            ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
             if (ra_wl.correct_a > 0)
                 ra_wl.image_offset = (ra_wl.correct_a * var->west->height) / (ra_wl.wall_projection_height);
-
         }
         else if (ray->textures_index == 3)
         {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+            ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
             if (ra_wl.correct_a > 0)
                 ra_wl.image_offset = (ra_wl.correct_a * var->south->height) / (ra_wl.wall_projection_height);
         }
+        
         while (ra_wl.idy < HEIGHT - ra_wl.a)
         {
             if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)

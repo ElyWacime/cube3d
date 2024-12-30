@@ -126,6 +126,6 @@ void    init_mini_map(t_var *var)
         tracker[1] += SQUARE_SIZE;
     }
     color_player(var, 0xFF0000FF);
-    // if (mlx_image_to_window(var->mlx, var->mini_map, 0, 0))
-    //     ft_error();
+    if (mlx_image_to_window(var->mlx, var->mini_map, 0, 0))
+        ft_error();
 }
