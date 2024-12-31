@@ -21,7 +21,7 @@
 #define VIEW 63
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-#define SPEED 2
+#define SPEED 5
 
 typedef unsigned int t_uint;
 
@@ -106,7 +106,10 @@ typedef struct s_var
     int         map_len;
     int         x_3d;
     int         y_3d;
-
+    int r;
+    int g;
+    int b;
+    int o;
     t_uint      mini_width;
     t_uint      mini_height;
     uint32_t    color_C;
