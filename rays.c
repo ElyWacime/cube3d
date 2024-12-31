@@ -510,5 +510,5 @@ void cast(t_var *var)
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
     init_mini_map_system(var);
-    draw_animated_sprite(var);
+    // draw_animated_sprite(var);
 }
