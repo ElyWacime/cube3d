@@ -334,9 +334,9 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         else
             ray->textures_index = 2;
         cor->h  = cor->distance_h;
-        // cor->line.by = cor->colision_h.y;
-        // cor->line.bx = cor->colision_h.x;
-        // draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
+        cor->line.by = cor->colision_h.y;
+        cor->line.bx = cor->colision_h.x;
+        draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
     }
     else if (ray->direction_y == 0)
     {
@@ -346,9 +346,9 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         else
             ray->textures_index = 3;
         cor->h  = cor->distance_v;
-        // cor->line.bx = cor->colision_v.x;
-        // cor->line.by = cor->colision_v.y;
-        // draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
+        cor->line.bx = cor->colision_v.x;
+        cor->line.by = cor->colision_v.y;
+        draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
@@ -360,17 +360,17 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         if (cor->distance_v < cor->distance_h)
         {
             cor->is_collision_horizontal = 0;
-            // cor->line.bx = cor->colision_v.x;
-            // cor->line.by = cor->colision_v.y;
-            // draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
+            cor->line.bx = cor->colision_v.x;
+            cor->line.by = cor->colision_v.y;
+            draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
         }
         else if (cor->distance_h < cor->distance_v)
         {
             cor->h  = cor->distance_h;
             ray->angle = my_fmod(ray->angle,360);
-            // cor->line.by = cor->colision_h.y;
-            // cor->line.bx = cor->colision_h.x;
-            // draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
+            cor->line.by = cor->colision_h.y;
+            cor->line.bx = cor->colision_h.x;
+            draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
         }
         else
         {
