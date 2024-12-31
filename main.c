@@ -8,15 +8,14 @@ void parse_arguments(char *arg)
     cube = ft_strnstr(arg, ".cub", ft_strlen(arg) + 1);
     if (!cube)
     {
-        printf("wrong file format!");
+        write(2, "wrong file format!", 18);
         exit(4);
     }
-    if (ft_strncmp(cube, ".cube", 5))
+    if (ft_strncmp(cube, ".cub", 5))
     {
-        printf("wrong file format!");
+        write(2, "wrong file format!", 18);
         exit(5);
     }
-
 }
 
 void    is_map_all_ones(char **map)
@@ -46,23 +45,16 @@ void parsing(int ac, char *av[], t_var *var)
     char **_map;
     int position[2];
     int zero_position[2];
-    char **to_print;
 
     if (ac != 2)
     {
-        printf("wrong number of arguments!");
+        write(1, "wrong number of arguments!", 26);
         exit(3);
     }
     parse_arguments(av[1]);
     free_double((void **)var->map);
     var->map = create_map(av[1], var);
     _map = strdup_double(var->map);
-    to_print = _map;
-    while (to_print && *to_print)
-    {
-        printf("%s\n", *to_print);
-        to_print++;
-    }
     get_players_position(var->map, position, var);
     // printf("B : player position: %d, %d\n", position[0], position[1]);
     var->player.position[0] = (position[1] * SQUARE_SIZE) + (SQUARE_SIZE /2);
@@ -89,12 +81,12 @@ int main(int ac, char *av[])
     var.colors = NULL;
     parsing(ac, av, &var);
     _init_window(&var);
+    var.mini_map = mlx_new_image(var.mlx, WIDTH, HEIGHT);
     init_mini_map(&var);
-    draw_vector(&var);
-    var.north =   mlx_load_png("./textures/rome1.png");
-    var.south =   mlx_load_png("./textures/rome2.png");
-    var.east =   mlx_load_png("./textures/rome3.png");
-    var.west =   mlx_load_png("./textures/rome4.png");
+    var.north =   mlx_load_png(var.textures[0] + 3);
+    var.south =   mlx_load_png(var.textures[1] + 3);
+    var.west =   mlx_load_png(var.textures[2] + 3);
+    var.east =   mlx_load_png(var.textures[3] + 3);
     cast(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_loop(var.mlx);

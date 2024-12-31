@@ -48,25 +48,6 @@ int strlen_double(void **ptr)
     return i;
 }
 
-void    print_map(t_var *var)
-{
-    int i;
-    int j;
-
-    i = -1;
-    printf("###########\n");
-    while (var->map[++i])
-    {
-        j = -1;
-        while (var->map[i][++j])
-        {
-            printf("%c", var->map[i][j]);
-        }
-        printf("\n");
-    }
-    printf("###########\n");
-}
-
 char    **strdup_double(char **str)
 {
     char **ret;
@@ -154,25 +135,4 @@ void    draw_line(t_line line, t_var *var, t_uint color)
             y -= (fabs(line.by - line.ay) / distance);
         }
     }
-}
-
-void    color_player(t_var *var, int color)
-{
-    t_uint i;
-    t_uint j;
-
-    i = var->player.position[1];
-    while (i < var->player.position[1] + SQUARE_SIZE && i < var->mini_height)
-    {
-        j = var->player.position[0];
-        while (j < var->player.position[0] + SQUARE_SIZE && j < var->mini_width)
-        {
-            if (i >= (var->player.position[1]) && i < var->player.position[1] + SQUARE_SIZE / 16
-                && j >= var->player.position[0] && j < var->player.position[0] + SQUARE_SIZE / 16)
-                mlx_put_pixel(var->mini_map, j, i, color);
-            j++;
-        }
-        i++;
-    }
-    var->player.direction = var->player.direction;
 }
