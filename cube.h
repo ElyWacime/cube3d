@@ -90,10 +90,10 @@ typedef struct s_var
 {
     t_player    player;
     mlx_t       *mlx;
-    mlx_t       *mlx_3d;
     mlx_image_t *img;
     mlx_image_t *img_3d;
     mlx_image_t *mini_map;
+    mlx_image_t *mini_map_system; // image
     mlx_texture_t *north;
     mlx_texture_t *east;
     mlx_texture_t *west;
@@ -133,7 +133,6 @@ void    rotate_player_left(t_var *);
 */
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
-void    color_player(t_var *var, int color);
 
 /*
 ** init_map.c
@@ -146,8 +145,6 @@ uint32_t    transform_color_to_hexa(int *);
 ** init_mini_map.c
 */
 void    init_mini_map(t_var *);
-void    create_mini_map_image(t_var *var);
-void    draw_vector(t_var *var);
 
 /*
 ** utils.c
@@ -157,12 +154,10 @@ void    ft_error(void);
 void    free_double(void**);
 char    **strdup_double(char**);
 int     strlen_double(void**);
-void    print_map(t_var *var);
 t_uint  px_to_map_grid(t_uint x);
 float  calculate_distance(float, float, float, float);
 float  from_rad_to_deg(float);
 float  from_deg_to_rad(float);
-int     check_if_wall(float , float , t_var *);
 void    draw_line(t_line , t_var *, t_uint);
 void    quit_program(t_var *);
 /*
@@ -187,4 +182,10 @@ size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
+
+/*
+** mini_map_system.c
+*/
+void init_mini_map_system(t_var *var);
+void draw_animated_sprite(t_var *var);
 #endif

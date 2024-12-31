@@ -72,7 +72,7 @@ int main(int ac, char *av[])
 
     var.img = NULL;
     var.mlx = NULL;
-    var.mlx_3d = NULL;
+    // var.mlx_3d = NULL;
     var.img = NULL;
     var.img_3d = NULL;
     var.mini_map = NULL;
@@ -83,6 +83,7 @@ int main(int ac, char *av[])
     _init_window(&var);
     var.mini_map = mlx_new_image(var.mlx, WIDTH, HEIGHT);
     init_mini_map(&var);
+    // init_mini_map_system(&var);
     var.north =   mlx_load_png(var.textures[0] + 3);
     var.south =   mlx_load_png(var.textures[1] + 3);
     var.west =   mlx_load_png(var.textures[2] + 3);

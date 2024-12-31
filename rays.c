@@ -426,7 +426,6 @@ void one_ray_wall(t_var *var, t_ray *ray)
     {
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
-        // ra_wl.ofssetx = 1;
         if (ray->textures_index == 0)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
@@ -471,8 +470,8 @@ void one_ray_wall(t_var *var, t_ray *ray)
         }
         ++var->x_3d;
     }
+    // init_mini_map_system(var);
 }
-
 
 void cast(t_var *var)
 {
@@ -488,7 +487,6 @@ void cast(t_var *var)
     angle = my_fmod(var->player.angle,360);
     p.x = var->player.position[0];
     p.y = var->player.position[1];
-    // // printf("player position : %f, %f\n",p.x,p.y);
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
     ray.start = p;
@@ -511,6 +509,6 @@ void cast(t_var *var)
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    range_2(var);
+    init_mini_map_system(var);
+    draw_animated_sprite(var);
 }

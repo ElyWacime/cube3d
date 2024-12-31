@@ -2,8 +2,6 @@
 
 int check_if_wall_up_movement(t_var *var, t_point new_position)
 {
-    // static int i;
-    // printf("%f\n", var->player.angle);
     if (var->player.angle == 0)
     {
         if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x + 1)] != '1')
@@ -12,11 +10,7 @@ int check_if_wall_up_movement(t_var *var, t_point new_position)
     else if (var->player.angle == 90)
     {
         if (var->map[px_to_map_grid(new_position.y - 1)][px_to_map_grid(new_position.x)] != '1')
-        {
-            // i += 1;
-            // printf("static int = %d\tpalyer x = %d, player y = %d\tfloat value = %f\n", i, px_to_map_grid(new_position.x - (SQUARE_SIZE / 4)), px_to_map_grid(new_position.y), new_position.y - (SQUARE_SIZE / 4));
             return 1;
-        }
     }
     else if (var->player.angle == 180)
     {
@@ -32,15 +26,12 @@ int check_if_wall_up_movement(t_var *var, t_point new_position)
     {
         if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != '1')
             return 1;
-    // printf("%f\n",
     }
     return 0;
 }
 
 int check_if_wall_down_movement(t_var *var, t_point new_position)
 {
-    // static int i;
-    // printf("%f\n", var->player.angle);
     if (var->player.angle == 0)
     {
         if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x - 1)] != '1')
@@ -49,11 +40,7 @@ int check_if_wall_down_movement(t_var *var, t_point new_position)
     else if (var->player.angle == 90)
     {
         if (var->map[px_to_map_grid(new_position.y + 1)][px_to_map_grid(new_position.x)] != '1')
-        {
-            // i += 1;
-            // printf("static int = %d\tpalyer x = %d, player y = %d\tfloat value = %f\n", i, px_to_map_grid(new_position.x - (SQUARE_SIZE / 4)), px_to_map_grid(new_position.y), new_position.y - (SQUARE_SIZE / 4));
             return 1;
-        }
     }
     else if (var->player.angle == 180)
     {
@@ -75,25 +62,19 @@ int check_if_wall_down_movement(t_var *var, t_point new_position)
 
 int check_if_wall_left_movement(t_var *var, t_point new_position)
 {
-    // static int i;
-    // printf("%f\n", var->player.angle);
     if (var->player.angle == 0)
     {
-        if (var->map[px_to_map_grid(new_position.y + 1)][px_to_map_grid(new_position.x)] != '1')
+        if (var->map[px_to_map_grid(new_position.y - 1)][px_to_map_grid(new_position.x)] != '1')
             return 1;
     }
     else if (var->player.angle == 90)
     {
         if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x - 1)] != '1')
-        {
-            // i += 1;
-            // printf("static int = %d\tpalyer x = %d, player y = %d\tfloat value = %f\n", i, px_to_map_grid(new_position.x - (SQUARE_SIZE / 4)), px_to_map_grid(new_position.y), new_position.y - (SQUARE_SIZE / 4));
             return 1;
-        }
     }
     else if (var->player.angle == 180)
     {
-        if (var->map[px_to_map_grid(new_position.y - 1)][px_to_map_grid(new_position.x)] != '1')
+        if (var->map[px_to_map_grid(new_position.y + 1)][px_to_map_grid(new_position.x)] != '1')
             return 1;
     }
     else if (var->player.angle == 270)
@@ -111,25 +92,19 @@ int check_if_wall_left_movement(t_var *var, t_point new_position)
 
 int check_if_wall_right_movement(t_var *var, t_point new_position)
 {
-    // static int i;
-    // printf("%f\n", var->player.angle);
     if (var->player.angle == 0)
     {
-        if (var->map[px_to_map_grid(new_position.y - 1)][px_to_map_grid(new_position.x)] != '1')
+        if (var->map[px_to_map_grid(new_position.y + 1)][px_to_map_grid(new_position.x)] != '1')
             return 1;
     }
     else if (var->player.angle == 90)
     {
         if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x + 1)] != '1')
-        {
-            // i += 1;
-            // printf("static int = %d\tpalyer x = %d, player y = %d\tfloat value = %f\n", i, px_to_map_grid(new_position.x - (SQUARE_SIZE / 4)), px_to_map_grid(new_position.y), new_position.y - (SQUARE_SIZE / 4));
             return 1;
-        }
     }
     else if (var->player.angle == 180)
     {
-        if (var->map[px_to_map_grid(new_position.y + 1)][px_to_map_grid(new_position.x)] != '1')
+        if (var->map[px_to_map_grid(new_position.y - 1)][px_to_map_grid(new_position.x)] != '1')
             return 1;
     }
     else if (var->player.angle == 270)
