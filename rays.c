@@ -185,6 +185,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
+        printf("v == -1\n");
         colison.x = next_px_in_grid(ray->start.x,ray->direction_x);
         colison.y = ray->start.y - (fabs(colison.x-ray->start.x) * tn);
         skip_x = SQUARE_SIZE *  ray->direction_x;
@@ -197,7 +198,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
         skip_x = SQUARE_SIZE *  ray->direction_x;
         skip_y = SQUARE_SIZE / tn;
     }
-    while ((0 <= colison.x && colison.x < WIDTH && 0 <= colison.y && colison.y < HEIGHT))
+    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_height  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_v(colison, ray->direction, var))
             return colison;
@@ -222,6 +223,8 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
+        printf("H == -1\n");
+
         horizon.y = ray->start.y;
         colison.y = next_px_in_grid(ray->start.y, ray->direction_y);
         colison.x = ray->start.x + (ray->direction_x * ((fabs(horizon.y - colison.y) / tn)));
@@ -238,7 +241,7 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
         skip_x = (SQUARE_SIZE * tn) * ray->direction_x;
         skip_y = SQUARE_SIZE * ray->direction_y;
     }
-    while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
+    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_height  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_h(colison, ray->direction, var))
             return colison;
@@ -377,7 +380,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             // printf("Vertical === Horizontal\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
+            draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
         }
     }
     cor->distance_to_wall =  cor->h;
