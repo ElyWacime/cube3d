@@ -72,7 +72,6 @@ int main(int ac, char *av[])
 
     var.img = NULL;
     var.mlx = NULL;
-    // var.mlx_3d = NULL;
     var.img = NULL;
     var.img_3d = NULL;
     var.mini_map = NULL;

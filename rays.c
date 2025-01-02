@@ -460,6 +460,11 @@ void one_ray_wall(t_var *var, t_ray *ray)
         {
             if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
             {
+                if (ra_wl.idx < 100 && ra_wl.idy < 100)
+                {
+                    ++(ra_wl.idy);
+                    continue;
+                }
                 if (ray->textures_index == 0)
                     mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,ra_wl.ofssetx));
                 else if (ray->textures_index == 1)

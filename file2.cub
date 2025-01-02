@@ -1,0 +1,12 @@
+NO ./textures/rome2.png
+SO ./textures/rome1.png
+WE ./textures/rome4.png
+EA ./textures/rome3.png
+
+F 0,173,173
+C 0,0,0
+
+    11111111111111
+    100011000001
+    111110000W11
+   11111111111111111111

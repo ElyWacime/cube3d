@@ -251,6 +251,8 @@ void    _init_window(t_var *var)
                         mlx_put_pixel(var->img, i, j, var->color_F);
                         continue ;
                     }
+                    if (i < 100 && j < 100)
+                        continue;
                     mlx_put_pixel(var->img, i, j, var->color_C);
                 }
             }
