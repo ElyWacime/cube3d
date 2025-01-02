@@ -48,25 +48,6 @@ int strlen_double(void **ptr)
     return i;
 }
 
-void    print_map(t_var *var)
-{
-    int i;
-    int j;
-
-    i = -1;
-    printf("###########\n");
-    while (var->map[++i])
-    {
-        j = -1;
-        while (var->map[i][++j])
-        {
-            printf("%c", var->map[i][j]);
-        }
-        printf("\n");
-    }
-    printf("###########\n");
-}
-
 char    **strdup_double(char **str)
 {
     char **ret;
@@ -95,25 +76,25 @@ t_uint px_to_map_grid(t_uint x)
     return (x / SQUARE_SIZE);
 }
 
-double  calculate_distance(double a, double b, double a1, double b1)
+float  calculate_distance(float a, float b, float a1, float b1)
 {
     return (sqrt(((a - a1) * (a - a1)) + ((b - b1) * (b - b1))));
 }
 
-double  from_rad_to_deg(double val)
+float  from_rad_to_deg(float val)
 {
     return ((val * 180) / PI);
 }
 
-double  from_deg_to_rad(double val)
+float  from_deg_to_rad(float val)
 {
     return ((val * PI) / 180);
 }
 void    draw_line(t_line line, t_var *var, t_uint color)
 {
-    double distance;
-    double x;
-    double y;
+    float distance;
+    float x;
+    float y;
 
     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
     x = line.ax;
@@ -154,25 +135,4 @@ void    draw_line(t_line line, t_var *var, t_uint color)
             y -= (fabs(line.by - line.ay) / distance);
         }
     }
-}
-
-void    color_player(t_var *var, int color)
-{
-    t_uint i;
-    t_uint j;
-
-    i = var->player.position[1];
-    while (i < var->player.position[1] + SQUARE_SIZE && i < var->mini_height)
-    {
-        j = var->player.position[0];
-        while (j < var->player.position[0] + SQUARE_SIZE && j < var->mini_width)
-        {
-            if (i >= (var->player.position[1]) && i < var->player.position[1] + SQUARE_SIZE / 16
-                && j >= var->player.position[0] && j < var->player.position[0] + SQUARE_SIZE / 16)
-                mlx_put_pixel(var->mini_map, j, i, color);
-            j++;
-        }
-        i++;
-    }
-    var->player.direction = var->player.direction;
 }
