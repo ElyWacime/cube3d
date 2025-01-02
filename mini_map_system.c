@@ -34,7 +34,7 @@ void init_mini_map_system(t_var *var)
     t_uint i = (t_uint)start.x, j = (t_uint)start.y;
     printf("start.x = %f\tstart.y = %f\tend.x = %f\tend.y = %f\n", start.x, start.y, end.x, end.y);
     printf("palyer[0] = %f\tplayer[1] = %f\n", var->player.position[0], var->player.position[1]);
-    printf("%zu\t%zu\n", px_to_map_grid(end.x), px_to_map_grid(end.y));
+    printf("%u\t%u\n", px_to_map_grid(end.x), px_to_map_grid(end.y));
     while (j++ < end.y && map_y < 100)
     {
         i = start.x;
@@ -43,8 +43,8 @@ void init_mini_map_system(t_var *var)
             printf("#####################################\n");
             printf("start.x = %f\tstart.y = %f\tend.x = %f\tend.y = %f\n", start.x, start.y, end.x, end.y);
             printf("palyer[0] = %f\tplayer[1] = %f\n", var->player.position[0], var->player.position[1]);
-            printf("i = %zu\tj = %zu\t\ti.to.px = %zu\tj.to.px = %zu\n", i, j, px_to_map_grid(i), px_to_map_grid(j));
-            printf("%zu\t%zu\n", px_to_map_grid(end.x), px_to_map_grid(end.y));
+            printf("i = %u\tj = %u\t\ti.to.px = %u\tj.to.px = %u\n", i, j, px_to_map_grid(i), px_to_map_grid(j));
+            printf("%u\t%u\n", px_to_map_grid(end.x), px_to_map_grid(end.y));
             if (var->map[px_to_map_grid(j)][px_to_map_grid(i)] != '1')
                 mlx_put_pixel(var->img_3d, map_x, map_y, 0x000000FF);
             else

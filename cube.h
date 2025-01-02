@@ -110,6 +110,11 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
+
+    t_uint      r;
+    t_uint      g;
+    t_uint      b;
+    t_uint      o;
 }   t_var;
 
 /*

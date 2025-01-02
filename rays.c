@@ -170,6 +170,12 @@ t_point rotate_by(t_point center, t_point m, float angle)
     z.y = ((m.y - center.y)*cos(angle)) + ((m.x - center.x)*sin(angle)) + center.y;
     return z;
 }
+int max(int a,int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
 
 t_point cast_vertical(t_var *var,t_ray *ray)
 {
@@ -198,7 +204,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
         skip_x = SQUARE_SIZE *  ray->direction_x;
         skip_y = SQUARE_SIZE / tn;
     }
-    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_height  && colison.y < var->mini_height))))
+    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_width  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_v(colison, ray->direction, var))
             return colison;
@@ -223,8 +229,6 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
-        // printf("H == -1\n");
-
         horizon.y = ray->start.y;
         colison.y = next_px_in_grid(ray->start.y, ray->direction_y);
         colison.x = ray->start.x + (ray->direction_x * ((fabs(horizon.y - colison.y) / tn)));
@@ -241,7 +245,7 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
         skip_x = (SQUARE_SIZE * tn) * ray->direction_x;
         skip_y = SQUARE_SIZE * ray->direction_y;
     }
-    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_height  && colison.y < var->mini_height))))
+    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < var->mini_width  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_h(colison, ray->direction, var))
             return colison;
@@ -377,7 +381,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
         else
         {
-            // // printf("Vertical === Horizontal\n");
+            // printf("Vertical === Horizontal\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
             draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
@@ -426,6 +430,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
     {
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
+        // ra_wl.ofssetx = 1;
         if (ray->textures_index == 0)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
@@ -470,8 +475,8 @@ void one_ray_wall(t_var *var, t_ray *ray)
         }
         ++var->x_3d;
     }
-    // init_mini_map_system(var);
 }
+
 
 void cast(t_var *var)
 {
@@ -487,6 +492,7 @@ void cast(t_var *var)
     angle = my_fmod(var->player.angle,360);
     p.x = var->player.position[0];
     p.y = var->player.position[1];
+    // printf("player position : %f, %f\n",p.x,p.y);
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
     ray.start = p;
@@ -509,6 +515,6 @@ void cast(t_var *var)
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    init_mini_map_system(var);
-    // draw_animated_sprite(var);
+    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
+    // range_2(var);
 }
