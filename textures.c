@@ -19,7 +19,7 @@ size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
     return   var->r|
             var->g |
             var->b |
-            var->o;
+            127;
 }
 
 size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
@@ -40,7 +40,7 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
         return   var->r|
             var->g |
             var->b |
-            var->o;
+            127;
 }
 
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
@@ -60,7 +60,7 @@ size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
         return   var->r|
             var->g |
             var->b |
-            var->o;
+            127;
     // return  var->west->pixels[ra_wl->pix + 3] |  (var->west->pixels[ra_wl->pix + 2] << 8) | (var->west->pixels[ra_wl->pix + 1] << 16) |  (var->west->pixels[ra_wl->pix + 0] << 24);
 }
 
@@ -81,6 +81,6 @@ size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
         return   var->r|
             var->g |
             var->b |
-            var->o;
+            127;
     // return  var->south->pixels[ra_wl->pix + 3] |  (var->south->pixels[ra_wl->pix + 2] << 8) | (var->south->pixels[ra_wl->pix + 1] << 16) |  (var->south->pixels[ra_wl->pix + 0] << 24);
 }
