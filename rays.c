@@ -265,8 +265,8 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 
 //     v.x = var->player.vect[0];
 //     v.y = var->player.vect[1];
-//     p.x = var->player.position[0];
-//     p.y = var->player.position[1];
+//     p.x = var->player.position.x;
+//     p.y = var->player.position.y;
 //     r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
 //     line.ax = p.x;
 //     line.ay = p.y;
@@ -490,8 +490,8 @@ void cast(t_var *var)
     
     step = (1.0 * VIEW ) / WIDTH;
     angle = my_fmod(var->player.angle,360);
-    p.x = var->player.position[0];
-    p.y = var->player.position[1];
+    p.x = var->player.position.x;
+    p.y = var->player.position.y;
     // printf("player position : %f, %f\n",p.x,p.y);
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];

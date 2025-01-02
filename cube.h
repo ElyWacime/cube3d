@@ -68,10 +68,10 @@ typedef struct s_line
 
 typedef struct s_player
 {
-    float  position[2];
-    float  vect[2];
-    char    direction;
-    float  angle;
+    t_point     position;
+    float       vect[2];
+    char        direction;
+    float       angle;
 }   t_player;
 
 typedef struct s_cords
