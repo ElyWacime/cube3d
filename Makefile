@@ -4,6 +4,7 @@ FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 FLAGS = -Wall -Wextra 
 FLAGS = -fsanitize=address -g -O3
 FLAGS = -g -O3
+FLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 CFILES = rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c textures.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
@@ -16,8 +17,8 @@ INCLUDES = MLX43/build/libmlx42.a libft2/libft.a  MLX43/build/libglfw3.a -Iinclu
 
 all : ${NAME}
 ${NAME}:${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
-# ${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX}  -Iinclude -ldl -lglfw  -lm -o ${NAME}
+	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX}  -Iinclude -ldl -lglfw  -lm -o ${NAME}
+# ${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
 # ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}:
