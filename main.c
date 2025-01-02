@@ -59,7 +59,7 @@ void parsing(int ac, char *av[], t_var *var)
     // printf("B : player position: %d, %d\n", position[0], position[1]);
     var->player.position[0] = (position[1] * SQUARE_SIZE) + (SQUARE_SIZE /2);
     var->player.position[1] = (position[0] * SQUARE_SIZE) + (SQUARE_SIZE /2);
-    // printf("a : player position: %f, %f\n", var->player.position[0], var->player.position[1]);
+    printf("a : player position: %f, %f\n", var->player.position[0], var->player.position[1]);
     while (is_still_there_zeros(_map, zero_position))
         flood_fill(_map, zero_position[1], zero_position[0]);
     is_map_all_ones(_map);
@@ -83,12 +83,12 @@ int main(int ac, char *av[])
     _init_window(&var);
     var.mini_map = mlx_new_image(var.mlx, WIDTH, HEIGHT);
     init_mini_map(&var);
-    // init_mini_map_system(&var);
     var.north =   mlx_load_png(var.textures[0] + 3);
     var.south =   mlx_load_png(var.textures[1] + 3);
     var.west =   mlx_load_png(var.textures[2] + 3);
     var.east =   mlx_load_png(var.textures[3] + 3);
     cast(&var);
+    // init_mini_map_system(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_loop(var.mlx);
     return 0;

@@ -256,40 +256,40 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 }
 
 // maxim left and right rays
-void range_2(t_var *var)
-{
-    t_point v;
-    t_point p;
-    t_point r;
-    t_line line;
+// void range_2(t_var *var)
+// {
+//     t_point v;
+//     t_point p;
+//     t_point r;
+//     t_line line;
 
-    v.x = var->player.vect[0];
-    v.y = var->player.vect[1];
-    p.x = var->player.position[0];
-    p.y = var->player.position[1];
-    r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
-    line.ax = p.x;
-    line.ay = p.y;
-    line.bx = r.x;
-    line.by = r.y;
-    // draw_line5(line,var,0XA020F0A0);
-    draw_line5(line,var,0xFF20F0FF);
-    r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
-    line.bx = r.x;
-    line.by = r.y;
-    draw_line5(line,var,0xFF20F0FF);
-}
+//     v.x = var->player.vect[0];
+//     v.y = var->player.vect[1];
+//     p.x = var->player.position[0];
+//     p.y = var->player.position[1];
+//     r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
+//     line.ax = p.x;
+//     line.ay = p.y;
+//     line.bx = r.x;
+//     line.by = r.y;
+//     // draw_line5(line,var,0XA020F0A0);
+//     draw_line5(line,var,0xFF20F0FF);
+//     r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
+//     line.bx = r.x;
+//     line.by = r.y;
+//     draw_line5(line,var,0xFF20F0FF);
+// }
 
-void one_ray(t_var *var, t_ray *ray ,unsigned int color)
-{
-    t_line line;
+// void one_ray(t_var *var, t_ray *ray ,unsigned int color)
+// {
+//     t_line line;
 
-    line.ax = ray->start.x;
-    line.ay = ray->start.y;
-    line.bx = ray->target.x;
-    line.by = ray->target.y;
-    draw_line5(line,var,color);
-}
+//     line.ax = ray->start.x;
+//     line.ay = ray->start.y;
+//     line.bx = ray->target.x;
+//     line.by = ray->target.y;
+//     draw_line5(line,var,color);
+// }
 
 void set_direciton(t_ray *ray)
 {
@@ -515,6 +515,4 @@ void cast(t_var *var)
     }
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    // range_2(var);
 }

@@ -20,7 +20,7 @@
 #define VIEW 63
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-#define SPEED 2
+#define SPEED 1.5
 
 typedef unsigned int t_uint;
 

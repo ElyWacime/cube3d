@@ -42,6 +42,7 @@ void    rotate_player_right(t_var *var)
     init_mini_map(var);
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
+    init_mini_map_system(var);
 }
 
 void    rotate_player_left(t_var *var)
@@ -58,4 +59,5 @@ void    rotate_player_left(t_var *var)
     init_mini_map(var);
     draw_line(vector, var, 0x00FF00FF);
     cast(var);
+    init_mini_map_system(var);
 }
