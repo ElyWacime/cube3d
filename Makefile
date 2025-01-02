@@ -10,12 +10,13 @@ LIBFT = ./libft2/libft.a
 MLX = ./mlx/build/libmlx42.a
 MLX_LINUX = ./MLX43/build/libmlx42.a
 GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
+INCLUDES = MLX43/build/libmlx42.a libft2/libft.a  MLX43/build/libglfw3.a -Iinclude -lm -framework Cocoa -framework OpenGL -framework IOKit
 # GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 
 all : ${NAME}
-
 ${NAME}:${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw  -lm -o ${NAME}
+	${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
+# ${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw  -lm -o ${NAME}
 # ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
 ${LIBFT}:
