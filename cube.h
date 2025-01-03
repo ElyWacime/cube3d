@@ -149,7 +149,7 @@ uint32_t    transform_color_to_hexa(int *);
 /*
 ** init_mini_map.c
 */
-void    init_mini_map(t_var *);
+void    init_img3d(t_var *);
 unsigned int   calculate_mini_map_width(t_var *var);
 
 /*

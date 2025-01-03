@@ -476,7 +476,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
             }
             else 
                 break;
-            ++(ra_wl.idy);
+            ++(ra_wl.idy); 
         }
         ++var->x_3d;
     }

@@ -142,6 +142,7 @@ void    extract_F(t_var *var)
     _colors[1] = ft_atoi(color[1]);
     _colors[2] = ft_atoi(color[2]);
     free_double((void**)color);
+    free(color);
     var->color_C = transform_color_to_hexa(_colors);
 }
 
@@ -164,6 +165,7 @@ void    extract_C(t_var *var)
     _colors[1] = ft_atoi(color[1]);
     _colors[2] = ft_atoi(color[2]);
     free_double((void**)color);
+    free(color);
     var->color_F = transform_color_to_hexa(_colors);
 }
 
