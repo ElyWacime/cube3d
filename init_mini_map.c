@@ -55,13 +55,10 @@ unsigned int   calculate_mini_map_width(t_var *var)
     return width;
 }
 
-void    init_mini_map(t_var *var)
+void    init_img3d(t_var *var)
 {
     var->mini_width = calculate_mini_map_width(var) * SQUARE_SIZE;
     var->mini_height = (t_uint)(strlen_double((void **)var->map)) * SQUARE_SIZE;
-    // var->mini_map = mlx_new_image(var->mlx, var->mini_width, var->mini_height);
-    // if (!var->mini_map)
-    //     ft_error();
     if (var->img_3d)
         mlx_delete_image(var->mlx, var->img_3d);
     var->img_3d = mlx_new_image(var->mlx, WIDTH, HEIGHT);

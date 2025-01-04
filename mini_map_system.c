@@ -20,11 +20,11 @@ void init_mini_map_system(t_var *var)
     if (var->player.position.x + 50 > mini_width)
         end.x = var->player.position.x + 50;
     else
-        end.x = mini_width - 1;
+        end.x = mini_width;
     if (var->player.position.y + 50 > mini_height)
         end.y = var->player.position.y + 50;
     else
-        end.y = mini_height - 1;
+        end.y = mini_height;
     t_uint i = (t_uint)start.x, j = (t_uint)start.y;
     // printf("start.x = %f\tstart.y = %f\tend.x = %f\tend.y = %f\n", start.x, start.y, end.x, end.y);
     // printf("palyer[0] = %f\tplayer[1] = %f\n", var->player.position.x, var->player.position.y);

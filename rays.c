@@ -272,12 +272,12 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 //     line.ay = p.y;
 //     line.bx = r.x;
 //     line.by = r.y;
-//     // draw_line5(line,var,0XA020F0A0);
-//     draw_line5(line,var,0xFF20F0FF);
+//     // //draw_line5(line,var,0XA020F0A0);
+//     //draw_line5(line,var,0xFF20F0FF);
 //     r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
 //     line.bx = r.x;
 //     line.by = r.y;
-//     draw_line5(line,var,0xFF20F0FF);
+//     //draw_line5(line,var,0xFF20F0FF);
 // }
 
 // void one_ray(t_var *var, t_ray *ray ,unsigned int color)
@@ -288,7 +288,7 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 //     line.ay = ray->start.y;
 //     line.bx = ray->target.x;
 //     line.by = ray->target.y;
-//     draw_line5(line,var,color);
+//     //draw_line5(line,var,color);
 // }
 
 void set_direciton(t_ray *ray)
@@ -343,7 +343,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         cor->h  = cor->distance_h;
         cor->line.by = cor->colision_h.y;
         cor->line.bx = cor->colision_h.x;
-        draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
+        //draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
     }
     else if (ray->direction_y == 0)
     {
@@ -355,7 +355,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         cor->h  = cor->distance_v;
         cor->line.bx = cor->colision_v.x;
         cor->line.by = cor->colision_v.y;
-        draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
+        //draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
@@ -369,7 +369,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             cor->is_collision_horizontal = 0;
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
+            //draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
         }
         else if (cor->distance_h < cor->distance_v)
         {
@@ -377,14 +377,14 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             ray->angle = my_fmod(ray->angle,360);
             cor->line.by = cor->colision_h.y;
             cor->line.bx = cor->colision_h.x;
-            draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
+            //draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
         }
         else
         {
             // printf("Vertical === Horizontal\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
+            //draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
         }
     }
     cor->distance_to_wall =  cor->h;
@@ -477,7 +477,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
             }
             else 
                 break;
-            ++(ra_wl.idy);
+            ++(ra_wl.idy); 
         }
         ++var->x_3d;
     }
@@ -504,7 +504,7 @@ void cast(t_var *var)
     // printf("player x = %f y = %f\n",p.x,p.y);
     ray.start = p;
     ray.target = v;
-    r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
+    r = rotate_by(ray.start, v, - from_deg_to_rad(VIEW / 2));
     ray.angle = angle + (VIEW / 2);
     ray.angle = my_fmod(ray.angle , 360);
     i = 0;

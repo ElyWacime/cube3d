@@ -3,8 +3,10 @@
 void    quit_program(t_var *var)
 {
     free_double((void **)var->map);
-    mlx_delete_image(var->mlx, var->mini_map);
-    mlx_close_window(var->mlx);
+    free(var->map);
+    // mlx_delete_image(var->mlx, var->mini_map);
+    // mlx_close_window(var->mlx);
+    mlx_terminate(var->mlx);
     exit(0);
 }
 
