@@ -106,6 +106,8 @@ int check_if_wall_h(t_point start, t_point direction, t_var *var)
             || ft_isspace(var->map[row][col - 1])
             ); 
         }
+        if (var->map[row][col] == 'P')
+            return DOOR;
         return (var->map[row][col] == '1'
             || var->map[row][col] == '\0'
             || ft_isspace(var->map[row][col])
@@ -133,6 +135,8 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
             || ft_isspace(var->map[row - 1][col])
             ); 
         }
+        if (var->map[row][col] == 'P')
+            return DOOR;
         return (var->map[row][col] == '1'
             || var->map[row][col] == '\0'
             || ft_isspace(var->map[row][col])
@@ -207,7 +211,10 @@ t_point cast_vertical(t_var *var,t_ray *ray)
     while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_width  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_v(colison, ray->direction, var))
+        {
+            ray->wall_or_door = check_if_wall_v(colison, ray->direction, var);
             return colison;
+        }
         colison.x += skip_x;
         colison.y += skip_y;
     }
@@ -248,48 +255,15 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
     while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < var->mini_width  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_h(colison, ray->direction, var))
+        {
+            ray->wall_or_door = check_if_wall_h(colison, ray->direction, var);
             return colison;
+        }
         colison.x += skip_x;
         colison.y += skip_y;
     }
     return colison;
 }
-
-// maxim left and right rays
-// void range_2(t_var *var)
-// {
-//     t_point v;
-//     t_point p;
-//     t_point r;
-//     t_line line;
-
-//     v.x = var->player.vect[0];
-//     v.y = var->player.vect[1];
-//     p.x = var->player.position.x;
-//     p.y = var->player.position.y;
-//     r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
-//     line.ax = p.x;
-//     line.ay = p.y;
-//     line.bx = r.x;
-//     line.by = r.y;
-//     // //draw_line5(line,var,0XA020F0A0);
-//     //draw_line5(line,var,0xFF20F0FF);
-//     r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
-//     line.bx = r.x;
-//     line.by = r.y;
-//     //draw_line5(line,var,0xFF20F0FF);
-// }
-
-// void one_ray(t_var *var, t_ray *ray ,unsigned int color)
-// {
-//     t_line line;
-
-//     line.ax = ray->start.x;
-//     line.ay = ray->start.y;
-//     line.bx = ray->target.x;
-//     line.by = ray->target.y;
-//     //draw_line5(line,var,color);
-// }
 
 void set_direciton(t_ray *ray)
 {
@@ -388,7 +362,9 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
     }
     cor->distance_to_wall =  cor->h;
-    if (cor->is_collision_horizontal == 0)
+    if (ray->wall_or_door == DOOR)
+        ray->textures_index = 4;
+    else if (cor->is_collision_horizontal == 0)
     {
         if ((270 < ray->angle && ray->angle < 360) ||
             (0 < ray->angle && ray->angle < 90))
@@ -432,7 +408,13 @@ void one_ray_wall(t_var *var, t_ray *ray)
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
         // ra_wl.ofssetx = 1;
-        if (ray->textures_index == 0)
+        if (ray->textures_index == 4)
+        {
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->door->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->door->width) / (ra_wl.wall_projection_height);
+        }
+        else if (ray->textures_index == 0)
         {
             ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
             if (ra_wl.correct_a > 0)
@@ -466,7 +448,10 @@ void one_ray_wall(t_var *var, t_ray *ray)
                     ++(ra_wl.idy);
                     continue;
                 }
-                if (ray->textures_index == 0)
+                // printf("%d\t%d\n", px_to_map_grid(ra_wl.idy), px_to_map_grid(ra_wl.idy));
+                if (ray->textures_index == 4)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_v(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 0)
                     mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,ra_wl.ofssetx));
                 else if (ray->textures_index == 1)
                     mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,ra_wl.ofssetx));

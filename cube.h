@@ -15,6 +15,7 @@
 //alias cv="make && ./cube file.cube" && alias cr="make && ./cube creepy.cube"
 //
 #define SQUARE_SIZE 8
+#define DOOR 7
 #define WIDTH 1280 // 2560   //     1080
 #define HEIGHT 640 // 1280  //      896
 #define VIEW 63
@@ -56,6 +57,7 @@ typedef struct s_ray
     float angle;
     float direction_x;
     float direction_y;
+    int wall_or_door;
 }   t_ray;
 
 typedef struct s_line
@@ -94,10 +96,13 @@ typedef struct s_var
     mlx_image_t *img_3d;
     mlx_image_t *mini_map;
     mlx_image_t *mini_map_system; // image
+
     mlx_texture_t *north;
     mlx_texture_t *east;
     mlx_texture_t *west;
     mlx_texture_t *south;
+    mlx_texture_t *door;
+
     char        **map;
     char        **textures;
     char        **colors;
@@ -187,6 +192,7 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
 
 /*
@@ -194,4 +200,5 @@ float my_fmod(float theta,int mod);
 */
 void init_mini_map_system(t_var *var);
 void draw_animated_sprite(t_var *var);
+
 #endif

@@ -65,6 +65,27 @@ void parsing(int ac, char *av[], t_var *var)
     free(_map);
 }
 
+void check_for_door_image(t_var *var)
+{
+    int fd;
+
+    fd = open("./textures/door.png", O_RDONLY);
+    if (fd < 1)
+        quit_program(var);
+}
+
+void print_map(t_var var)
+{
+    int len;
+    len = strlen_double((void**)var.map);
+    for (int i = 0;i<len;i++)
+    {
+        for (int j=0;var.map[i][j];j++)
+            printf("%c", var.map[i][j]);
+        printf("\n");
+    }
+}
+
 int main(int ac, char *av[])
 {
     t_var var;
@@ -85,6 +106,9 @@ int main(int ac, char *av[])
     var.south =   mlx_load_png(var.textures[1] + 3);
     var.west =   mlx_load_png(var.textures[2] + 3);
     var.east =   mlx_load_png(var.textures[3] + 3);
+    check_for_door_image(&var);
+    var.door = mlx_load_png("./textures/door.png");
+    print_map(var);
     cast(&var);
     init_mini_map_system(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
