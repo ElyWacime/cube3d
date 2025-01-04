@@ -502,7 +502,7 @@ void cast(t_var *var)
     v.y = var->player.vect[1];
     ray.start = p;
     ray.target = v;
-    r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
+    r = rotate_by(ray.start, v, - from_deg_to_rad(VIEW / 2));
     ray.angle = angle + (VIEW / 2);
     ray.angle = my_fmod(ray.angle , 360);
     i = 0;

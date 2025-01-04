@@ -15,7 +15,7 @@ INCLUDES = MLX43/build/libmlx42.a libft2/libft.a  MLX43/build/libglfw3.a -Iinclu
 
 all : ${NAME}
 ${NAME}:${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw  -lm -o ${NAME}
+	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -O3 -Iinclude -ldl -lglfw  -lm -o ${NAME}
 # ${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
 # ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
 
