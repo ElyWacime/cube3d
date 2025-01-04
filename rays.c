@@ -1,77 +1,63 @@
 #include "cube.h"
 
-
-float mod_360(float a)
+void draw_line5(t_line line, t_var *var, t_uint color)
 {
-    // while (a > 360)
-    //     a-= 360;
-    // return (a);
-    return fmod(a,360);
-}
-
-float mod(float a, int b)
-{   
-    // while (a >= b)
-    //     a-= b;
-    // return (a);
-    return fmod(a,b);
-}
-
-void    draw_line5(t_line line, t_var *var, t_uint color)
-{
-    double distance;
-    double x;
-    double y;
-
+    float distance;
+    float x;
+    float y;
+    int i = 0;
     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
     x = line.ax;
     y = line.ay;
     if (x <= line.bx && y <= line.by)
     {
-        // printf("A(%f %f) B(%f %f)\n",line.ax,line.by,line.bx,line.by);
-        while (x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
+            i++;
         }
     }
     else if (x >= line.bx && y <= line.by)
     {
-        while (x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
             y += (fabs(line.by - line.ay) / distance);
+            i++;
         }
     }
     else if (x >= line.bx && y >= line.by)
     {
-        while (x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x -= (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
+            i++;
         }
     }
     else if (x <= line.bx && y >= line.by)
     {
-        while (x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        while ( x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
         {
             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
             x += (fabs(line.bx - line.ax) / distance);
             y -= (fabs(line.by - line.ay) / distance);
+            i++;
         }
     }
 }
 
 
-double distance_squared(t_point a, t_point b)
+float distance_squared(t_point a, t_point b)
 {
     return (((a.x - b.x) * (a.x - b.x)) + ((a.y - b.y) * (a.y - b.y)));
 }
 
-double str_double_len(char **str)
+float str_double_len(char **str)
 {
     int i;
 
@@ -81,7 +67,7 @@ double str_double_len(char **str)
     return i;
 }
 
-double next_px_in_grid(double p, int d)
+float next_px_in_grid(float p, int d)
 {
     int a;
 
@@ -106,10 +92,9 @@ int check_if_wall_h(t_point start, t_point direction, t_var *var)
 {
     int row;
     int col;
-
     row = px_to_map_grid((t_uint)start.y) - (direction.y == -1);
     col = px_to_map_grid((t_uint)start.x);
-    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (double)ft_strlen(var->map[row]))
+    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (float)ft_strlen(var->map[row]))
     {   
         if (col * SQUARE_SIZE == start.x)
         {
@@ -136,7 +121,7 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
 
     row = px_to_map_grid((t_uint)start.y);
     col = px_to_map_grid((t_uint)start.x) - (direction.x == -1);
-    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (double)ft_strlen(var->map[row]))
+    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (float)ft_strlen(var->map[row]))
     {   
         if (row * SQUARE_SIZE == start.y)
         {
@@ -156,11 +141,18 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
     return 1;
 }
 
-double tan_0_90(double theta)
+float my_fmod(float theta,int mod)
 {
-    theta = mod(theta,360);
+    int i;
+
+    i = theta;
+    return theta - ((i / mod) * mod );
+}
+float tan_0_90(float theta)
+{
+    theta = my_fmod(theta,360);
     theta += 360;
-    theta = mod(theta,360);
+    theta = my_fmod(theta,360);
     if (90 < theta && theta < 180)
         theta = 180 - theta;
     else  if (180 < theta && theta < 270)
@@ -170,7 +162,7 @@ double tan_0_90(double theta)
     return tan(from_deg_to_rad(theta));
 }
 
-t_point rotate_by(t_point center, t_point m, double angle)
+t_point rotate_by(t_point center, t_point m, float angle)
 {
     t_point z;
 
@@ -178,19 +170,28 @@ t_point rotate_by(t_point center, t_point m, double angle)
     z.y = ((m.y - center.y)*cos(angle)) + ((m.x - center.x)*sin(angle)) + center.y;
     return z;
 }
+int max(int a,int b)
+{
+    if (a >= b)
+        return a;
+    return b;
+}
 
 t_point cast_vertical(t_var *var,t_ray *ray)
 {
     t_point colison;
-    double skip_x;
-    double skip_y;
-    double tn;
+    float skip_x;
+    float skip_y;
+    float tn;
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
+    // if (check_if_wall_v(colison, ray->direction, var))
+    //     return colison;
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
+        // printf("v == -1\n");
         colison.x = next_px_in_grid(ray->start.x,ray->direction_x);
         colison.y = ray->start.y - (fabs(colison.x-ray->start.x) * tn);
         skip_x = SQUARE_SIZE *  ray->direction_x;
@@ -203,7 +204,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
         skip_x = SQUARE_SIZE *  ray->direction_x;
         skip_y = SQUARE_SIZE / tn;
     }
-    while ((0 <= colison.x && colison.x < WIDTH && 0 <= colison.y && colison.y < HEIGHT))
+    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < WIDTH  && colison.y < HEIGHT) || (colison.x < var->mini_width  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_v(colison, ray->direction, var))
             return colison;
@@ -217,12 +218,14 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 {
     t_point horizon;
     t_point colison;
-    double skip_x;
-    double skip_y;
-    double tn;
+    float skip_x;
+    float skip_y;
+    float tn;
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
+    // if (check_if_wall_h(colison, ray->direction, var))
+        // return colison;
     tn = tan_0_90(ray->angle);
     if (ray->direction_y == -1)
     {
@@ -242,7 +245,7 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
         skip_x = (SQUARE_SIZE * tn) * ray->direction_x;
         skip_y = SQUARE_SIZE * ray->direction_y;
     }
-    while ((0 <= colison.x && colison.x < var->mini_width && 0 <= colison.y && colison.y < var->mini_height))
+    while (((0 <= colison.x && 0 <= colison.y) && ((colison.x < var->mini_width  && colison.y < var->mini_height))))
     {   
         if (check_if_wall_h(colison, ray->direction, var))
             return colison;
@@ -253,47 +256,48 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
 }
 
 // maxim left and right rays
-void range_2(t_var *var)
-{
-    t_point v;
-    t_point p;
-    t_point r;
-    t_line line;
+// void range_2(t_var *var)
+// {
+//     t_point v;
+//     t_point p;
+//     t_point r;
+//     t_line line;
 
-    v.x = var->player.vect[0];
-    v.y = var->player.vect[1];
-    p.x = var->player.position[0];
-    p.y = var->player.position[1];
-    r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
-    line.ax = p.x;
-    line.ay = p.y;
-    line.bx = r.x;
-    line.by = r.y;
-    draw_line5(line,var,0XA020F0A0);
-    r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
-    line.bx = r.x;
-    line.by = r.y;
-    draw_line5(line,var,0XA020F0A0);
-}
+//     v.x = var->player.vect[0];
+//     v.y = var->player.vect[1];
+//     p.x = var->player.position.x;
+//     p.y = var->player.position.y;
+//     r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
+//     line.ax = p.x;
+//     line.ay = p.y;
+//     line.bx = r.x;
+//     line.by = r.y;
+//     // //draw_line5(line,var,0XA020F0A0);
+//     //draw_line5(line,var,0xFF20F0FF);
+//     r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
+//     line.bx = r.x;
+//     line.by = r.y;
+//     //draw_line5(line,var,0xFF20F0FF);
+// }
 
-void one_ray(t_var *var, t_ray *ray ,unsigned int color)
-{
-    t_line line;
+// void one_ray(t_var *var, t_ray *ray ,unsigned int color)
+// {
+//     t_line line;
 
-    line.ax = ray->start.x;
-    line.ay = ray->start.y;
-    line.bx = ray->target.x;
-    line.by = ray->target.y;
-    draw_line5(line,var,color);
-}
+//     line.ax = ray->start.x;
+//     line.ay = ray->start.y;
+//     line.bx = ray->target.x;
+//     line.by = ray->target.y;
+//     //draw_line5(line,var,color);
+// }
 
 void set_direciton(t_ray *ray)
 {
     ray->direction_x = 1;
     ray->direction_y = 1;
-    ray->angle = mod(ray->angle, 360);
+    ray->angle = my_fmod(ray->angle, 360);
     ray->angle += 360;
-    ray->angle = mod(ray->angle,360);
+    ray->angle = my_fmod(ray->angle,360);
     if (0 < ray->angle  && ray->angle < 90)
         ray->direction_y = -1;
     else if (90 < ray->angle && ray->angle < 180)
@@ -318,7 +322,7 @@ void set_direciton(t_ray *ray)
     }
 }
 
-double min(double a,double b)
+float min(float a,float b)
 {
     if (a < b)
         return a;
@@ -327,32 +331,31 @@ double min(double a,double b)
 
 void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
 {
-    // ray->is_vertical = 1;
     cor->is_collision_horizontal = 1;
     if (ray->direction_x == 0)
     {
         cor->is_collision_horizontal = 0;
-        cor->colision_h = cast_horizantal(var,ray);
+        cor->colision_h = cast_vertical(var,ray);
         if (ray->angle == 0)
             ray->textures_index = 0;
         else
             ray->textures_index = 2;
-        cor->line.bx = cor->colision_h.x;
-        cor->line.by = cor->colision_h.y;
         cor->h  = cor->distance_h;
-        draw_line5(cor->line,var,0xFF0000FF);//WHITE HORIZON     0xFFFFFFFF
+        cor->line.by = cor->colision_h.y;
+        cor->line.bx = cor->colision_h.x;
+        //draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
     }
     else if (ray->direction_y == 0)
     {
-        cor->colision_v = cast_vertical(var,ray);
+        cor->colision_v = cast_horizantal(var,ray);
         if (ray->angle == 90)
             ray->textures_index = 1;
         else
             ray->textures_index = 3;
+        cor->h  = cor->distance_v;
         cor->line.bx = cor->colision_v.x;
         cor->line.by = cor->colision_v.y;
-        cor->h  = cor->distance_v;
-        draw_line5(cor->line,var,0xFF0000FF);//WHITE VERTICAL    0xFFFFFFFF    
+        //draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
@@ -366,22 +369,22 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             cor->is_collision_horizontal = 0;
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
+            //draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
         }
         else if (cor->distance_h < cor->distance_v)
         {
             cor->h  = cor->distance_h;
-            cor->line.bx = cor->colision_h.x;
+            ray->angle = my_fmod(ray->angle,360);
             cor->line.by = cor->colision_h.y;
-            // ray->is_vertical = 0;
-            ray->angle = fmod(ray->angle,360);
-            draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
+            cor->line.bx = cor->colision_h.x;
+            //draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
         }
-        else // to remove never enter !!!
+        else
         {
+            // printf("Vertical === Horizontal\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0x00FF00FF);//GRAY VERTICAL   0x808080FF
+            //draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
         }
     }
     cor->distance_to_wall =  cor->h;
@@ -405,15 +408,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
 void one_ray_wall(t_var *var, t_ray *ray)
 {
     t_cords cor;
-    int a;
-    int idy;
-    int idx;
-    double distance_correction;
-    double distance_to_projection;
-    double wall_projection_height;
-    // char *path = "/textures/rome1.webp";
-    // int offset = 0;
-        uint32_t color = 0xAD00FAFF;
+    t_ray_wall ra_wl;
 
     set_direciton(ray);
     cor.line.ax = ray->start.x;
@@ -422,125 +417,72 @@ void one_ray_wall(t_var *var, t_ray *ray)
     cor.line.by = ray->target.y;
     ray->direction.x = ray->direction_x;
     ray->direction.y = ray->direction_y;
-    distance_to_projection = HEIGHT / (2 * tan(from_deg_to_rad(VIEW/2)));
+    ra_wl.distance_to_projection = HEIGHT / (tan(from_deg_to_rad(VIEW/2)));
     cast_v_h(var ,ray, &cor);
     cor.h = sqrt(cor.h);
-    distance_correction = cor.h;
-    distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
-    wall_projection_height = (distance_to_projection * CUBE_SIZE) / (distance_correction);
-    a = ((HEIGHT - wall_projection_height) / 2);
-    if (a <= 0)
-        a = 0;
+    ra_wl.distance_correction = cor.h;
+    ra_wl.distance_correction *= cos(from_deg_to_rad(ray->angle - var->player.angle));
+    ra_wl.wall_projection_height = (ra_wl.distance_to_projection * CUBE_SIZE) / (ra_wl.distance_correction);
+    ra_wl.a = ((HEIGHT - ra_wl.wall_projection_height) / 2);
+    ra_wl.correct_a = -ra_wl.a * (ra_wl.a <= 0);
+    ra_wl.a *= (ra_wl.a > 0);
+    // unsigned int color;
     if(var->img_3d)
     {
-        idx = var->x_3d;
-        // idy = 0;
-        // while (a > 0 && idy < a)  //Draw Sky
-        // {
-        //     if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
-        //     {
-        //         // jmlx_put_pixel(var->img_3d, idx, idy, 0xA0D8EFB4);
-        //     }
-        //     else 
-        //         break;
-        //     idy++;
-        // }
-        idy = a;
-        
-        if (cor.is_collision_horizontal == 1)
+        ra_wl.idx = var->x_3d;
+        ra_wl.idy = ra_wl.a;
+        // ra_wl.ofssetx = 1;
+        if (ray->textures_index == 0)
         {
-            color =0xAD00FAFF;
+            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->east->width) / (ra_wl.wall_projection_height);
         }
-        // #####################################
-        while (idy < HEIGHT - a)
+        else if (ray->textures_index == 1)
         {
-            if (0 <= idx && idx  < WIDTH &&  0 <= idy && idy < HEIGHT)
+            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->north->width ;
+        }
+        else if (ray->textures_index == 2)
+        {
+            ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->west->height) / (ra_wl.wall_projection_height);
+        }
+        else if (ray->textures_index == 3)
+        {
+            ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+            if (ra_wl.correct_a > 0)
+                ra_wl.image_offset = (ra_wl.correct_a * var->south->height) / (ra_wl.wall_projection_height);
+        }
+        
+        while (ra_wl.idy < HEIGHT - ra_wl.a)
+        {
+            if (0 <= ra_wl.idx && ra_wl.idx  < WIDTH &&  0 <= ra_wl.idy && ra_wl.idy < HEIGHT)
             {
-            //   mlx_texture_t *b =   mlx_load_png(path);
-            //   b->pixels[offset];
-            if (ray->textures_index == 0)
-                mlx_put_pixel(var->img_3d, idx, idy,0xFFFF00FF);
-            else if (ray->textures_index == 1)
-                mlx_put_pixel(var->img_3d, idx, idy,0x00FF00FF);
-            else if (ray->textures_index == 2)
-                mlx_put_pixel(var->img_3d, idx, idy,0x0000FFFF);
-            else if (ray->textures_index == 3)
-                mlx_put_pixel(var->img_3d, idx, idy,color);
+                if (ra_wl.idx < 100 && ra_wl.idy < 100)
+                {
+                    ++(ra_wl.idy);
+                    continue;
+                }
+                if (ray->textures_index == 0)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 1)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 2)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,ra_wl.ofssetx));
+                else if (ray->textures_index == 3)
+                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,ra_wl.ofssetx));
             }
             else 
                 break;
-            idy++;
+            ++(ra_wl.idy); 
         }
-
-        var->x_3d++;
+        ++var->x_3d;
     }
 }
 
-// int    get_texture(t_ray ray)
-// {
-//     if (ray.verical_hit == 0)
-//     {
-//         if (ray.ray_up)
-//             return (3);
-//         else if (ray.ray_down)
-//             return (0);
-//     }
-//     else
-//     {
-//         if (ray.ray_right)
-//             return (2);
-//         else if (ray.ray_left)
-//             return (1);
-//     }
-//     return (0);
-// }
-
-// void    print_wall(t_all_data *data, float wall_height, int starting_x,
-//         int starting_y)
-// {
-//     double            offset_x;
-//     double            offset_y;
-//     unsigned int    color;
-//     int                i;
-//     int                texture_num;
-//     int                texture_width;
-//     int                texture_height;
-//     int                x;
-//     int                y;
-//     int                distance_from_top;
-//     int                j;
-
-//     i = 0;
-//     offset_x = 0;
-//     offset_y = 0;
-//     texture_num = get_texture(data->rays[starting_x]);
-//     color = 0;
-//     texture_width = data->news[texture_num]->width;
-//     texture_height = data->news[texture_num]->height;
-//     if (!data->rays[starting_x].verical_hit)
-//     {
-//         offset_x = fmod(data->rays[starting_x].wall_x, data->minimap.tile);
-//         offset_x *= texture_width / data->minimap.tile;
-//     }
-//     else
-//     {
-//         offset_x = fmod(data->rays[starting_x].wall_y, data->minimap.tile);
-//         offset_x *= texture_width / data->minimap.tile;
-//     }
-//     while (i < wall_height)
-//     {
-//         x = starting_x;
-//         y = starting_y + i;
-//         distance_from_top = y - starting_y;
-//         offset_y = distance_from_top * texture_height / wall_height;
-//         mlx_get_color_at(data->news[texture_num]->data, offset_x, offset_y,
-//                 &color);
-//         j = 0;
-//         if (x > 0 && x < WIDTH && y > 0 && y < HEIGHT)
-//             custom_mlx_pixel_put(&data->game_img, x, y, color);
-//         i++;
-//     }
-// }
 
 void cast(t_var *var)
 {
@@ -550,37 +492,34 @@ void cast(t_var *var)
     t_point v;
     float angle;
     float step;
-    float i;
+    int i;
     
-    i = 0;
     step = (1.0 * VIEW ) / WIDTH;
-    angle = mod(var->player.angle,360);
-    p.x = var->player.position[0];
-    p.y = var->player.position[1];
+    angle = my_fmod(var->player.angle,360);
+    p.x = var->player.position.x;
+    p.y = var->player.position.y;
+    // printf("player position : %f, %f\n",p.x,p.y);
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
+    // printf("player x = %f y = %f\n",p.x,p.y);
     ray.start = p;
     ray.target = v;
-    r = rotate_by(ray.start, v, -from_deg_to_rad(VIEW / 2));
+    r = rotate_by(ray.start, v, - from_deg_to_rad(VIEW / 2));
     ray.angle = angle + (VIEW / 2);
-    ray.angle = mod(ray.angle , 360);
+    ray.angle = my_fmod(ray.angle , 360);
     i = 0;
     var->x_3d = 0;
-    var->y_3d = HEIGHT - 50;
+    var->y_3d = 0;
     while (i < WIDTH)
     {
-        var->player.angle = mod(var->player.angle,360);
+        var->player.angle = my_fmod(var->player.angle,360);
         ray.target = r;
         ray.angle = ray.angle + 360 - (step);
-        ray.angle = mod(ray.angle , 360);
+        ray.angle = my_fmod(ray.angle , 360);
         one_ray_wall(var,&ray);
         r = rotate_by(p, r, from_deg_to_rad(step));
-        i+=1;
+        ++i;
     }
-    // printf("player(%f %f) **angle : %f\n",var->player.position[0],var->player.position[1],var->player.angle);
-    // printf("start(%f %f) target(%f %f) angle : %f\n",ray.start.x,ray.start.y,ray.target.x,ray.target.y,ray.angle);
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
-    // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    // range_2(var);
 }

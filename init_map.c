@@ -7,12 +7,8 @@ void    check_textures(char *NO, char *SO, char *WE, char *EA)
         || ft_strncmp(WE, "WE ", 3)
         || ft_strncmp(EA, "EA ", 3))
     {
-        write(2, "Error\nInvalid path!", 18);
+        write(2, "Error 1\nInvalid path!", 21);
         exit(72);
-        free(NO);
-        free(SO);
-        free(WE);
-        free(EA);
     }
 }
 
@@ -29,13 +25,17 @@ void   check_path(char *NO, char *SO, char *WE, char *EA)
     fd4 = open(EA, O_RDONLY);
     if (fd1 < 0 || fd2 < 0 || fd3 < 0 || fd4 < 0)
     {
-        write(2, "Error\nInvalid path!\n", 20);
+        write(2, "Error 2\nInvalid path!\n", 20);
         close(fd1);
         close(fd2);
         close(fd3);
         close(fd4);
         exit(73);
     }
+    close(fd1);
+    close(fd2);
+    close(fd3);
+    close(fd4);
 }
 
 void    parse_textures(t_var *var)
@@ -47,7 +47,7 @@ void    parse_textures(t_var *var)
 
     if (strlen_double((void**)var->textures) < 4)
     {
-        write(2, "Error\nInvalid path!", 18);
+        write(2, "Error 3\nInvalid path!", 20);
         exit(71);
     }
     check_textures(var->textures[0], var->textures[1],
@@ -56,7 +56,7 @@ void    parse_textures(t_var *var)
     SO = var->textures[1] + 3;
     WE = var->textures[2] + 3;
     EA = var->textures[3] + 3;
-    printf("%s\t%s\t%s\t%s\t\n", NO, SO, WE, EA);
+    // printf("%s\t%s\t%s\t%s\t\n", NO, SO, WE, EA);
     check_path(NO, SO, WE, EA);
 }
 
@@ -70,6 +70,7 @@ void    get_texures(t_var *var, int fd)
     tmp = NULL;
     while (++i < 4)
     {
+        // printf("ENTER\n");
         line = gnl(fd);
         if (!line)
         {
@@ -77,9 +78,11 @@ void    get_texures(t_var *var, int fd)
             exit(5);
         }
         tmp = ft_strjoin(tmp, line);
+        // printf("inside loop: %s\tline: %s\n", tmp, line);
         free(line);
     }
     var->textures = ft_split(tmp, '\n');
+    // printf(">>>>>>>>%s\n\n\n\n\n\n", tmp);
     parse_textures(var);
     free(tmp);
 }
@@ -139,6 +142,7 @@ void    extract_F(t_var *var)
     _colors[1] = ft_atoi(color[1]);
     _colors[2] = ft_atoi(color[2]);
     free_double((void**)color);
+    free(color);
     var->color_C = transform_color_to_hexa(_colors);
 }
 
@@ -161,13 +165,8 @@ void    extract_C(t_var *var)
     _colors[1] = ft_atoi(color[1]);
     _colors[2] = ft_atoi(color[2]);
     free_double((void**)color);
+    free(color);
     var->color_F = transform_color_to_hexa(_colors);
-}
-
-void    parse_colors(t_var *var)
-{
-    extract_C(var);
-    extract_F(var);
 }
 
 void    get_colors(t_var *var, int fd)
@@ -191,7 +190,8 @@ void    get_colors(t_var *var, int fd)
     }
     var->colors = ft_split(tmp, '\n');
     free(tmp);
-    parse_colors(var);
+    extract_C(var);
+    extract_F(var);
 }
 
 char **create_map(char *file_cub, t_var *var)
@@ -250,11 +250,11 @@ void    _init_window(t_var *var)
                 {
                     if (j > HEIGHT / 2)
                     {
-                        // mlx_put_pixel(var->img, i, j, 0x0000FF00);
                         mlx_put_pixel(var->img, i, j, var->color_F);
                         continue ;
                     }
-                    // mlx_put_pixel(var->img, i, j, 0x0000FF00);
+                    if (i < 100 && j < 100)
+                        continue;
                     mlx_put_pixel(var->img, i, j, var->color_C);
                 }
             }
