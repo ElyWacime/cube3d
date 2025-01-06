@@ -362,9 +362,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
     }
     cor->distance_to_wall =  cor->h;
-    if (ray->wall_or_door == DOOR)
-        ray->textures_index = 4;
-    else if (cor->is_collision_horizontal == 0)
+    if (cor->is_collision_horizontal == 0)
     {
         if ((270 < ray->angle && ray->angle < 360) ||
             (0 < ray->angle && ray->angle < 90))
@@ -408,35 +406,59 @@ void one_ray_wall(t_var *var, t_ray *ray)
         ra_wl.idx = var->x_3d;
         ra_wl.idy = ra_wl.a;
         // ra_wl.ofssetx = 1;
-        if (ray->textures_index == 4)
+        if (ray->wall_or_door != DOOR)
         {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->door->width)) / CUBE_SIZE;
-            if (ra_wl.correct_a > 0)
-                ra_wl.image_offset = (ra_wl.correct_a * var->door->width) / (ra_wl.wall_projection_height);
+            if (ray->textures_index == 0)
+            {
+                ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a * var->east->width) / (ra_wl.wall_projection_height);
+            }
+            else if (ray->textures_index == 1)
+            {
+                ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->north->width ;
+            }
+            else if (ray->textures_index == 2)
+            {
+                ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a * var->west->height) / (ra_wl.wall_projection_height);
+            }
+            else if (ray->textures_index == 3)
+            {
+                ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a * var->south->height) / (ra_wl.wall_projection_height);
+            }
         }
-        else if (ray->textures_index == 0)
+        else
         {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->east->width)) / CUBE_SIZE;
-            if (ra_wl.correct_a > 0)
-                ra_wl.image_offset = (ra_wl.correct_a * var->east->width) / (ra_wl.wall_projection_height);
-        }
-        else if (ray->textures_index == 1)
-        {
-            ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->north->width)) / CUBE_SIZE;
-            if (ra_wl.correct_a > 0)
-                ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->north->width ;
-        }
-        else if (ray->textures_index == 2)
-        {
-            ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->west->width)) / CUBE_SIZE;
-            if (ra_wl.correct_a > 0)
-                ra_wl.image_offset = (ra_wl.correct_a * var->west->height) / (ra_wl.wall_projection_height);
-        }
-        else if (ray->textures_index == 3)
-        {
-            ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->south->width)) / CUBE_SIZE;
-            if (ra_wl.correct_a > 0)
-                ra_wl.image_offset = (ra_wl.correct_a * var->south->height) / (ra_wl.wall_projection_height);
+            if (ray->textures_index == 0)
+            {
+                ra_wl.ofssetx = (((my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->door->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a * var->door->width) / (ra_wl.wall_projection_height);
+            }
+            else if (ray->textures_index == 1)
+            {
+                ra_wl.ofssetx = (((my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->door->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a  / (ra_wl.wall_projection_height))  * var->door->width ;
+            }
+            else if (ray->textures_index == 2)
+            {
+                ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_v.y,CUBE_SIZE)) * var->door->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a * var->door->height) / (ra_wl.wall_projection_height);
+            }
+            else if (ray->textures_index == 3)
+            {
+                ra_wl.ofssetx = (((CUBE_SIZE - my_fmod(cor.colision_h.x,CUBE_SIZE)) * var->door->width)) / CUBE_SIZE;
+                if (ra_wl.correct_a > 0)
+                    ra_wl.image_offset = (ra_wl.correct_a * var->door->height) / (ra_wl.wall_projection_height);
+            } 
         }
         
         while (ra_wl.idy < HEIGHT - ra_wl.a)
@@ -449,16 +471,24 @@ void one_ray_wall(t_var *var, t_ray *ray)
                     continue;
                 }
                 // printf("%d\t%d\n", px_to_map_grid(ra_wl.idy), px_to_map_grid(ra_wl.idy));
-                if (ray->textures_index == 4)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_v(var,&ra_wl,ra_wl.ofssetx));
-                else if (ray->textures_index == 0)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,ra_wl.ofssetx));
-                else if (ray->textures_index == 1)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,ra_wl.ofssetx));
-                else if (ray->textures_index == 2)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,ra_wl.ofssetx));
-                else if (ray->textures_index == 3)
-                    mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,ra_wl.ofssetx));
+                if (ray->wall_or_door != DOOR)
+                {   
+                    if (ray->textures_index == 0)
+                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,east_textures(var,&ra_wl,ra_wl.ofssetx));
+                    else if (ray->textures_index == 1)
+                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,north_textures(var,&ra_wl,ra_wl.ofssetx));
+                    else if (ray->textures_index == 2)
+                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,west_textures(var,&ra_wl,ra_wl.ofssetx));
+                    else if (ray->textures_index == 3)
+                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,south_textures(var,&ra_wl,ra_wl.ofssetx));
+                }
+                else
+                {
+                    if (ray->textures_index == 0 || ray->textures_index == 2)
+                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_h(var,&ra_wl,ra_wl.ofssetx));
+                    else
+                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_v(var,&ra_wl,ra_wl.ofssetx));
+                }
             }
             else 
                 break;

@@ -192,7 +192,8 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
-size_t door_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures_v(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures_h(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
 
 /*
