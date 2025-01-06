@@ -98,6 +98,8 @@ int check_if_wall_h(t_point start, t_point direction, t_var *var)
     {   
         if (col * SQUARE_SIZE == start.x)
         {
+            if (var->map[row][col] == 'P' || var->map[row][col - 1] == 'P')
+                return DOOR;
            return (var->map[row][col] == '1'
             || var->map[row][col] == '\0'
             || ft_isspace(var->map[row][col])
@@ -127,6 +129,8 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
     {   
         if (row * SQUARE_SIZE == start.y)
         {
+            if (var->map[row][col] == 'P' || var->map[row - 1][col] == 'P')
+                return DOOR;
            return (var->map[row][col] == '1'
             || var->map[row][col] == '\0'
             || ft_isspace(var->map[row][col])
