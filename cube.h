@@ -123,7 +123,10 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
+    
     t_dcor      door_cords;
+    // t_cords     *cor;
+    // t_ray       *ray;
 
     t_uint      r;
     t_uint      g;
@@ -180,6 +183,7 @@ float  from_rad_to_deg(float);
 float  from_deg_to_rad(float);
 void    draw_line(t_line , t_var *, t_uint);
 void    quit_program(t_var *);
+void    close_or_open_door(t_var *var);
 /*
 ** check_map.c
 */

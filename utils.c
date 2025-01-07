@@ -138,3 +138,30 @@ void    draw_line(t_line line, t_var *var, t_uint color)
         }
     }
 }
+
+void    close_or_open_door(t_var *var)
+{
+    int trucker;
+
+
+
+    trucker = -1;
+    if (var->map[px_to_map_grid(var->player.position.y)][px_to_map_grid(var->player.position.x)] == 'P'
+        || var->map[px_to_map_grid(var->player.position.y) - 1][px_to_map_grid(var->player.position.x)] == 'P'
+        || var->map[px_to_map_grid(var->player.position.y) + 1][px_to_map_grid(var->player.position.x)] == 'P'
+        || var->map[px_to_map_grid(var->player.position.y)][px_to_map_grid(var->player.position.x) - 1] == 'P'
+        || var->map[px_to_map_grid(var->player.position.y)][px_to_map_grid(var->player.position.x) + 1] == 'P')
+    {
+        while (++trucker < (int)var->door_cords.len)
+        {
+            var->map[(int)var->door_cords.cords[trucker].y][(int)var->door_cords.cords[trucker].x] = '0';
+        }
+    }
+    // else
+    // {
+    //     while (++trucker < (int)var->door_cords.len)
+    //     {
+    //         var->map[(int)var->door_cords.cords[trucker].y][(int)var->door_cords.cords[trucker].x] = 'P';
+    //     }
+    // }
+}

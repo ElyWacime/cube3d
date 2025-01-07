@@ -93,9 +93,8 @@ void get_all_door_cords(t_var *var)
     int8_t trucker;
 
     i = -1;
-    while (++i < (int)var->mini_height / 8 - 1)
+    while (++i < (int)var->mini_height / 8)
     {
-        printf("i = %d\n", i);
         j = -1;
         while (var->map[i][++j])
         {
@@ -103,25 +102,24 @@ void get_all_door_cords(t_var *var)
                 var->door_cords.len++;
         }
     }
-    printf("\n\n\n%d\n\n\n", (int)var->mini_height / 8);
     if (var->door_cords.len == 0)
         return ;
     var->door_cords.cords = malloc(sizeof(t_point) * var->door_cords.len);
     i = -1;
-    trucker = -1;
-    while (++i < (int)var->mini_height)
+    trucker = 0;
+    while (++i < (int)var->mini_height / 8)
     {
         j = -1;
         while (var->map[i][++j])
         {
             if (var->map[i][j] == 'P')
             {
-                var->door_cords.cords[++trucker].x = j;
+                var->door_cords.cords[trucker].x = j;
                 var->door_cords.cords[trucker].y = i;
+                trucker++;
             }
         }
     }
-    printf(">>>> : %d\n", (int)var->door_cords.len);
 }
 
 int main(int ac, char *av[])
@@ -138,6 +136,8 @@ int main(int ac, char *av[])
     var.colors = NULL;
     var.door_cords.len = 0;
     var.door_cords.cords = NULL;
+    // var.cor = NULL;
+    // var.ray = NULL;
     parsing(ac, av, &var);
     _init_window(&var);
     var.mini_map = mlx_new_image(var.mlx, WIDTH, HEIGHT);

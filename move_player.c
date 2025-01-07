@@ -188,6 +188,7 @@ void    calcul_down_movement(t_var *var)
 void    move_player_down(t_var *var)
 {
     calcul_down_movement(var);
+    close_or_open_door(var);
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
@@ -196,6 +197,7 @@ void    move_player_down(t_var *var)
 void    move_player_up(t_var *var)
 {
     calcul_up_movement(var);
+    close_or_open_door(var);
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
@@ -204,6 +206,7 @@ void    move_player_up(t_var *var)
 void    move_player_right(t_var *var)
 {
     calcul_right_movement(var);
+    close_or_open_door(var);
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
@@ -212,6 +215,7 @@ void    move_player_right(t_var *var)
 void    move_player_left(t_var *var)
 {
     calcul_left_movement(var);
+    close_or_open_door(var);
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
