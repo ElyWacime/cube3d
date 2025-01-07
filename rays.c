@@ -1,56 +1,55 @@
 #include "cube.h"
 
-void draw_line5(t_line line, t_var *var, t_uint color)
-{
-    float distance;
-    float x;
-    float y;
-    int i = 0;
-    distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
-    x = line.ax;
-    y = line.ay;
-    if (x <= line.bx && y <= line.by)
-    {
-        while ( x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x += (fabs(line.bx - line.ax) / distance);
-            y += (fabs(line.by - line.ay) / distance);
-            i++;
-        }
-    }
-    else if (x >= line.bx && y <= line.by)
-    {
-        while ( x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x -= (fabs(line.bx - line.ax) / distance);
-            y += (fabs(line.by - line.ay) / distance);
-            i++;
-        }
-    }
-    else if (x >= line.bx && y >= line.by)
-    {
-        while ( x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x -= (fabs(line.bx - line.ax) / distance);
-            y -= (fabs(line.by - line.ay) / distance);
-            i++;
-        }
-    }
-    else if (x <= line.bx && y >= line.by)
-    {
-        while ( x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x += (fabs(line.bx - line.ax) / distance);
-            y -= (fabs(line.by - line.ay) / distance);
-            i++;
-        }
-    }
-}
-
+// void draw_line5(t_line line, t_var *var, t_uint color)
+// {
+//     float distance;
+//     float x;
+//     float y;
+//     int i = 0;
+//     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
+//     x = line.ax;
+//     y = line.ay;
+//     if (x <= line.bx && y <= line.by)
+//     {
+//         while ( x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+//         {
+//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+//             x += (fabs(line.bx - line.ax) / distance);
+//             y += (fabs(line.by - line.ay) / distance);
+//             i++;
+//         }
+//     }
+//     else if (x >= line.bx && y <= line.by)
+//     {
+//         while ( x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+//         {
+//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+//             x -= (fabs(line.bx - line.ax) / distance);
+//             y += (fabs(line.by - line.ay) / distance);
+//             i++;
+//         }
+//     }
+//     else if (x >= line.bx && y >= line.by)
+//     {
+//         while ( x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+//         {
+//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+//             x -= (fabs(line.bx - line.ax) / distance);
+//             y -= (fabs(line.by - line.ay) / distance);
+//             i++;
+//         }
+//     }
+//     else if (x <= line.bx && y >= line.by)
+//     {
+//         while ( x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+//         {
+//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+//             x += (fabs(line.bx - line.ax) / distance);
+//             y -= (fabs(line.by - line.ay) / distance);
+//             i++;
+//         }
+//     }
+// }
 
 float distance_squared(t_point a, t_point b)
 {
@@ -148,6 +147,7 @@ float my_fmod(float theta,int mod)
     i = theta;
     return theta - ((i / mod) * mod );
 }
+
 float tan_0_90(float theta)
 {
     theta = my_fmod(theta,360);
@@ -170,6 +170,7 @@ t_point rotate_by(t_point center, t_point m, float angle)
     z.y = ((m.y - center.y)*cos(angle)) + ((m.x - center.x)*sin(angle)) + center.y;
     return z;
 }
+
 int max(int a,int b)
 {
     if (a >= b)
@@ -255,30 +256,29 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
     return colison;
 }
 
-// maxim left and right rays
-void range_2(t_var *var)
-{
-    t_point v;
-    t_point p;
-    t_point r;
-    t_line line;
-
-    v.x = var->player.vect[0];
-    v.y = var->player.vect[1];
-    p.x = var->player.position[0];
-    p.y = var->player.position[1];
-    r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
-    line.ax = p.x;
-    line.ay = p.y;
-    line.bx = r.x;
-    line.by = r.y;
-    // draw_line5(line,var,0XA020F0A0);
-    draw_line5(line,var,0xFF20F0FF);
-    r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
-    line.bx = r.x;
-    line.by = r.y;
-    draw_line5(line,var,0xFF20F0FF);
-}
+// // maxim left and right rays
+// void range_2(t_var *var)
+// {
+//     t_point v;
+//     t_point p;
+//     t_point r;
+//     t_line line;
+//     v.x = var->player.vect[0];
+//     v.y = var->player.vect[1];
+//     p.x = var->player.position[0];
+//     p.y = var->player.position[1];
+//     r = rotate_by(p,v,from_deg_to_rad(VIEW/2));//RED + RIGHT
+//     line.ax = p.x;
+//     line.ay = p.y;
+//     line.bx = r.x;
+//     line.by = r.y;
+//     // //draw_line5(line,var,0XA020F0A0);
+//     //draw_line5(line,var,0xFF20F0FF);
+//     r = rotate_by(p,v,from_deg_to_rad(-VIEW/2));//BLUE - LEFT
+//     line.bx = r.x;
+//     line.by = r.y;
+//     //draw_line5(line,var,0xFF20F0FF);
+// }
 
 void one_ray(t_var *var, t_ray *ray ,unsigned int color)
 {
@@ -288,16 +288,14 @@ void one_ray(t_var *var, t_ray *ray ,unsigned int color)
     line.ay = ray->start.y;
     line.bx = ray->target.x;
     line.by = ray->target.y;
-    draw_line5(line,var,color);
+    //draw_line5(line,var,color);
 }
 
 void set_direciton(t_ray *ray)
 {
     ray->direction_x = 1;
     ray->direction_y = 1;
-    ray->angle = my_fmod(ray->angle, 360);
-    ray->angle += 360;
-    ray->angle = my_fmod(ray->angle,360);
+    ray->angle = my_fmod((ray->angle + 360),360);
     if (0 < ray->angle  && ray->angle < 90)
         ray->direction_y = -1;
     else if (90 < ray->angle && ray->angle < 180)
@@ -343,7 +341,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         cor->h  = cor->distance_h;
         cor->line.by = cor->colision_h.y;
         cor->line.bx = cor->colision_h.x;
-        draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
+        //draw_line5(cor->line,var,0xFFFF00FF);//WHITE HORIZON     0xFFFFFFFF
     }
     else if (ray->direction_y == 0)
     {
@@ -355,7 +353,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         cor->h  = cor->distance_v;
         cor->line.bx = cor->colision_v.x;
         cor->line.by = cor->colision_v.y;
-        draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
+        //draw_line5(cor->line,var,0xFF00FFFF);//WHITE VERTICAL    0xFFFFFFFF    
     }
     else
     {
@@ -369,7 +367,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             cor->is_collision_horizontal = 0;
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
+            //draw_line5(cor->line,var,0xFF0000FF);//BLUE VERTICAL   0x0000FFFF
         }
         else if (cor->distance_h < cor->distance_v)
         {
@@ -377,17 +375,18 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             ray->angle = my_fmod(ray->angle,360);
             cor->line.by = cor->colision_h.y;
             cor->line.bx = cor->colision_h.x;
-            draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
+            //draw_line5(cor->line,var,0x0000FFFF);//RED HORIZON
         }
         else
         {
             // printf("Vertical === Horizontal\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
-            draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
+            //draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
         }
     }
     cor->distance_to_wall =  cor->h;
+    
     if (cor->is_collision_horizontal == 0)
     {
         if ((270 < ray->angle && ray->angle < 360) ||
@@ -477,7 +476,6 @@ void one_ray_wall(t_var *var, t_ray *ray)
     }
 }
 
-
 void cast(t_var *var)
 {
     t_ray ray;
@@ -492,7 +490,6 @@ void cast(t_var *var)
     angle = my_fmod(var->player.angle,360);
     p.x = var->player.position[0];
     p.y = var->player.position[1];
-    // printf("player position : %f, %f\n",p.x,p.y);
     v.x = var->player.vect[0];
     v.y = var->player.vect[1];
     ray.start = p;
@@ -516,5 +513,5 @@ void cast(t_var *var)
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
     // one_ray(var,&ray,0x00FF00FF);//PLAYER VIEW DIRECTION
-    range_2(var);
+    // range_2(var);
 }
