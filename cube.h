@@ -58,6 +58,8 @@ typedef struct s_ray
     float direction_x;
     float direction_y;
     int wall_or_door;
+    int wall_or_door_v;
+    int wall_or_door_h;
 }   t_ray;
 
 typedef struct s_line

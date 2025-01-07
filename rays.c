@@ -194,6 +194,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
 
     colison.x = ray->start.x;
     colison.y = ray->start.y;
+    ray->wall_or_door_v = 0;
     // if (check_if_wall_v(colison, ray->direction, var))
     //     return colison;
     tn = tan_0_90(ray->angle);
@@ -216,7 +217,7 @@ t_point cast_vertical(t_var *var,t_ray *ray)
     {   
         if (check_if_wall_v(colison, ray->direction, var))
         {
-            ray->wall_or_door = check_if_wall_v(colison, ray->direction, var);
+            ray->wall_or_door_v = check_if_wall_v(colison, ray->direction, var);
             return colison;
         }
         colison.x += skip_x;
@@ -233,6 +234,7 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
     float skip_y;
     float tn;
 
+    ray->wall_or_door_h = 0;
     colison.x = ray->start.x;
     colison.y = ray->start.y;
     // if (check_if_wall_h(colison, ray->direction, var))
@@ -260,7 +262,7 @@ t_point cast_horizantal(t_var *var,t_ray *ray)
     {   
         if (check_if_wall_h(colison, ray->direction, var))
         {
-            ray->wall_or_door = check_if_wall_h(colison, ray->direction, var);
+            ray->wall_or_door_h = check_if_wall_h(colison, ray->direction, var);
             return colison;
         }
         colison.x += skip_x;
@@ -310,10 +312,13 @@ float min(float a,float b)
 void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
 {
     cor->is_collision_horizontal = 1;
+    ray->wall_or_door = 0;
     if (ray->direction_x == 0)
     {
         cor->is_collision_horizontal = 0;
         cor->colision_h = cast_vertical(var,ray);
+        if (ray->wall_or_door_v == DOOR)
+            ray->wall_or_door = DOOR;
         if (ray->angle == 0)
             ray->textures_index = 0;
         else
@@ -326,6 +331,8 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
     else if (ray->direction_y == 0)
     {
         cor->colision_v = cast_horizantal(var,ray);
+        if (ray->wall_or_door_h == DOOR)
+            ray->wall_or_door = DOOR;
         if (ray->angle == 90)
             ray->textures_index = 1;
         else
@@ -337,13 +344,15 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
     }
     else
     {
-        cor->colision_v = cast_vertical(var,ray);
         cor->colision_h = cast_horizantal(var,ray);
+        cor->colision_v = cast_vertical(var,ray);
         cor->distance_v = distance_squared(ray->start, cor->colision_v);
         cor->distance_h = distance_squared(ray->start, cor->colision_h);
         cor->h  = cor->distance_v;
         if (cor->distance_v < cor->distance_h)
         {
+            if (ray->wall_or_door_v == DOOR)
+                ray->wall_or_door = DOOR;
             cor->is_collision_horizontal = 0;
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
@@ -351,6 +360,8 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
         else if (cor->distance_h < cor->distance_v)
         {
+            if (ray->wall_or_door_h == DOOR)
+                ray->wall_or_door = DOOR;   
             cor->h  = cor->distance_h;
             ray->angle = my_fmod(ray->angle,360);
             cor->line.by = cor->colision_h.y;
@@ -359,6 +370,8 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
         }
         else
         {
+            // if (ray->wall_or_door_h == DOOR || ray->wall_or_door_v == DOOR)
+            //     ray->wall_or_door = DOOR;
             // printf("Vertical === Horizontal\n");
             cor->line.bx = cor->colision_v.x;
             cor->line.by = cor->colision_v.y;
