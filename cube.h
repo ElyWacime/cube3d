@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "./MLX43/include/MLX42/MLX42.h"
 
-//alias cv="make && ./cube file.cube" && alias cr="make && ./cube creepy.cube"
+//alias cv="make && ./cube file.cub" && alias cr="make && ./cube creepy.cub"
 //
 #define SQUARE_SIZE 8
 #define DOOR 7

@@ -501,10 +501,10 @@ void one_ray_wall(t_var *var, t_ray *ray)
                 }
                 else
                 {
-                    if (ray->textures_index == 0 || ray->textures_index == 2)
-                        mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_h(var,&ra_wl,ra_wl.ofssetx));
-                    else
                         mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_v(var,&ra_wl,ra_wl.ofssetx));
+                    // if (ray->textures_index == 0 || ray->textures_index == 2)
+                    // else
+                        // mlx_put_pixel(var->img_3d, ra_wl.idx, ra_wl.idy,door_textures_v(var,&ra_wl,ra_wl.ofssetx));
                 }
             }
             else 
