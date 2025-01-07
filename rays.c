@@ -100,13 +100,13 @@ int check_if_wall_h(t_point start, t_point direction, t_var *var)
         {
             if (var->map[row][col] == 'P' || var->map[row][col - 1] == 'P')
                 return DOOR;
-           return (var->map[row][col] == '1'
-            || var->map[row][col] == '\0'
-            || ft_isspace(var->map[row][col])
-            || var->map[row][col - 1] == '1'
-            || var->map[row][col - 1] == '\0'
-            || ft_isspace(var->map[row][col - 1])
-            ); 
+            return (var->map[row][col] == '1'
+                || var->map[row][col] == '\0'
+                || ft_isspace(var->map[row][col])
+                || var->map[row][col - 1] == '1'
+                || var->map[row][col - 1] == '\0'
+                || ft_isspace(var->map[row][col - 1])
+                );
         }
         if (var->map[row][col] == 'P')
             return DOOR;
@@ -131,13 +131,13 @@ int check_if_wall_v(t_point start, t_point direction, t_var *var)
         {
             if (var->map[row][col] == 'P' || var->map[row - 1][col] == 'P')
                 return DOOR;
-           return (var->map[row][col] == '1'
-            || var->map[row][col] == '\0'
-            || ft_isspace(var->map[row][col])
-            || var->map[row - 1][col] == '1'
-            || var->map[row - 1][col] == '\0'
-            || ft_isspace(var->map[row - 1][col])
-            ); 
+            return (var->map[row][col] == '1'
+                || var->map[row][col] == '\0'
+                || ft_isspace(var->map[row][col])
+                || var->map[row - 1][col] == '1'
+                || var->map[row - 1][col] == '\0'
+                || ft_isspace(var->map[row - 1][col])
+                ); 
         }
         if (var->map[row][col] == 'P')
             return DOOR;
@@ -309,6 +309,24 @@ float min(float a,float b)
     return b;   
 }
 
+void    close_or_open_door(t_cords *cor, t_ray *ray, t_var *var)
+{
+    int trucker;
+
+
+
+    trucker = -1;
+    if (cor->h < 150 && ray->wall_or_door == DOOR)
+    {
+    // printf("%d\t%d\nlen = %d", (int)var->door_cords.cords[0].y, (int)var->door_cords.cords[0].x,
+    //     (int)var->door_cords.len);
+        while (++trucker < (int)var->door_cords.len)
+        {
+            var->map[(int)var->door_cords.cords[trucker].y][(int)var->door_cords.cords[trucker].x] = '0';
+        }
+    }
+}
+
 void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
 {
     cor->is_collision_horizontal = 1;
@@ -378,6 +396,7 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             //draw_line5(cor->line,var,0xFFFFFFFF);//GRAY VERTICAL   0x808080FF
         }
     }
+    close_or_open_door(cor, ray, var);
     cor->distance_to_wall =  cor->h;
     if (cor->is_collision_horizontal == 0)
     {

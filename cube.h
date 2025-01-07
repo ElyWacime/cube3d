@@ -90,6 +90,12 @@ typedef struct s_cords
     int is_collision_horizontal;
 }   t_cords;
 
+typedef struct s_door_cords
+{
+    t_point *cords;
+    t_uint  len;
+}   t_dcor;
+
 typedef struct s_var
 {
     t_player    player;
@@ -117,6 +123,7 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
+    t_dcor      door_cords;
 
     t_uint      r;
     t_uint      g;
