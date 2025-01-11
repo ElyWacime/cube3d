@@ -86,42 +86,6 @@ void print_map(t_var var)
     }
 }
 
-void get_all_door_cords(t_var *var)
-{
-    int8_t i;
-    int8_t j;
-    int8_t trucker;
-
-    i = -1;
-    while (++i < (int)var->mini_height / 8)
-    {
-        j = -1;
-        while (var->map[i][++j])
-        {
-            if (var->map[i][j] == 'P')
-                var->door_cords.len++;
-        }
-    }
-    if (var->door_cords.len == 0)
-        return ;
-    var->door_cords.cords = malloc(sizeof(t_point) * var->door_cords.len);
-    i = -1;
-    trucker = 0;
-    while (++i < (int)var->mini_height / 8)
-    {
-        j = -1;
-        while (var->map[i][++j])
-        {
-            if (var->map[i][j] == 'P')
-            {
-                var->door_cords.cords[trucker].x = j;
-                var->door_cords.cords[trucker].y = i;
-                trucker++;
-            }
-        }
-    }
-}
-
 int main(int ac, char *av[])
 {
     t_var var;

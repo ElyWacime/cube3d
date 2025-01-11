@@ -23,6 +23,10 @@ void    listen_to_key(struct mlx_key_data keydata, void *ptr)
 	else if (keydata.key == MLX_KEY_S
         && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
 		move_player_down(var);
+    else if (keydata.key == MLX_KEY_C && keydata.action == MLX_PRESS)
+        close_door(var);
+    else if (keydata.key == MLX_KEY_O && keydata.action == MLX_PRESS)
+        open_door(var);
     else if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
         quit_program(var);
 }

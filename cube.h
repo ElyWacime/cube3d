@@ -183,7 +183,10 @@ float  from_rad_to_deg(float);
 float  from_deg_to_rad(float);
 void    draw_line(t_line , t_var *, t_uint);
 void    quit_program(t_var *);
+void    get_all_door_cords(t_var *var);
 void    close_or_open_door(t_var *var);
+void open_door(t_var *var);
+void close_door(t_var *var);
 /*
 ** check_map.c
 */
