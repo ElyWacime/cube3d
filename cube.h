@@ -110,6 +110,7 @@ typedef struct s_var
     mlx_texture_t *west;
     mlx_texture_t *south;
     mlx_texture_t *door;
+    mlx_texture_t *gun;
 
     char        **map;
     char        **textures;
@@ -155,6 +156,7 @@ void    rotate_player_left(t_var *);
 */
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
+void    cursor_callBackFunc(double x, double y, void *ptr);
 
 /*
 ** init_map.c

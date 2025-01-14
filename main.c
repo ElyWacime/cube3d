@@ -65,11 +65,14 @@ void parsing(int ac, char *av[], t_var *var)
     free(_map);
 }
 
-void check_for_door_image(t_var *var)
+void check_for_images(t_var *var)
 {
     int fd;
 
     fd = open("./textures/door.png", O_RDONLY);
+    if (fd < 1)
+        quit_program(var);
+    fd = open("./textures/gunPicture.png", O_RDONLY);
     if (fd < 1)
         quit_program(var);
 }
@@ -86,37 +89,50 @@ void print_map(t_var var)
     }
 }
 
+void    init_vars(t_var *var)
+{
+    var->img = NULL;
+    var->mlx = NULL;
+    var->img = NULL;
+    var->img_3d = NULL;
+    var->mini_map = NULL;
+    var->map = NULL;
+    var->textures = NULL;
+    var->colors = NULL;
+    var->door_cords.len = 0;
+    var->door_cords.cords = NULL;
+    // var.cor = NULL;
+    // var.ray = NULL;
+}
+
+void    load_pictures(t_var *var)
+{
+    var->north =   mlx_load_png(var->textures[0] + 3);
+    var->south =   mlx_load_png(var->textures[1] + 3);
+    var->west =   mlx_load_png(var->textures[2] + 3);
+    var->east =   mlx_load_png(var->textures[3] + 3);
+    check_for_images(var);
+    var->door = mlx_load_png("./textures/door.png");
+    var->gun = mlx_load_png("./textures/gunPicture.png");
+
+}
+
 int main(int ac, char *av[])
 {
     t_var var;
 
-    var.img = NULL;
-    var.mlx = NULL;
-    var.img = NULL;
-    var.img_3d = NULL;
-    var.mini_map = NULL;
-    var.map = NULL;
-    var.textures = NULL;
-    var.colors = NULL;
-    var.door_cords.len = 0;
-    var.door_cords.cords = NULL;
-    // var.cor = NULL;
-    // var.ray = NULL;
+    init_vars(&var);
     parsing(ac, av, &var);
     _init_window(&var);
     var.mini_map = mlx_new_image(var.mlx, WIDTH, HEIGHT);
     init_img3d(&var);
-    var.north =   mlx_load_png(var.textures[0] + 3);
-    var.south =   mlx_load_png(var.textures[1] + 3);
-    var.west =   mlx_load_png(var.textures[2] + 3);
-    var.east =   mlx_load_png(var.textures[3] + 3);
-    check_for_door_image(&var);
-    var.door = mlx_load_png("./textures/door.png");
+    load_pictures(&var);
     print_map(var);
     get_all_door_cords(&var);
     cast(&var);
     init_mini_map_system(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
+    mlx_cursor_hook(var.mlx, cursor_callBackFunc, (void*)&var);
     mlx_loop(var.mlx);
     return 0;
 }
