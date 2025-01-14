@@ -34,7 +34,10 @@ void init_mini_map_system(t_var *var)
         {
             if (i > ft_strlen(var->map[px_to_map_grid(j)]) * SQUARE_SIZE)
                 break;
-            if (var->map[px_to_map_grid(j)][px_to_map_grid(i)] != '1' &&
+            if (var->player.position.x - 2 < i && i < var->player.position.x + 2
+                && var->player.position.y - 2 < j && j < var->player.position.y + 2)
+                mlx_put_pixel(var->img_3d, map_x, map_y, 0x00FF00FF);
+            else if (var->map[px_to_map_grid(j)][px_to_map_grid(i)] != '1' &&
                 var->map[px_to_map_grid(j)][px_to_map_grid(i)] != 'P')
                 mlx_put_pixel(var->img_3d, map_x, map_y, 0x000000FF);
             else if (var->map[px_to_map_grid(j)][px_to_map_grid(i)] == 'P')
