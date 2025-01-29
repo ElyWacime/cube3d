@@ -12,9 +12,10 @@
 #include <stdint.h>
 #include "./MLX43/include/MLX42/MLX42.h"
 
-//alias cv="make && ./cube file.cube" && alias cr="make && ./cube creepy.cube"
+//alias cv="make && ./cube file.cub" && alias cr="make && ./cube creepy.cub"
 //
 #define SQUARE_SIZE 8
+#define DOOR 7
 #define WIDTH 1280 // 2560   //     1080
 #define HEIGHT 640 // 1280  //      896
 #define VIEW 63
@@ -56,6 +57,9 @@ typedef struct s_ray
     float angle;
     float direction_x;
     float direction_y;
+    int wall_or_door;
+    int wall_or_door_v;
+    int wall_or_door_h;
 }   t_ray;
 
 typedef struct s_line
@@ -86,6 +90,12 @@ typedef struct s_cords
     int is_collision_horizontal;
 }   t_cords;
 
+typedef struct s_door_cords
+{
+    t_point *cords;
+    t_uint  len;
+}   t_dcor;
+
 typedef struct s_var
 {
     t_player    player;
@@ -94,10 +104,14 @@ typedef struct s_var
     mlx_image_t *img_3d;
     mlx_image_t *mini_map;
     mlx_image_t *mini_map_system; // image
+
     mlx_texture_t *north;
     mlx_texture_t *east;
     mlx_texture_t *west;
     mlx_texture_t *south;
+    mlx_texture_t *door;
+    mlx_texture_t *gun;
+
     char        **map;
     char        **textures;
     char        **colors;
@@ -110,6 +124,10 @@ typedef struct s_var
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
+    
+    t_dcor      door_cords;
+    // t_cords     *cor;
+    // t_ray       *ray;
 
     t_uint      r;
     t_uint      g;
@@ -138,6 +156,13 @@ void    rotate_player_left(t_var *);
 */
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
+void    cursor_callBackFunc(double x, double y, void *ptr);
+
+/*
+** mouse.c
+*/
+void    change_mouse_position(void* param);
+void    mlx_mouse_func(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
 
 /*
 ** init_map.c
@@ -166,6 +191,10 @@ float  from_rad_to_deg(float);
 float  from_deg_to_rad(float);
 void    draw_line(t_line , t_var *, t_uint);
 void    quit_program(t_var *);
+void    get_all_door_cords(t_var *var);
+void    close_or_open_door(t_var *var);
+void open_door(t_var *var);
+void close_door(t_var *var);
 /*
 ** check_map.c
 */
@@ -187,6 +216,8 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures_v(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures_h(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
 
 /*
@@ -194,4 +225,5 @@ float my_fmod(float theta,int mod);
 */
 void init_mini_map_system(t_var *var);
 void draw_animated_sprite(t_var *var);
+
 #endif
