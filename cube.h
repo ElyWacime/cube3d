@@ -159,6 +159,12 @@ void    get_point_position_to_draw_diraction(t_var *, t_uint);
 void    cursor_callBackFunc(double x, double y, void *ptr);
 
 /*
+** mouse.c
+*/
+void    change_mouse_position(void* param);
+void    mlx_mouse_func(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+
+/*
 ** init_map.c
 */
 char        **create_map(char *, t_var *);
