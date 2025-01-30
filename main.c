@@ -132,7 +132,7 @@ int main(int ac, char *av[])
     cast(&var);
     init_mini_map_system(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
-    mlx_mouse_hook(var.mlx, mlx_mouse_func, (void*)&var);
+    mlx_cursor_hook(var.mlx, mlx_mouse_func, (void*)&var);
     mlx_loop(var.mlx);
     return 0;
 }

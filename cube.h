@@ -162,7 +162,7 @@ void    cursor_callBackFunc(double x, double y, void *ptr);
 ** mouse.c
 */
 void    change_mouse_position(void* param);
-void    mlx_mouse_func(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+void    mlx_mouse_func(double xpos, double ypos, void* param);
 
 /*
 ** init_map.c

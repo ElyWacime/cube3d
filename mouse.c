@@ -8,9 +8,6 @@ void change_mouse_position(void* param) {
     const float speed = 2;
 
     if (!var || !var->mlx) return;
-
-    mlx_set_cursor_mode(var->mlx, MLX_MOUSE_HIDDEN);
-
     mlx_get_mouse_pos(var->mlx, &mouse_x, &mouse_y);
     float delta_x = mouse_x - prev_x;
 
@@ -29,10 +26,7 @@ void change_mouse_position(void* param) {
     mlx_set_mouse_pos(var->mlx, WIDTH/2, HEIGHT/2);
 }
 
-void mlx_mouse_func(mouse_key_t button, action_t action, modifier_key_t mods, void* param) {
-    (void)button;
-    // (void)action;
-    (void)mods;
-    printf("action = %d\n", action);
+void mlx_mouse_func(double xpos, double ypos, void* param) {
+    mlx_set_cursor_mode(((t_var *)param)->mlx, MLX_MOUSE_HIDDEN);
     change_mouse_position(param);
 }
