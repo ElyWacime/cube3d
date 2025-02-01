@@ -1,7 +1,7 @@
 CC = cc
 # FLAGS = -fsanitize=address -g
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g 
-FLAGS = -fsanitize=address -g
+# FLAGS = -Wall -Wextra -Werror -fsanitize=address -g 
+# FLAGS = -fsanitize=address -g
 FLAGS = -Wall -Wextra -g
 CFILES = mouse.c mini_map_system.c rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c textures.c
 OBJ = $(CFILES:.c=.o)
@@ -15,8 +15,8 @@ GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/
 
 all : ${NAME}
 ${NAME}:${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -O3 -Iinclude -ldl -lglfw  -lm -o ${NAME}
-# ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -O3 -framework OpenGL -framework AppKit -o ${NAME}
+	${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -O3 -framework OpenGL -framework AppKit -o ${NAME}
+# ${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -O3 -Iinclude -ldl -lglfw  -lm -o ${NAME}
 # ${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
 
 ${LIBFT}:
