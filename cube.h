@@ -219,6 +219,7 @@ size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t door_textures_v(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t door_textures_h(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
+void draw_gun(t_var *var);
 
 /*
 ** mini_map_system.c

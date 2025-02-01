@@ -113,8 +113,13 @@ void    load_pictures(t_var *var)
     var->east =   mlx_load_png(var->textures[3] + 3);
     check_for_images(var);
     var->door = mlx_load_png("./textures/door.png");
-    var->gun = mlx_load_png("./textures/gunPicture.png");
-
+    var->gun = mlx_load_png("./textures/gunImage.png");
+    // int x = 0;
+    // while (x < var->gun->height * var->gun->width * 4)
+    // {
+    //     printf("%zu\n", var->gun->pixels[x]);
+    //     x++;
+    // }
 }
 
 int main(int ac, char *av[])
@@ -131,6 +136,7 @@ int main(int ac, char *av[])
     get_all_door_cords(&var);
     cast(&var);
     init_mini_map_system(&var);
+    draw_gun(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_cursor_hook(var.mlx, mlx_mouse_func, (void*)&var);
     mlx_loop(var.mlx);

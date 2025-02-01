@@ -122,3 +122,57 @@ size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
             var->o;
     // return  var->south->pixels[ra_wl->pix + 3] |  (var->south->pixels[ra_wl->pix + 2] << 8) | (var->south->pixels[ra_wl->pix + 1] << 16) |  (var->south->pixels[ra_wl->pix + 0] << 24);
 }
+
+uint32_t get_gun_color_at_current_pixel(t_var *var, int x, int y)
+{
+    t_uint r;
+    t_uint g;
+    t_uint b;
+    t_uint o;
+    t_uint color;
+
+    if ((y * var->gun->width + x) >= var->gun->height * var->gun->width * 4)
+        return 0x00000000;
+    r = (var->gun->pixels[((y * var->gun->width + x) + 0)]) << 24;
+    g = (var->gun->pixels[((y * var->gun->width + x) + 1)]) << 16;
+    b =  (var->gun->pixels[((y * var->gun->width + x) + 2)]) << 8;
+    o = (var->gun->pixels[((y * var->gun->width + x) + 3)]);
+    color =   r |
+            g |
+            b |
+            o;
+    if (color == 0x000000FF)
+        return 0x00000000;
+    return color;
+}
+
+void draw_gun(t_var *var)
+{
+    int xstart;
+    int xend;
+    int ystart;
+    int yend;
+    uint32_t color;
+
+    int x_img = 0;
+    int y_img = 0;
+
+    xstart = (WIDTH / 2) - (var->gun->width / 2);
+    xend = (WIDTH / 2) + (var->gun->width / 2);
+    ystart = (HEIGHT) - var->gun->height;
+    yend = HEIGHT;
+
+    while (ystart < yend)
+    {
+        xstart = (WIDTH / 2) - (var->gun->width / 2);
+        while (xstart < xend)
+        {
+            color = get_gun_color_at_current_pixel(var, x_img, y_img);
+            mlx_put_pixel(var->img_3d, xstart, ystart, color);
+            xstart++;
+            x_img+=4;
+        }
+        ystart++;
+        y_img+=4;
+    }
+}
