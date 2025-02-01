@@ -35,6 +35,7 @@ void    rotate_player_right(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
+    draw_gun(var);
 }
 
 void    rotate_player_left(t_var *var)
@@ -44,4 +45,5 @@ void    rotate_player_left(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
+    draw_gun(var);
 }

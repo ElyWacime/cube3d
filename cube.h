@@ -162,7 +162,7 @@ void    cursor_callBackFunc(double x, double y, void *ptr);
 ** mouse.c
 */
 void    change_mouse_position(void* param);
-void    mlx_mouse_func(mouse_key_t button, action_t action, modifier_key_t mods, void* param);
+void    mlx_mouse_func(double xpos, double ypos, void* param);
 
 /*
 ** init_map.c
@@ -219,6 +219,7 @@ size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t door_textures_v(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t door_textures_h(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
+void draw_gun(t_var *var);
 
 /*
 ** mini_map_system.c
