@@ -72,7 +72,7 @@ void check_for_images(t_var *var)
     fd = open("./textures/door.png", O_RDONLY);
     if (fd < 1)
         quit_program(var);
-    fd = open("./textures/gunPicture.png", O_RDONLY);
+    fd = open("./textures/gunImage.png", O_RDONLY);
     if (fd < 1)
         quit_program(var);
 }
