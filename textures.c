@@ -132,7 +132,7 @@ uint32_t get_gun_color_at_current_pixel(t_var *var, int x, int y)
     t_uint color;
 
     if ((y * var->gun->width + x) >= var->gun->height * var->gun->width * 4)
-        return 0x00000000;
+        return 0xFFFFFF00;
     r = (var->gun->pixels[((y * var->gun->width + x) + 0)]) << 24;
     g = (var->gun->pixels[((y * var->gun->width + x) + 1)]) << 16;
     b =  (var->gun->pixels[((y * var->gun->width + x) + 2)]) << 8;
@@ -141,7 +141,7 @@ uint32_t get_gun_color_at_current_pixel(t_var *var, int x, int y)
             g |
             b |
             o;
-    if (color == 0x000000FF)
+    if (color == 0x6070DFFF)
         return 0x00000000;
     return color;
 }
@@ -156,18 +156,27 @@ void draw_gun(t_var *var)
 
     int x_img = 0;
     int y_img = 0;
+    int xtrucker = 0;
+    int ytrucker = 0;
 
     xstart = (WIDTH / 2) - (var->gun->width / 2);
     xend = (WIDTH / 2) + (var->gun->width / 2);
-    ystart = (HEIGHT) - var->gun->height;
-    yend = HEIGHT;
+    ystart = (HEIGHT - (HEIGHT / 4)) - var->gun->height;
+    yend = (HEIGHT - HEIGHT / 4) + var->gun->height;
+
+    printf("xstart = %d\tystart = %d\t\txend = %d\tyend = %d\t\tx = %d\ty = %d\t\twidth = %u\theight = %u\n",
+            xstart, ystart, xend, yend, xend-xstart, yend-ystart, var->gun->width, var->gun->height);
 
     while (ystart < yend)
     {
+        if (++ytrucker > var->gun->height)
+            break;
         xstart = (WIDTH / 2) - (var->gun->width / 2);
         while (xstart < xend)
         {
             color = get_gun_color_at_current_pixel(var, x_img, y_img);
+            // printf("%X\n", color);
+            // break;
             mlx_put_pixel(var->img_3d, xstart, ystart, color);
             xstart++;
             x_img+=4;
