@@ -164,8 +164,8 @@ void draw_gun(t_var *var)
     ystart = (HEIGHT - (HEIGHT / 4)) - var->gun->height;
     yend = (HEIGHT - HEIGHT / 4) + var->gun->height;
 
-    printf("xstart = %d\tystart = %d\t\txend = %d\tyend = %d\t\tx = %d\ty = %d\t\twidth = %u\theight = %u\n",
-            xstart, ystart, xend, yend, xend-xstart, yend-ystart, var->gun->width, var->gun->height);
+    // printf("xstart = %d\tystart = %d\t\txend = %d\tyend = %d\t\tx = %d\ty = %d\t\twidth = %u\theight = %u\n",
+    //         xstart, ystart, xend, yend, xend-xstart, yend-ystart, var->gun->width, var->gun->height);
 
     while (ystart < yend)
     {
