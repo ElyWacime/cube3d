@@ -131,12 +131,12 @@ uint32_t get_gun_color_at_current_pixel(t_var *var, int x, int y)
     t_uint o;
     t_uint color;
 
-    if ((y * var->gun->width + x) >= var->gun->height * var->gun->width * 4)
+    if ((y * var->gunPreFire->width + x) >= var->gunPreFire->height * var->gunPreFire->width * 4)
         return 0xFFFFFF00;
-    r = (var->gun->pixels[((y * var->gun->width + x) + 0)]) << 24;
-    g = (var->gun->pixels[((y * var->gun->width + x) + 1)]) << 16;
-    b =  (var->gun->pixels[((y * var->gun->width + x) + 2)]) << 8;
-    o = (var->gun->pixels[((y * var->gun->width + x) + 3)]);
+    r = (var->gunPreFire->pixels[((y * var->gunPreFire->width + x) + 0)]) << 24;
+    g = (var->gunPreFire->pixels[((y * var->gunPreFire->width + x) + 1)]) << 16;
+    b =  (var->gunPreFire->pixels[((y * var->gunPreFire->width + x) + 2)]) << 8;
+    o = (var->gunPreFire->pixels[((y * var->gunPreFire->width + x) + 3)]);
     color =   r |
             g |
             b |
@@ -149,39 +149,14 @@ uint32_t get_gun_color_at_current_pixel(t_var *var, int x, int y)
 void draw_gun(t_var *var)
 {
     int xstart;
-    int xend;
     int ystart;
-    int yend;
-    uint32_t color;
 
-    int x_img = 0;
-    int y_img = 0;
-    int xtrucker = 0;
-    int ytrucker = 0;
-
-    xstart = (WIDTH / 2) - (var->gun->width / 2);
-    xend = (WIDTH / 2) + (var->gun->width / 2);
-    ystart = (HEIGHT - (HEIGHT / 4)) - var->gun->height;
-    yend = (HEIGHT - HEIGHT / 4) + var->gun->height;
-
-    // printf("xstart = %d\tystart = %d\t\txend = %d\tyend = %d\t\tx = %d\ty = %d\t\twidth = %u\theight = %u\n",
-    //         xstart, ystart, xend, yend, xend-xstart, yend-ystart, var->gun->width, var->gun->height);
-
-    while (ystart < yend)
-    {
-        if (++ytrucker > var->gun->height)
-            break;
-        xstart = (WIDTH / 2) - (var->gun->width / 2);
-        while (xstart < xend)
-        {
-            color = get_gun_color_at_current_pixel(var, x_img, y_img);
-            // printf("%X\n", color);
-            // break;
-            mlx_put_pixel(var->img_3d, xstart, ystart, color);
-            xstart++;
-            x_img+=4;
-        }
-        ystart++;
-        y_img+=4;
-    }
+    xstart = (WIDTH / 2) - (var->gunPreFire->width / 2);
+    ystart = HEIGHT - var->gunPreFire->height;
+    mlx_image_t *gunFire =  mlx_texture_to_image(var->mlx, var->gunPreFire);
+    mlx_image_t *gunPreFire =  mlx_texture_to_image(var->mlx, var->gunPreFire);
+    gunPreFire->enabled = true;
+    gunFire->enabled = false;
+    mlx_resize_image(gunFire, var->gunPreFire->width*4, var->gunPreFire->height*4);
+    mlx_image_to_window(var->mlx, gunPreFire, xstart, ystart);
 }
