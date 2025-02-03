@@ -72,7 +72,10 @@ void check_for_images(t_var *var)
     fd = open("./textures/door.png", O_RDONLY);
     if (fd < 1)
         quit_program(var);
-    fd = open("./textures/gunImage.png", O_RDONLY);
+    fd = open("./textures/gunImageFire.png", O_RDONLY);
+    if (fd < 1)
+        quit_program(var);
+    fd = open("./textures/gunImagePreFire.png", O_RDONLY);
     if (fd < 1)
         quit_program(var);
 }
@@ -113,11 +116,12 @@ void    load_pictures(t_var *var)
     var->east =   mlx_load_png(var->textures[3] + 3);
     check_for_images(var);
     var->door = mlx_load_png("./textures/door.png");
-    var->gun = mlx_load_png("./textures/gunImage.png");
+    var->gunFire = mlx_load_png("./textures/gunImageFire.png");
+    var->gunPreFire = mlx_load_png("./textures/gunImagePreFire.png");
     // int x = 0;
-    // while (x < var->gun->height * var->gun->width * 4)
+    // while (x < var->gunPreFire->height * var->gunPreFire->width * 4)
     // {
-    //     printf("%zu\n", var->gun->pixels[x]);
+    //     printf("%zu\n", var->gunPreFire->pixels[x]);
     //     x++;
     // }
 }

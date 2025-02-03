@@ -182,6 +182,14 @@ void close_door(t_var *var)
     i = 0;
     while (i < var->door_cords.len)
     {
+        if (var->door_cords.cords[i].x == px_to_map_grid(var->player.position.x)
+            && var->door_cords.cords[i].y == px_to_map_grid(var->player.position.y))
+            return ;
+        i++;
+    }
+    i = 0;
+    while (i < var->door_cords.len)
+    {
         var->map[(int)var->door_cords.cords[i].y][(int)var->door_cords.cords[i].x] = 'P';
         i++;
     }
