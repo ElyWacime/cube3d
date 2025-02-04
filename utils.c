@@ -196,6 +196,7 @@ void close_door(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
+    draw_gun(var);
 }
 
 void open_door(t_var *var)
@@ -211,33 +212,6 @@ void open_door(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
+    draw_gun(var);
 }
 
-void    close_or_open_door(t_var *var)
-{
-    (void)var;
-    // int trucker;
-
-
-
-    // trucker = -1;
-    // if (var->map[px_to_map_grid(var->player.position.y)][px_to_map_grid(var->player.position.x)] == 'P'
-    //     || var->map[px_to_map_grid(var->player.position.y) - 1][px_to_map_grid(var->player.position.x)] == 'P'
-    //     || var->map[px_to_map_grid(var->player.position.y) + 1][px_to_map_grid(var->player.position.x)] == 'P'
-    //     || var->map[px_to_map_grid(var->player.position.y)][px_to_map_grid(var->player.position.x) - 1] == 'P'
-    //     || var->map[px_to_map_grid(var->player.position.y)][px_to_map_grid(var->player.position.x) + 1] == 'P')
-    // {
-    //     while (++trucker < (int)var->door_cords.len)
-    //     {
-    //         var->map[(int)var->door_cords.cords[trucker].y][(int)var->door_cords.cords[trucker].x] = '0';
-    //     }
-    // }
-    // else
-    // {
-    //     while (++trucker < (int)var->door_cords.len)
-    //     {
-    //         var->map[(int)var->door_cords.cords[trucker].y][(int)var->door_cords.cords[trucker].x] = 'P';
-    //     }
-    // }
-    return ;
-}

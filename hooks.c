@@ -5,7 +5,11 @@ void    listen_to_key(struct mlx_key_data keydata, void *ptr)
     t_var *var;
     
     var = (t_var *)ptr;
-    if (keydata.key == MLX_KEY_LEFT
+    if (keydata.key == MLX_KEY_SPACE && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+        var->gunFireImg->enabled = true;
+    else if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
+        var->gunFireImg->enabled = false;
+    else if (keydata.key == MLX_KEY_LEFT
         && (keydata.action == MLX_PRESS || keydata.action == MLX_REPEAT))
         rotate_player_left(var);
     else if (keydata.key == MLX_KEY_RIGHT
@@ -38,4 +42,15 @@ void    cursor_callBackFunc(double x, double y, void *ptr)
     var = (t_var *)ptr;
     //mlx_get_mouse_pos
     (void)var;
+}
+
+void shoot(struct mlx_key_data keydata, void *ptr)
+{
+    t_var *var;
+
+    var = (t_var *)ptr;
+    if (keydata.key == MLX_KEY_SPACE && (keydata.action == MLX_REPEAT || keydata.action == MLX_PRESS))
+        var->gunFireImg->enabled = true;
+    if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
+        var->gunFireImg->enabled = false;
 }

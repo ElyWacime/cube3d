@@ -112,6 +112,8 @@ typedef struct s_var
     mlx_texture_t *door;
     mlx_texture_t *gunPreFire;
     mlx_texture_t *gunFire;
+    mlx_image_t *gunFireImg;
+    mlx_image_t *gunPreFireImg;
 
     char        **map;
     char        **textures;
@@ -158,6 +160,7 @@ void    rotate_player_left(t_var *);
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
 void    cursor_callBackFunc(double x, double y, void *ptr);
+// void    shoot(struct mlx_key_data keydata, void *ptr);
 
 /*
 ** mouse.c

@@ -151,12 +151,18 @@ void draw_gun(t_var *var)
     int xstart;
     int ystart;
 
-    xstart = (WIDTH / 2) - (var->gunPreFire->width / 2);
-    ystart = HEIGHT - var->gunPreFire->height;
-    mlx_image_t *gunFire =  mlx_texture_to_image(var->mlx, var->gunPreFire);
-    mlx_image_t *gunPreFire =  mlx_texture_to_image(var->mlx, var->gunPreFire);
-    gunPreFire->enabled = true;
-    gunFire->enabled = false;
-    mlx_resize_image(gunFire, var->gunPreFire->width*4, var->gunPreFire->height*4);
-    mlx_image_to_window(var->mlx, gunPreFire, xstart, ystart);
+    xstart = (WIDTH / 2) - (var->gunPreFire->width);
+    ystart = HEIGHT - var->gunPreFire->height * 2;
+
+    var->gunFireImg =  mlx_texture_to_image(var->mlx, var->gunFire);
+    var->gunPreFireImg =  mlx_texture_to_image(var->mlx, var->gunPreFire);
+
+    var->gunPreFireImg->enabled = true;
+    var->gunFireImg->enabled = false;
+
+    mlx_resize_image(var->gunPreFireImg, var->gunPreFire->width*2, var->gunPreFire->height*2);
+    mlx_resize_image(var->gunFireImg, var->gunFire->width*2, var->gunFire->height*2);
+
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, xstart, ystart);
+    mlx_image_to_window(var->mlx, var->gunFireImg, xstart, ystart);
 }
