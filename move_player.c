@@ -211,7 +211,9 @@ void    move_player_down(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    draw_gun(var);
+    // draw_gun(var);
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
 
 void    move_player_up(t_var *var)
@@ -220,7 +222,9 @@ void    move_player_up(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    draw_gun(var);
+    // draw_gun(var);
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
 
 void    move_player_right(t_var *var)
@@ -229,7 +233,10 @@ void    move_player_right(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    draw_gun(var);
+    // draw_gun(var);
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
+
 }
 
 void    move_player_left(t_var *var)
@@ -238,5 +245,8 @@ void    move_player_left(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    draw_gun(var);
+    // draw_gun(var);
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
+
 }
