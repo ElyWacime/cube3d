@@ -557,3 +557,18 @@ void cast(t_var *var)
     ray.target.x = var->player.vect[0];
     ray.target.y = var->player.vect[1];
 }
+
+float cast_one_ray_for_movement(t_var var, t_ray *ray)
+{
+    t_cords cor;
+
+    cor.line.ax = ray->start.x;
+    cor.line.ay = ray->start.y;
+    cor.line.bx = ray->target.x;
+    cor.line.by = ray->target.y;
+    ray->direction.x = ray->direction_x;
+    ray->direction.y = ray->direction_y;
+    cast_v_h(&var ,ray, &cor);
+    cor.h = sqrt(cor.h);
+    return cor.h;
+}

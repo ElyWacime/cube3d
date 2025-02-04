@@ -212,6 +212,8 @@ int     is_still_there_zeros(char **, int *);
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
 t_point rotate_by(t_point center, t_point m, float angle);
+float cast_one_ray_for_movement(t_var var, t_ray *ray);
+void set_direciton(t_ray *ray);
 
 /*
 ** textures.c
