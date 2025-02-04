@@ -104,6 +104,8 @@ void    init_vars(t_var *var)
     var->colors = NULL;
     var->door_cords.len = 0;
     var->door_cords.cords = NULL;
+    var->gunFireImg = NULL;
+    var->gunPreFireImg = NULL;
     // var.cor = NULL;
     // var.ray = NULL;
 }

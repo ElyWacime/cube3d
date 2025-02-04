@@ -61,6 +61,10 @@ void    init_img3d(t_var *var)
     var->mini_height = (t_uint)(strlen_double((void **)var->map)) * SQUARE_SIZE;
     if (var->img_3d)
         mlx_delete_image(var->mlx, var->img_3d);
+    if (var->gunFireImg)
+        mlx_delete_image(var->mlx, var->gunFireImg);
+    if (var->gunPreFireImg)
+        mlx_delete_image(var->mlx, var->gunPreFireImg);
     var->img_3d = mlx_new_image(var->mlx, WIDTH, HEIGHT);
     mlx_image_to_window(var->mlx, var->img_3d, 0, 0);
 }
