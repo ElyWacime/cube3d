@@ -104,8 +104,6 @@ void    init_vars(t_var *var)
     var->colors = NULL;
     var->door_cords.len = 0;
     var->door_cords.cords = NULL;
-    // var->gunFire = NULL;
-    // var->gunPreFire  = NULL;
     var->gunFireImg = NULL;
     var->gunPreFireImg = NULL;
     // var.cor = NULL;
@@ -143,7 +141,6 @@ int main(int ac, char *av[])
     print_map(var);
     get_all_door_cords(&var);
     cast(&var);
-    mlx_set_mouse_pos(var.mlx, WIDTH/2, HEIGHT/2);
     init_mini_map_system(&var);
     draw_gun(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);

@@ -6,7 +6,7 @@ void    quit_program(t_var *var)
     free(var->map);
     // mlx_delete_image(var->mlx, var->mini_map);
     // mlx_close_window(var->mlx);
-    // mlx_terminate(var->mlx);
+    mlx_terminate(var->mlx);
     exit(0);
 }
 
@@ -21,7 +21,6 @@ void ft_error(void)
 }
 
 void    free_double(void **ptr)
-
 {
     if (!ptr)
         return ;
@@ -198,8 +197,8 @@ void close_door(t_var *var)
     cast(var);
     init_mini_map_system(var);
     // draw_gun(var);
-    // mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
-    // mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
 
 void open_door(t_var *var)
@@ -216,7 +215,7 @@ void open_door(t_var *var)
     cast(var);
     init_mini_map_system(var);
     // draw_gun(var);
-    // mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
-    // mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
 

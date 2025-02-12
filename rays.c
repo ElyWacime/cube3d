@@ -1,55 +1,56 @@
 #include "cube.h"
 
-// void draw_line5(t_line line, t_var *var, t_uint color)
-// {
-//     float distance;
-//     float x;
-//     float y;
-//     int i = 0;
-//     distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
-//     x = line.ax;
-//     y = line.ay;
-//     if (x <= line.bx && y <= line.by)
-//     {
-//         while ( x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-//         {
-//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-//             x += (fabs(line.bx - line.ax) / distance);
-//             y += (fabs(line.by - line.ay) / distance);
-//             i++;
-//         }
-//     }
-//     else if (x >= line.bx && y <= line.by)
-//     {
-//         while ( x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-//         {
-//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-//             x -= (fabs(line.bx - line.ax) / distance);
-//             y += (fabs(line.by - line.ay) / distance);
-//             i++;
-//         }
-//     }
-//     else if (x >= line.bx && y >= line.by)
-//     {
-//         while ( x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-//         {
-//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-//             x -= (fabs(line.bx - line.ax) / distance);
-//             y -= (fabs(line.by - line.ay) / distance);
-//             i++;
-//         }
-//     }
-//     else if (x <= line.bx && y >= line.by)
-//     {
-//         while ( x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
-//         {
-//             mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-//             x += (fabs(line.bx - line.ax) / distance);
-//             y -= (fabs(line.by - line.ay) / distance);
-//             i++;
-//         }
-//     }
-// }
+void draw_line5(t_line line, t_var *var, t_uint color)
+{
+    float distance;
+    float x;
+    float y;
+    int i = 0;
+    distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
+    x = line.ax;
+    y = line.ay;
+    if (x <= line.bx && y <= line.by)
+    {
+        while ( x <= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x += (fabs(line.bx - line.ax) / distance);
+            y += (fabs(line.by - line.ay) / distance);
+            i++;
+        }
+    }
+    else if (x >= line.bx && y <= line.by)
+    {
+        while ( x >= line.bx && y <= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x -= (fabs(line.bx - line.ax) / distance);
+            y += (fabs(line.by - line.ay) / distance);
+            i++;
+        }
+    }
+    else if (x >= line.bx && y >= line.by)
+    {
+        while ( x >= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x -= (fabs(line.bx - line.ax) / distance);
+            y -= (fabs(line.by - line.ay) / distance);
+            i++;
+        }
+    }
+    else if (x <= line.bx && y >= line.by)
+    {
+        while ( x <= line.bx && y >= line.by && (0 <= x && x < var->mini_width && 0 <= y && y < var->mini_height))
+        {
+            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
+            x += (fabs(line.bx - line.ax) / distance);
+            y -= (fabs(line.by - line.ay) / distance);
+            i++;
+        }
+    }
+}
+
 
 float distance_squared(t_point a, t_point b)
 {
@@ -155,7 +156,6 @@ float my_fmod(float theta,int mod)
     i = theta;
     return theta - ((i / mod) * mod );
 }
-
 float tan_0_90(float theta)
 {
     theta = my_fmod(theta,360);
@@ -275,7 +275,9 @@ void set_direciton(t_ray *ray)
 {
     ray->direction_x = 1;
     ray->direction_y = 1;
-    ray->angle = my_fmod((ray->angle + 360),360);
+    ray->angle = my_fmod(ray->angle, 360);
+    ray->angle += 360;
+    ray->angle = my_fmod(ray->angle,360);
     if (0 < ray->angle  && ray->angle < 90)
         ray->direction_y = -1;
     else if (90 < ray->angle && ray->angle < 180)
@@ -379,7 +381,6 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
     // var->cor = cor;
     // var->ray = ray;
     cor->distance_to_wall =  cor->h;
-    
     if (cor->is_collision_horizontal == 0)
     {
         if ((270 < ray->angle && ray->angle < 360) ||
@@ -515,6 +516,7 @@ void one_ray_wall(t_var *var, t_ray *ray)
         ++var->x_3d;
     }
 }
+
 
 void cast(t_var *var)
 {
