@@ -12,16 +12,16 @@
 #include <stdint.h>
 #include "./MLX43/include/MLX42/MLX42.h"
 
-//alias cv="make && ./cube file.cube" && alias cr="make && ./cube creepy.cube"
-//  Resolution:	5120 x 2880 (5K/UHD+ - Ultra High Definition Plus)
-//   UI Looks like:	2560 x 1440
+//alias cv="make && ./cube file.cub" && alias cr="make && ./cube creepy.cub"
+//
 #define SQUARE_SIZE 8
+#define DOOR 7
 #define WIDTH 1280 // 2560   //     1080
 #define HEIGHT 640 // 1280  //      896
 #define VIEW 63
 #define CUBE_SIZE 8
 #define PI 3.14159265358979323846
-#define SPEED 5
+#define SPEED 1.5
 
 typedef unsigned int t_uint;
 
@@ -57,6 +57,9 @@ typedef struct s_ray
     float angle;
     float direction_x;
     float direction_y;
+    int wall_or_door;
+    int wall_or_door_v;
+    int wall_or_door_h;
 }   t_ray;
 
 typedef struct s_line
@@ -69,10 +72,10 @@ typedef struct s_line
 
 typedef struct s_player
 {
-    float  position[2];
-    float  vect[2];
-    char    direction;
-    float  angle;
+    t_point     position;
+    float       vect[2];
+    char        direction;
+    float       angle;
 }   t_player;
 
 typedef struct s_cords
@@ -87,18 +90,31 @@ typedef struct s_cords
     int is_collision_horizontal;
 }   t_cords;
 
+typedef struct s_door_cords
+{
+    t_point *cords;
+    t_uint  len;
+}   t_dcor;
+
 typedef struct s_var
 {
     t_player    player;
     mlx_t       *mlx;
-    mlx_t       *mlx_3d;
     mlx_image_t *img;
     mlx_image_t *img_3d;
     mlx_image_t *mini_map;
+    mlx_image_t *mini_map_system; // image
+
     mlx_texture_t *north;
     mlx_texture_t *east;
     mlx_texture_t *west;
     mlx_texture_t *south;
+    mlx_texture_t *door;
+    mlx_texture_t *gunPreFire;
+    mlx_texture_t *gunFire;
+    mlx_image_t *gunFireImg;
+    mlx_image_t *gunPreFireImg;
+
     char        **map;
     char        **textures;
     char        **colors;
@@ -106,14 +122,20 @@ typedef struct s_var
     int         map_len;
     int         x_3d;
     int         y_3d;
-    int r;
-    int g;
-    int b;
-    int o;
+
     t_uint      mini_width;
     t_uint      mini_height;
     uint32_t    color_C;
     uint32_t    color_F;
+    
+    t_dcor      door_cords;
+    // t_cords     *cor;
+    // t_ray       *ray;
+
+    t_uint      r;
+    t_uint      g;
+    t_uint      b;
+    t_uint      o;
 }   t_var;
 
 /*
@@ -137,7 +159,14 @@ void    rotate_player_left(t_var *);
 */
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
-void    color_player(t_var *var, int color);
+void    cursor_callBackFunc(double x, double y, void *ptr);
+// void    shoot(struct mlx_key_data keydata, void *ptr);
+
+/*
+** mouse.c
+*/
+void    change_mouse_position(void* param);
+void    mlx_mouse_func(double xpos, double ypos, void* param);
 
 /*
 ** init_map.c
@@ -149,9 +178,8 @@ uint32_t    transform_color_to_hexa(int *);
 /*
 ** init_mini_map.c
 */
-void    init_mini_map(t_var *);
-void    create_mini_map_image(t_var *var);
-void    draw_vector(t_var *var);
+void    init_img3d(t_var *);
+unsigned int   calculate_mini_map_width(t_var *var);
 
 /*
 ** utils.c
@@ -161,14 +189,16 @@ void    ft_error(void);
 void    free_double(void**);
 char    **strdup_double(char**);
 int     strlen_double(void**);
-void    print_map(t_var *var);
 t_uint  px_to_map_grid(t_uint x);
 float  calculate_distance(float, float, float, float);
 float  from_rad_to_deg(float);
 float  from_deg_to_rad(float);
-int     check_if_wall(float , float , t_var *);
 void    draw_line(t_line , t_var *, t_uint);
 void    quit_program(t_var *);
+void    get_all_door_cords(t_var *var);
+void    close_or_open_door(t_var *var);
+void open_door(t_var *var);
+void close_door(t_var *var);
 /*
 ** check_map.c
 */
@@ -182,6 +212,8 @@ int     is_still_there_zeros(char **, int *);
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
 t_point rotate_by(t_point center, t_point m, float angle);
+float cast_one_ray_for_movement(t_var var, t_ray *ray);
+void set_direciton(t_ray *ray);
 
 /*
 ** textures.c
@@ -190,5 +222,15 @@ size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t south_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
 size_t west_textures(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures_v(t_var *var, t_ray_wall *ra_wl, int ofsx);
+size_t door_textures_h(t_var *var, t_ray_wall *ra_wl, int ofsx);
 float my_fmod(float theta,int mod);
+void draw_gun(t_var *var);
+
+/*
+** mini_map_system.c
+*/
+void init_mini_map_system(t_var *var);
+void draw_animated_sprite(t_var *var);
+
 #endif

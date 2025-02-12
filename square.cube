@@ -1,0 +1,11 @@
+NO ./path.c
+SO ./path.c
+WE ./path.c
+EA ./path.c
+
+F 0,173,173
+C 0,0,0
+
+     111
+    10W01
+111111111111

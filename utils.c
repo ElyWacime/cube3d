@@ -3,8 +3,10 @@
 void    quit_program(t_var *var)
 {
     free_double((void **)var->map);
-    mlx_delete_image(var->mlx, var->mini_map);
-    mlx_close_window(var->mlx);
+    free(var->map);
+    // mlx_delete_image(var->mlx, var->mini_map);
+    // mlx_close_window(var->mlx);
+    // mlx_terminate(var->mlx);
     exit(0);
 }
 
@@ -19,6 +21,7 @@ void ft_error(void)
 }
 
 void    free_double(void **ptr)
+
 {
     if (!ptr)
         return ;
@@ -46,25 +49,6 @@ int strlen_double(void **ptr)
         i++;
     }
     return i;
-}
-
-void    print_map(t_var *var)
-{
-    int i;
-    int j;
-
-    i = -1;
-    printf("###########\n");
-    while (var->map[++i])
-    {
-        j = -1;
-        while (var->map[i][++j])
-        {
-            printf("%c", var->map[i][j]);
-        }
-        printf("\n");
-    }
-    printf("###########\n");
 }
 
 char    **strdup_double(char **str)
@@ -156,23 +140,83 @@ void    draw_line(t_line line, t_var *var, t_uint color)
     }
 }
 
-void    color_player(t_var *var, int color)
+void get_all_door_cords(t_var *var)
 {
-    t_uint i;
-    t_uint j;
+    int8_t i;
+    int8_t j;
+    int8_t trucker;
 
-    i = var->player.position[1];
-    while (i < var->player.position[1] + SQUARE_SIZE && i < var->mini_height)
+    i = -1;
+    while (++i < (int)var->mini_height / 8)
     {
-        j = var->player.position[0];
-        while (j < var->player.position[0] + SQUARE_SIZE && j < var->mini_width)
+        j = -1;
+        while (var->map[i][++j])
         {
-            if (i >= (var->player.position[1]) && i < var->player.position[1] + SQUARE_SIZE / 16
-                && j >= var->player.position[0] && j < var->player.position[0] + SQUARE_SIZE / 16)
-                mlx_put_pixel(var->mini_map, j, i, color);
-            j++;
+            if (var->map[i][j] == 'P')
+                var->door_cords.len++;
         }
+    }
+    if (var->door_cords.len == 0)
+        return ;
+    var->door_cords.cords = malloc(sizeof(t_point) * var->door_cords.len);
+    i = -1;
+    trucker = 0;
+    while (++i < (int)var->mini_height / 8)
+    {
+        j = -1;
+        while (var->map[i][++j])
+        {
+            if (var->map[i][j] == 'P')
+            {
+                var->door_cords.cords[trucker].x = j;
+                var->door_cords.cords[trucker].y = i;
+                trucker++;
+            }
+        }
+    }
+}
+
+void close_door(t_var *var)
+{
+    t_uint  i;
+
+    i = 0;
+    while (i < var->door_cords.len)
+    {
+        if (var->door_cords.cords[i].x == px_to_map_grid(var->player.position.x)
+            && var->door_cords.cords[i].y == px_to_map_grid(var->player.position.y))
+            return ;
         i++;
     }
-    var->player.direction = var->player.direction;
+    i = 0;
+    while (i < var->door_cords.len)
+    {
+        var->map[(int)var->door_cords.cords[i].y][(int)var->door_cords.cords[i].x] = 'P';
+        i++;
+    }
+    init_img3d(var);
+    cast(var);
+    init_mini_map_system(var);
+    // draw_gun(var);
+    // mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    // mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
+
+void open_door(t_var *var)
+{
+    t_uint  i;
+
+    i = 0;
+    while (i < var->door_cords.len)
+    {
+        var->map[(int)var->door_cords.cords[i].y][(int)var->door_cords.cords[i].x] = '0';
+        i++;
+    }
+    init_img3d(var);
+    cast(var);
+    init_mini_map_system(var);
+    // draw_gun(var);
+    // mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
+    // mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
+}
+

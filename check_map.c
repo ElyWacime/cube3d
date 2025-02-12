@@ -51,7 +51,7 @@ int is_still_there_zeros(char **_map, int *zero_position)
         j = 0;
         while (_map[i][j])
         {
-            if (_map[i][j] == '0')
+            if (_map[i][j] == '0' || _map[i][j] == 'P')
             {
                 zero_position[0] = i;
                 zero_position[1] = j;
@@ -79,9 +79,9 @@ void flood_fill(char **map, int x, int  y)
     if (map[y][x] == '1')
         return ;
     if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'W'
-        || map[y][x] == 'S' || map[y][x] == 'E')
+        || map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'P')
     {
-        if (!(map[y][x] == '0'))
+        if (!(map[y][x] == '0' || map[y][x] == 'P'))
             flag += 1;
         map[y][x] = '1';
     }
