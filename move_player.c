@@ -26,12 +26,6 @@ int check_if_wall_up_movement(t_var *var, t_point new_position)
             && var->map[px_to_map_grid(new_position.y + 1)][px_to_map_grid(new_position.x)] != 'P')
             return 1;
     }
-    // else
-    // {
-    //     if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != '1'
-    //         && var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != 'P')
-    //         return 1;
-    // }
     return 0;
 }
 
@@ -61,12 +55,6 @@ int check_if_wall_down_movement(t_var *var, t_point new_position)
             && var->map[px_to_map_grid(new_position.y - 1)][px_to_map_grid(new_position.x)] != 'P')
             return 1;
     }
-    // else
-    // {
-    //     if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != '1'
-    //         && var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != 'P')
-    //         return 1;
-    // }
     return 0;
 }
 
@@ -96,12 +84,6 @@ int check_if_wall_left_movement(t_var *var, t_point new_position)
             && var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x + 1)] != 'P')
             return 1;
     }
-    // else
-    // {
-    //     if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != '1'
-    //         && var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != 'P')
-    //         return 1;
-    // }
     return 0;
 }
 
@@ -131,12 +113,6 @@ int check_if_wall_right_movement(t_var *var, t_point new_position)
             && var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x - 1)] != 'P')
             return 1;
     }
-    // else
-    // {
-    //     if (var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != '1'
-    //         && var->map[px_to_map_grid(new_position.y)][px_to_map_grid(new_position.x)] != 'P')
-    //         return 1;
-    // }
     return 0;
 }
 
@@ -244,7 +220,6 @@ void    move_player_down(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    // draw_gun(var);
     mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
     mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
@@ -255,7 +230,6 @@ void    move_player_up(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    // draw_gun(var);
     mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
     mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
@@ -266,7 +240,6 @@ void    move_player_right(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    // draw_gun(var);
     mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
     mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
@@ -277,7 +250,6 @@ void    move_player_left(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    // draw_gun(var);
     mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
     mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 

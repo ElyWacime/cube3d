@@ -106,8 +106,6 @@ void    init_vars(t_var *var)
     var->door_cords.cords = NULL;
     var->gunFireImg = NULL;
     var->gunPreFireImg = NULL;
-    // var.cor = NULL;
-    // var.ray = NULL;
 }
 
 void    load_pictures(t_var *var)
@@ -120,12 +118,6 @@ void    load_pictures(t_var *var)
     var->door = mlx_load_png("./textures/door.png");
     var->gunFire = mlx_load_png("./textures/gunImageFire.png");
     var->gunPreFire = mlx_load_png("./textures/gunImagePreFire.png");
-    // int x = 0;
-    // while (x < var->gunPreFire->height * var->gunPreFire->width * 4)
-    // {
-    //     printf("%zu\n", var->gunPreFire->pixels[x]);
-    //     x++;
-    // }
 }
 
 int main(int ac, char *av[])
@@ -145,7 +137,6 @@ int main(int ac, char *av[])
     draw_gun(&var);
     mlx_key_hook(var.mlx, &listen_to_key, (void*)&var);
     mlx_cursor_hook(var.mlx, mlx_mouse_func, (void*)&var);
-    // mlx_key_hook(var.mlx, &shoot, (void*)&var);
     mlx_loop(var.mlx);
     return 0;
 }

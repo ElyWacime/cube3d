@@ -4,8 +4,6 @@ void    quit_program(t_var *var)
 {
     free_double((void **)var->map);
     free(var->map);
-    // mlx_delete_image(var->mlx, var->mini_map);
-    // mlx_close_window(var->mlx);
     mlx_terminate(var->mlx);
     exit(0);
 }
@@ -92,52 +90,6 @@ float  from_deg_to_rad(float val)
 {
     return ((val * PI) / 180);
 }
-void    draw_line(t_line line, t_var *var, t_uint color)
-{
-    float distance;
-    float x;
-    float y;
-
-    distance = calculate_distance(line.ax, line.ay, line.bx, line.by);
-    x = line.ax;
-    y = line.ay;
-    if (x <= line.bx && y <= line.by)
-    {
-        while ((0 <= x && y < var->mini_height && x < var->mini_width  && x < x + distance && 0 <= y && y < + distance))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x += (fabs(line.bx - line.ax) / distance);
-            y += (fabs(line.by - line.ay) / distance);
-        }
-    }
-    else if (x >= line.bx && y <= line.by)
-    {
-         while ((0 <= x && y < var->mini_height && x < var->mini_width  && x < x + distance && 0 <= y && y < + distance))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x -= (fabs(line.bx - line.ax) / distance);
-            y += (fabs(line.by - line.ay) / distance);
-        }
-    }
-    else if (x >= line.bx && y >= line.by)
-    {
-         while ((0 <= x && y < var->mini_height && x < var->mini_width  && x < x + distance && 0 <= y && y < + distance))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x -= (fabs(line.bx - line.ax) / distance);
-            y -= (fabs(line.by - line.ay) / distance);
-        }
-    }
-    else if (x <= line.bx && y >= line.by)
-    {
-         while ((0 <= x && y < var->mini_height && x < var->mini_width  && x < x + distance && 0 <= y && y < + distance))
-        {
-            mlx_put_pixel(var->mini_map, (t_uint)x, (t_uint)y, color);
-            x += (fabs(line.bx - line.ax) / distance);
-            y -= (fabs(line.by - line.ay) / distance);
-        }
-    }
-}
 
 void get_all_door_cords(t_var *var)
 {
@@ -196,7 +148,6 @@ void close_door(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    // draw_gun(var);
     mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
     mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }
@@ -214,7 +165,6 @@ void open_door(t_var *var)
     init_img3d(var);
     cast(var);
     init_mini_map_system(var);
-    // draw_gun(var);
     mlx_image_to_window(var->mlx, var->gunPreFireImg, (WIDTH / 2) - var->gunFire->width, HEIGHT - var->gunFire->height * 2);
     mlx_image_to_window(var->mlx, var->gunFireImg, (WIDTH / 2) - var->gunPreFire->width, HEIGHT - var->gunPreFire->height * 2);
 }

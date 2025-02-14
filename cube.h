@@ -138,6 +138,18 @@ typedef struct s_var
     t_uint      o;
 }   t_var;
 
+typedef struct s_init_mini_map
+{
+    t_point start;
+    t_point end;
+    t_uint  map_x;
+    t_uint map_y;
+    t_uint mini_width;
+    t_uint mini_height;
+    t_uint i;
+    t_uint j;
+}   t_imm;
+
 /*
 ** move_player.c
 */

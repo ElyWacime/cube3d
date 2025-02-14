@@ -56,7 +56,6 @@ void    parse_textures(t_var *var)
     SO = var->textures[1] + 3;
     WE = var->textures[2] + 3;
     EA = var->textures[3] + 3;
-    // printf("%s\t%s\t%s\t%s\t\n", NO, SO, WE, EA);
     check_path(NO, SO, WE, EA);
 }
 
@@ -70,7 +69,6 @@ void    get_texures(t_var *var, int fd)
     tmp = NULL;
     while (++i < 4)
     {
-        // printf("ENTER\n");
         line = gnl(fd);
         if (!line)
         {
@@ -78,13 +76,20 @@ void    get_texures(t_var *var, int fd)
             exit(5);
         }
         tmp = ft_strjoin(tmp, line);
-        // printf("inside loop: %s\tline: %s\n", tmp, line);
         free(line);
     }
     var->textures = ft_split(tmp, '\n');
-    // printf(">>>>>>>>%s\n\n\n\n\n\n", tmp);
     parse_textures(var);
     free(tmp);
+}
+
+void    check_len(char **color)
+{
+    if (strlen_double((void**)color) != 3)
+    {
+        write(2, "Error\nInvalid color!", 19);
+        exit(90);
+    }
 }
 
 void    check_if_valid_color(char **color)
@@ -93,11 +98,7 @@ void    check_if_valid_color(char **color)
     int j;
 
     i = -1;
-    if (strlen_double((void**)color) != 3)
-    {
-        write(2, "Error\nInvalid color!", 19);
-        exit(90);
-    }
+    check_len(color);
     while (color[++i])
     {
         if (ft_strlen(color[i]) > 3)
@@ -151,8 +152,6 @@ void    extract_C(t_var *var)
     char **color;
     int _colors[3];
 
-    // printf(">>>> %c\n", var->colors[1][0]);
-    // printf(">>>> %d\t%d\n", var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]));
     if (var->colors[1][0] == 'C' && ft_isspace(var->colors[1][1]))
         color = ft_split(var->colors[1] + 2, ',');
     else
@@ -230,36 +229,41 @@ void    _init_window_3d(t_var *var)
         ft_error();
 }
 
+void    sub_init_window(t_var *var, int i, int j)
+{
+    i = -1;
+    while (++i < WIDTH)
+    {
+        j = -1;
+        while (++j < HEIGHT)
+        {
+            if (j > HEIGHT / 2)
+            {
+                mlx_put_pixel(var->img, i, j, var->color_F);
+                continue ;
+            }
+            if (i < 100 && j < 100)
+                continue;
+            mlx_put_pixel(var->img, i, j, var->color_C);
+        }
+    }
+    mlx_image_to_window(var->mlx, var->img, 0, 0);
+}
+
 void    _init_window(t_var *var)
 {
     int i;
     int j;
 
+    i = -1;
+    j = -1;
 	var->mlx = mlx_init(WIDTH, HEIGHT, "cube4d", true);
 	if (var->mlx)
 	{
         var->img = mlx_new_image(var->mlx, WIDTH, HEIGHT);
         var->img_3d = mlx_new_image(var->mlx, WIDTH, HEIGHT);
         if (var->img)
-        {
-            i = -1;
-            while (++i < WIDTH)
-            {
-                j = -1;
-                while (++j < HEIGHT)
-                {
-                    if (j > HEIGHT / 2)
-                    {
-                        mlx_put_pixel(var->img, i, j, var->color_F);
-                        continue ;
-                    }
-                    if (i < 100 && j < 100)
-                        continue;
-                    mlx_put_pixel(var->img, i, j, var->color_C);
-                }
-            }
-            mlx_image_to_window(var->mlx, var->img, 0, 0);
-        }
+            sub_init_window(var, i, j);
         else
             ft_error();
     }
