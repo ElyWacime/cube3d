@@ -3,7 +3,8 @@ CC = cc
 # FLAGS = -Wall -Wextra -Werror -fsanitize=address -g 
 # FLAGS = -fsanitize=address -g
 FLAGS = -Wall -Wextra -g
-CFILES = mouse.c mini_map_system.c rotation.c move_player.c\
+CFILES = mouse.c mini_map_system.c rotation.c ./move_player/move_player.c\
+			./move_player/move_player1.c ./move_player/move_player2.c\
 			hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c\
 			gnl/gnl.c rays.c textures.c
 OBJ = $(CFILES:.c=.o)

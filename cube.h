@@ -157,6 +157,14 @@ void    move_player_down(t_var *);
 void    move_player_right(t_var *);
 void    move_player_left(t_var *);
 void    move_player_up(t_var *);
+int check_if_wall_up_movement(t_var *var, t_point new_position);
+int check_if_wall_down_movement(t_var *var, t_point new_position);
+int check_if_wall_left_movement(t_var *var, t_point new_position);
+int check_if_wall_right_movement(t_var *var, t_point new_position);
+void    calcul_down_movement(t_var *);
+void    calcul_up_movement(t_var *);
+void    calcul_right_movement(t_var *);
+void    calcul_left_movement(t_var *);
 
 /*
 ** rotation.c
