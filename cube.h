@@ -39,7 +39,7 @@ typedef struct s_one_ray_wall
     int idx;
     float distance_correction;
     float distance_to_projection;
-    float wall_projection_height;
+    float wall_proj_h;
     int ofssetx;
     int ofssety;
     int pix;
