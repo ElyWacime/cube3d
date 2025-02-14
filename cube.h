@@ -233,4 +233,40 @@ void draw_gun(t_var *var);
 void init_mini_map_system(t_var *var);
 void draw_animated_sprite(t_var *var);
 
+
+typedef struct s_cast_vertical
+{
+    t_point colison;
+    float skip_x;
+    float skip_y;
+    float tn;
+
+}cast_v;
+typedef struct s_cast_horizantal
+{
+    t_point horizon;
+    t_point colison;
+    float skip_x;
+    float skip_y;
+    float tn;
+    
+}cast_h;
+typedef struct s_cast
+{
+    t_ray ray;
+    t_point r;
+    t_point p;
+    t_point v;
+    float angle;
+    float step;
+    int i;
+    
+}t_cast;
+// rays_2.c
+float distance_squared(t_point a, t_point b);
+float str_double_len(char **str);
+float my_fmod(float theta,int mod);
+float tan_0_90(float theta);
+t_point rotate_by(t_point center, t_point m, float angle);
+
 #endif

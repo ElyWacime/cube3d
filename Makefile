@@ -3,7 +3,7 @@ CC = cc
 # FLAGS = -Wall -Wextra -Werror -fsanitize=address -g 
 # FLAGS = -fsanitize=address -g
 FLAGS = -Wall -Wextra -g
-CFILES = mouse.c mini_map_system.c rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c textures.c
+CFILES = mouse.c mini_map_system.c rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c  textures.c ./Rays/rays.c ./Rays/rays_2.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = ./libft2/libft.a
