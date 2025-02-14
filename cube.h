@@ -151,6 +151,15 @@ typedef struct s_init_mini_map
 }   t_imm;
 
 /*
+** game_setup.c
+*/
+void parse_arguments(char *arg);
+void    is_map_all_ones(char **map);
+void parsing(int ac, char *av[], t_var *var);
+void check_for_images(t_var *var);
+void    load_pictures(t_var *var);
+
+/*
 ** move_player.c
 */
 void    move_player_down(t_var *);
@@ -180,7 +189,6 @@ void    rotate_player_left(t_var *);
 void    listen_to_key(struct mlx_key_data, void *);
 void    get_point_position_to_draw_diraction(t_var *, t_uint);
 void    cursor_callBackFunc(double x, double y, void *ptr);
-// void    shoot(struct mlx_key_data keydata, void *ptr);
 
 /*
 ** mouse.c
@@ -200,6 +208,16 @@ uint32_t    transform_color_to_hexa(int *);
 */
 void    init_img3d(t_var *);
 unsigned int   calculate_mini_map_width(t_var *var);
+void    check_textures(char *NO, char *SO, char *WE, char *EA);
+void   check_path(char *NO, char *SO, char *WE, char *EA);
+void    parse_textures(t_var *var);
+void    get_texures(t_var *var, int fd);
+void    check_len(char **color);
+void    check_if_valid_color(char **color);
+uint32_t  transform_color_to_hexa(int *color);
+void    extract_F(t_var *var);
+void    extract_C(t_var *var);
+void    get_colors(t_var *var, int fd);
 
 /*
 ** utils.c

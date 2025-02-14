@@ -5,8 +5,9 @@ CC = cc
 FLAGS = -Wall -Wextra -g
 CFILES = mouse.c mini_map_system.c rotation.c ./move_player/move_player.c\
 			./move_player/move_player1.c ./move_player/move_player2.c\
-			hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c\
-			gnl/gnl.c rays.c textures.c
+			hooks.c init_mini_map.c utils.c check_map.c ./init_map/init_map.c main.c\
+			gnl/gnl.c rays.c textures.c ./init_map/init_map1.c ./init_map/init_map2.c\
+			game_setup.c
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = ./libft2/libft.a
