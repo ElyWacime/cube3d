@@ -269,4 +269,31 @@ float my_fmod(float theta,int mod);
 float tan_0_90(float theta);
 t_point rotate_by(t_point center, t_point m, float angle);
 
+// rays_3.c
+void fill_cast(t_var *var,t_cast *cst);
+void cast(t_var *var);
+float cast_one_ray_for_movement(t_var var, t_ray *ray);
+void fill_set_direciton(t_ray *ray);
+void set_direciton(t_ray *ray);
+
+// rays_4.c
+void fill_cast_vertical(t_ray *ray,cast_v *cst_v);
+t_point cast_vertical(t_var *var,t_ray *ray);
+void fill_cast_horizantal(t_ray *ray,cast_h *cst_h);
+t_point cast_horizantal(t_var *var,t_ray *ray);
+float next_px_in_grid(float p, int d);
+
+// rays.c
+int check_if_wall_h(t_point start, t_point direction, t_var *var);
+int check_if_wall_v(t_point start, t_point direction, t_var *var);
+void cast_v_h(t_var *var, t_ray *ray,t_cords *cor);
+void one_ray_wall(t_var *var, t_ray *ray);
+
+// rayc_5.c
+void fill_one_ray_wall_0(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void fill_one_ray_wall_1(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void fill_one_ray_wall_2(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void while_check(t_var *var, t_ray *ray,t_ray_wall *ra_wl);
+void one_ray_wall(t_var *var, t_ray *ray);
+
 #endif
