@@ -1,74 +1,17 @@
 #include "../cube.h"
 
-int check_if_wall_h(t_point start, t_point direction, t_var *var)
-{
-    int row;
-    int col;
-
-    row = px_to_map_grid((t_uint)start.y) - (direction.y == -1);
-    col = px_to_map_grid((t_uint)start.x);
-    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (float)ft_strlen(var->map[row]))
-    {   
-        if (col * SQUARE_SIZE == start.x)
-        {
-            if (var->map[row][col] == 'P' || var->map[row][col - 1] == 'P')
-                return DOOR;
-            return (var->map[row][col] == '1'
-                || var->map[row][col] == '\0'
-                || ft_isspace(var->map[row][col])
-                || var->map[row][col - 1] == '1'
-                || var->map[row][col - 1] == '\0'
-                || ft_isspace(var->map[row][col - 1])
-                );
-        }
-        if (var->map[row][col] == 'P')
-            return DOOR;
-        return (var->map[row][col] == '1'
-            || var->map[row][col] == '\0'
-            || ft_isspace(var->map[row][col])
-            );
-    }
-    return 1;
-}
-
-int check_if_wall_v(t_point start, t_point direction, t_var *var)
-{
-    int row;
-    int col;
-
-    row = px_to_map_grid((t_uint)start.y);
-    col = px_to_map_grid((t_uint)start.x) - (direction.x == -1);
-    if (0 <= row && row < str_double_len(var->map) && 0 <= col && col < (float)ft_strlen(var->map[row]))
-    {   
-        if (row * SQUARE_SIZE == start.y)
-        {
-            if (var->map[row][col] == 'P' || var->map[row - 1][col] == 'P')
-                return DOOR;
-            return (var->map[row][col] == '1'
-                || var->map[row][col] == '\0'
-                || ft_isspace(var->map[row][col])
-                || var->map[row - 1][col] == '1'
-                || var->map[row - 1][col] == '\0'
-                || ft_isspace(var->map[row - 1][col])
-                ); 
-        }
-        if (var->map[row][col] == 'P')
-            return DOOR;
-        return (var->map[row][col] == '1'
-            || var->map[row][col] == '\0'
-            || ft_isspace(var->map[row][col])
-            );
-    }
-    return 1;
-}
-
-void fill_cast_vh_2(t_var *var, t_ray *ray,t_cords *cor)
+void fill_cast_vh_2_0(t_var *var, t_ray *ray,t_cords *cor)
 {
     cor->colision_h = cast_horizantal(var,ray);
     cor->colision_v = cast_vertical(var,ray);
     cor->distance_v = distance_squared(ray->start, cor->colision_v);
     cor->distance_h = distance_squared(ray->start, cor->colision_h);
     cor->h = cor->distance_v;
+}
+
+void fill_cast_vh_2(t_var *var, t_ray *ray,t_cords *cor)
+{
+    fill_cast_vh_2_0(var, ray,cor);
     if (cor->distance_v < cor->distance_h)
     {
         if (ray->wall_or_door_v == DOOR)
@@ -149,4 +92,3 @@ void cast_v_h(t_var *var, t_ray *ray,t_cords *cor)
             ray->textures_index = 3;
     }
 }
-

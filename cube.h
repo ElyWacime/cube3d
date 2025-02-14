@@ -296,4 +296,7 @@ void fill_one_ray_wall_2(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
 void while_check(t_var *var, t_ray *ray,t_ray_wall *ra_wl);
 void one_ray_wall(t_var *var, t_ray *ray);
 
+// rays_6.c
+int check_if_wall_h(t_point start, t_point direction, t_var *var);
+int check_if_wall_v(t_point start, t_point direction, t_var *var);
 #endif
