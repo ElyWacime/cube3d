@@ -6,7 +6,7 @@
 # CMake specifications
 # -----------------------------------------------------------------------------
 cmake_minimum_required (VERSION 3.16.0)
-project(mlx42 VERSION 2.4.0)
+project(mlx42 VERSION 2.4.1)
 message(STATUS "MLX42 @ ${CMAKE_PROJECT_VERSION}")
 
 # Variables
@@ -53,7 +53,7 @@ if(UNIX AND NOT EMSCRIPTEN)
 	else()
 		message(STATUS "Building in RELEASE mode")
 		add_definitions(-D NDEBUG)
-		add_compile_options(-Ofast)
+		add_compile_options(-O3)
 	endif(DEBUG)
 else()
 	# TODO: Figure out what we need for windows.
