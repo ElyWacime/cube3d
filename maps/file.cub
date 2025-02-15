@@ -1,7 +1,7 @@
-NO ./textures/rome2.png
-SO ./textures/rome1.png
-WE ./textures/rome4.png
-EA ./textures/rome3.png
+NO ./textures/rome1.png
+SO ./textures/rome2.png
+WE ./textures/rome3.png
+EA ./textures/rome4.png
 
 F 0,173,173
 C 0,0,0

@@ -41,7 +41,7 @@ typedef struct s_one_ray_wall
     int idx;
     float distance_correction;
     float distance_to_projection;
-    float wall_projection_height;
+    float wall_proj_h;
     int ofssetx;
     int ofssety;
     int pix;
@@ -273,4 +273,70 @@ void draw_gun(t_var *var);
 void init_mini_map_system(t_var *var);
 void draw_animated_sprite(t_var *var);
 
+
+typedef struct s_cast_vertical
+{
+    t_point colison;
+    float skip_x;
+    float skip_y;
+    float tn;
+
+}cast_v;
+typedef struct s_cast_horizantal
+{
+    t_point horizon;
+    t_point colison;
+    float skip_x;
+    float skip_y;
+    float tn;
+    
+}cast_h;
+typedef struct s_cast
+{
+    t_ray ray;
+    t_point r;
+    t_point p;
+    t_point v;
+    float angle;
+    float step;
+    int i;
+    
+}t_cast;
+// rays_2.c
+float distance_squared(t_point a, t_point b);
+float str_double_len(char **str);
+float my_fmod(float theta,int mod);
+float tan_0_90(float theta);
+t_point rotate_by(t_point center, t_point m, float angle);
+
+// rays_3.c
+void fill_cast(t_var *var,t_cast *cst);
+void cast(t_var *var);
+float cast_one_ray_for_movement(t_var var, t_ray *ray);
+void fill_set_direciton(t_ray *ray);
+void set_direciton(t_ray *ray);
+
+// rays_4.c
+void fill_cast_vertical(t_ray *ray,cast_v *cst_v);
+t_point cast_vertical(t_var *var,t_ray *ray);
+void fill_cast_horizantal(t_ray *ray,cast_h *cst_h);
+t_point cast_horizantal(t_var *var,t_ray *ray);
+float next_px_in_grid(float p, int d);
+
+// rays.c
+int check_if_wall_h(t_point start, t_point direction, t_var *var);
+int check_if_wall_v(t_point start, t_point direction, t_var *var);
+void cast_v_h(t_var *var, t_ray *ray,t_cords *cor);
+void one_ray_wall(t_var *var, t_ray *ray);
+
+// rayc_5.c
+void fill_one_ray_wall_0(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void fill_one_ray_wall_1(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void fill_one_ray_wall_2(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void while_check(t_var *var, t_ray *ray,t_ray_wall *ra_wl);
+void one_ray_wall(t_var *var, t_ray *ray);
+
+// rays_6.c
+int check_if_wall_h(t_point start, t_point direction, t_var *var);
+int check_if_wall_v(t_point start, t_point direction, t_var *var);
 #endif
