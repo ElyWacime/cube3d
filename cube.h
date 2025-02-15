@@ -12,6 +12,8 @@
 #include <stdint.h>
 #include "./MLX43/include/MLX42/MLX42.h"
 
+#include "textures_code/textures.c" 
+
 //alias cv="make && ./cube file.cub" && alias cr="make && ./cube creepy.cub"
 //
 #define SQUARE_SIZE 8
@@ -39,7 +41,7 @@ typedef struct s_one_ray_wall
     int idx;
     float distance_correction;
     float distance_to_projection;
-    float wall_projection_height;
+    float wall_proj_h;
     int ofssetx;
     int ofssety;
     int pix;
@@ -112,6 +114,8 @@ typedef struct s_var
     mlx_texture_t *door;
     mlx_texture_t *gunPreFire;
     mlx_texture_t *gunFire;
+    mlx_image_t *gunFireImg;
+    mlx_image_t *gunPreFireImg;
 
     char        **map;
     char        **textures;
@@ -136,6 +140,27 @@ typedef struct s_var
     t_uint      o;
 }   t_var;
 
+typedef struct s_init_mini_map
+{
+    t_point start;
+    t_point end;
+    t_uint  map_x;
+    t_uint map_y;
+    t_uint mini_width;
+    t_uint mini_height;
+    t_uint i;
+    t_uint j;
+}   t_imm;
+
+/*
+** game_setup.c
+*/
+void parse_arguments(char *arg);
+void    is_map_all_ones(char **map);
+void parsing(int ac, char *av[], t_var *var);
+void check_for_images(t_var *var);
+void    load_pictures(t_var *var);
+
 /*
 ** move_player.c
 */
@@ -143,6 +168,14 @@ void    move_player_down(t_var *);
 void    move_player_right(t_var *);
 void    move_player_left(t_var *);
 void    move_player_up(t_var *);
+int check_if_wall_up_movement(t_var *var, t_point new_position);
+int check_if_wall_down_movement(t_var *var, t_point new_position);
+int check_if_wall_left_movement(t_var *var, t_point new_position);
+int check_if_wall_right_movement(t_var *var, t_point new_position);
+void    calcul_down_movement(t_var *);
+void    calcul_up_movement(t_var *);
+void    calcul_right_movement(t_var *);
+void    calcul_left_movement(t_var *);
 
 /*
 ** rotation.c
@@ -177,6 +210,16 @@ uint32_t    transform_color_to_hexa(int *);
 */
 void    init_img3d(t_var *);
 unsigned int   calculate_mini_map_width(t_var *var);
+void    check_textures(char *NO, char *SO, char *WE, char *EA);
+void   check_path(char *NO, char *SO, char *WE, char *EA);
+void    parse_textures(t_var *var);
+void    get_texures(t_var *var, int fd);
+void    check_len(char **color);
+void    check_if_valid_color(char **color);
+uint32_t  transform_color_to_hexa(int *color);
+void    extract_F(t_var *var);
+void    extract_C(t_var *var);
+void    get_colors(t_var *var, int fd);
 
 /*
 ** utils.c
@@ -209,6 +252,8 @@ int     is_still_there_zeros(char **, int *);
 void cast(t_var *);
 void    _init_window_3d(t_var *var);
 t_point rotate_by(t_point center, t_point m, float angle);
+float cast_one_ray_for_movement(t_var var, t_ray *ray);
+void set_direciton(t_ray *ray);
 
 /*
 ** textures.c
@@ -228,4 +273,70 @@ void draw_gun(t_var *var);
 void init_mini_map_system(t_var *var);
 void draw_animated_sprite(t_var *var);
 
+
+typedef struct s_cast_vertical
+{
+    t_point colison;
+    float skip_x;
+    float skip_y;
+    float tn;
+
+}cast_v;
+typedef struct s_cast_horizantal
+{
+    t_point horizon;
+    t_point colison;
+    float skip_x;
+    float skip_y;
+    float tn;
+    
+}cast_h;
+typedef struct s_cast
+{
+    t_ray ray;
+    t_point r;
+    t_point p;
+    t_point v;
+    float angle;
+    float step;
+    int i;
+    
+}t_cast;
+// rays_2.c
+float distance_squared(t_point a, t_point b);
+float str_double_len(char **str);
+float my_fmod(float theta,int mod);
+float tan_0_90(float theta);
+t_point rotate_by(t_point center, t_point m, float angle);
+
+// rays_3.c
+void fill_cast(t_var *var,t_cast *cst);
+void cast(t_var *var);
+float cast_one_ray_for_movement(t_var var, t_ray *ray);
+void fill_set_direciton(t_ray *ray);
+void set_direciton(t_ray *ray);
+
+// rays_4.c
+void fill_cast_vertical(t_ray *ray,cast_v *cst_v);
+t_point cast_vertical(t_var *var,t_ray *ray);
+void fill_cast_horizantal(t_ray *ray,cast_h *cst_h);
+t_point cast_horizantal(t_var *var,t_ray *ray);
+float next_px_in_grid(float p, int d);
+
+// rays.c
+int check_if_wall_h(t_point start, t_point direction, t_var *var);
+int check_if_wall_v(t_point start, t_point direction, t_var *var);
+void cast_v_h(t_var *var, t_ray *ray,t_cords *cor);
+void one_ray_wall(t_var *var, t_ray *ray);
+
+// rayc_5.c
+void fill_one_ray_wall_0(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void fill_one_ray_wall_1(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void fill_one_ray_wall_2(t_var *var, t_ray *ray,t_cords *cor,t_ray_wall *ra_wl);
+void while_check(t_var *var, t_ray *ray,t_ray_wall *ra_wl);
+void one_ray_wall(t_var *var, t_ray *ray);
+
+// rays_6.c
+int check_if_wall_h(t_point start, t_point direction, t_var *var);
+int check_if_wall_v(t_point start, t_point direction, t_var *var);
 #endif
