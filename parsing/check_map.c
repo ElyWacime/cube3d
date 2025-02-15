@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:58 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:50:59 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/15 20:11:40 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_player_angle(t_var *var)
 	else if (var->player.direction == 'E')
 		var->player.angle = 0;
 }
+
 int	get_players_position(char **map, int *position, t_var *var)
 {
 	int	i;
