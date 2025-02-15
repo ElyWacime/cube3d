@@ -117,7 +117,7 @@ void    load_pictures(t_var *var)
     var->west =   mlx_load_png(var->textures[2] + 3);
     var->east =   mlx_load_png(var->textures[3] + 3);
     check_for_images(var);
-    var->door = mlx_load_png("./textures/door.png");
+    var->door = mlx_load_png("./textures/ssssss.png");
     var->gunFire = mlx_load_png("./textures/gunImageFire.png");
     var->gunPreFire = mlx_load_png("./textures/gunImagePreFire.png");
     // int x = 0;
