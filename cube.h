@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:51:30 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:34:48 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -351,4 +351,9 @@ void one_ray_wall(t_var *var, t_ray *ray);
 // rays_6.c
 int check_if_wall_h(t_point start, t_point direction, t_var *var);
 int check_if_wall_v(t_point start, t_point direction, t_var *var);
+
+// rays_7.c
+void	fill_one_ray_wall_2_0(t_var *var, t_ray *ray, t_cords *cor,t_ray_wall *ra_wl);
+void	fill_one_ray_wall_2_1(t_var *var, t_ray *ray, t_cords *cor,t_ray_wall *ra_wl);
+void	fill_one_ray_wall_2(t_var *var, t_ray *ray, t_cords *cor,t_ray_wall *ra_wl);
 #endif
