@@ -49,3 +49,9 @@ linux: ${LIBFT} ${OBJ}
 	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw  -lm -o ${NAME}
 
 re : fclean all
+
+mlx:
+	git clone https://github.com/codam-coding-college/MLX42.git
+	cd MLX42
+	cmake -B build
+	cmake --build build -j4
