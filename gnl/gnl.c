@@ -12,12 +12,12 @@
 
 #include "gnl.h"
 
-char    *gnl(int fd)
+char	*gnl(int fd)
 {
-    static char buffer[42];
-    static int  counter;
+	static char	buffer[42];
+	static int	counter;
 	static int	readed;
-    char        line[100000];
+	char		line[100000];
 	int			i;
 
 	i = 0;
@@ -28,11 +28,11 @@ char    *gnl(int fd)
 			readed = read(fd, buffer, 42);
 			counter = 0;
 			if (readed <= 0)
-				break;
+				break ;
 		}
 		line[i++] = buffer[counter++];
 		if (line[i - 1] == '\n')
-			break;
+			break ;
 	}
 	line[i] = '\0';
 	if (i == 0)
