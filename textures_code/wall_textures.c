@@ -22,9 +22,9 @@ size_t east_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
 size_t north_textures(t_var *var, t_ray_wall *ra_wl, int ofsx)
 {
     if (ra_wl->correct_a > 0)
-        ra_wl->ofssety =  (((var->north->width - (2 * ra_wl->image_offset)) * ra_wl->idy) / HEIGHT) + ra_wl->image_offset;
+        ra_wl->ofssety =  (((var->north->height - (2 * ra_wl->image_offset)) * ra_wl->idy) / HEIGHT) + ra_wl->image_offset;
     else
-        ra_wl->ofssety = ((ra_wl->idy - ra_wl->a) * var->north->width) / (HEIGHT - (ra_wl->a << 1));
+        ra_wl->ofssety = ((ra_wl->idy - ra_wl->a) * var->north->height) / (HEIGHT - (ra_wl->a << 1));
     ra_wl->pix = ((ra_wl->ofssety * var->north->width) + ofsx) << 2;
     if ((uint32_t)(ra_wl->pix) >=  var->north->height * var->north->width * 4)
         return 0xFFFFFF00;
