@@ -227,8 +227,8 @@ void	get_texures(t_var *var, int fd);
 void	check_len(char **color);
 void	check_if_valid_color(char **color);
 uint32_t  transform_color_to_hexa(int *color);
-void	extract_F(t_var *var);
-void	extract_C(t_var *var);
+void	extract_f(t_var *var);
+void	extract_c(t_var *var);
 void	get_colors(t_var *var, int fd);
 
 /*

@@ -19,10 +19,10 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-#include <fcntl.h>
-#include <stdio.h>
-#include "../libft2/libft.h"
+# include <fcntl.h>
+# include <stdio.h>
+# include "../libft2/libft.h"
 
-char    *gnl(int fd);
+char	*gnl(int fd);
 
 #endif

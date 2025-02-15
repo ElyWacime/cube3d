@@ -46,7 +46,7 @@ uint32_t	transform_color_to_hexa(int *color)
 	return (_color);
 }
 
-void	extract_F(t_var *var)
+void	extract_f(t_var *var)
 {
 	char	**color;
 	int		_colors[3];
@@ -67,7 +67,7 @@ void	extract_F(t_var *var)
 	var->color_F = transform_color_to_hexa(_colors);
 }
 
-void	extract_C(t_var *var)
+void	extract_c(t_var *var)
 {
 	char	**color;
 	int		_colors[3];
@@ -109,6 +109,6 @@ void	get_colors(t_var *var, int fd)
 	}
 	var->colors = ft_split(tmp, '\n');
 	free(tmp);
-	extract_C(var);
-	extract_F(var);
+	extract_c(var);
+	extract_f(var);
 }

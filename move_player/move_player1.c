@@ -89,9 +89,10 @@ void	calcul_up_movement(t_var *var)
 
 void	calcul_down_movement(t_var *var)
 {
-	t_point new_position;
-	int cnt = -1;
+	t_point	new_position;
+	int		cnt;
 
+	cnt = -1;
 	while (cnt++ <= 1)
 	{
 		new_position.x = (var->player.position.x + cnt) - (SPEED

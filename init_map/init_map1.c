@@ -50,10 +50,10 @@ void	check_path(char *NO, char *SO, char *WE, char *EA)
 
 void	parse_textures(t_var *var)
 {
-	char	*NO;
-	char	*SO;
-	char	*WE;
-	char	*EA;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
 
 	if (strlen_double((void **)var->textures) < 4)
 	{
@@ -62,11 +62,11 @@ void	parse_textures(t_var *var)
 	}
 	check_textures(var->textures[0], var->textures[1], var->textures[2],
 		var->textures[3]);
-	NO = var->textures[0] + 3;
-	SO = var->textures[1] + 3;
-	WE = var->textures[2] + 3;
-	EA = var->textures[3] + 3;
-	check_path(NO, SO, WE, EA);
+	no = var->textures[0] + 3;
+	so = var->textures[1] + 3;
+	we = var->textures[2] + 3;
+	ea = var->textures[3] + 3;
+	check_path(no, so, we, ea);
 }
 
 void	get_texures(t_var *var, int fd)
