@@ -90,8 +90,8 @@ void	cast_v_h(t_var *var, t_ray *ray, t_cords *cor)
 	cor->distance_to_wall = cor->h;
 	if (cor->is_collision_horizontal == 0)
 	{
-		if ((270 < ray->angle && ray->angle < 360) 
-			|| (0 < ray->angle && ray->angle < 90))
+		if ((270 < ray->angle && ray->angle < 360) || (0 < ray->angle
+				&& ray->angle < 90))
 			ray->textures_index = 0;
 		else
 			ray->textures_index = 2;
