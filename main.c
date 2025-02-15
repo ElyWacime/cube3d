@@ -1,17 +1,5 @@
 #include "cube.h"
 
-void print_map(t_var var)
-{
-    int len;
-    len = strlen_double((void**)var.map);
-    for (int i = 0;i<len;i++)
-    {
-        for (int j=0;var.map[i][j];j++)
-            printf("%c", var.map[i][j]);
-        printf("\n");
-    }
-}
-
 void    init_vars(t_var *var)
 {
     var->img = NULL;
@@ -38,7 +26,6 @@ int main(int ac, char *av[])
     var.mini_map = mlx_new_image(var.mlx, WIDTH, HEIGHT);
     init_img3d(&var);
     load_pictures(&var);
-    print_map(var);
     get_all_door_cords(&var);
     cast(&var);
     init_mini_map_system(&var);
