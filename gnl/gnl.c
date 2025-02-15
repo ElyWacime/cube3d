@@ -1,17 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gnl.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skamroun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 17:48:57 by skamroun          #+#    #+#             */
+/*   Updated: 2025/02/15 17:48:58 by skamroun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "gnl.h"
 
 char    *gnl(int fd)
 {
     static char buffer[42];
-    char        line[100000];
     static int  counter;
 	static int	readed;
+    char        line[100000];
 	int			i;
 
 	i = 0;
-	if (fd < 0)
-		return (NULL);
-	while (1)
+	while (fd >= 0 && 1)
 	{
 		if (counter >= readed)
 		{

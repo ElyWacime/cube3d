@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
+/*   Updated: 2025/02/15 17:51:30 by skamroun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUBE_H
 # define CUBE_H
 
@@ -10,7 +22,7 @@
 #include "./libft2/libft.h"
 #include <math.h>
 #include <stdint.h>
-#include "./MLX43/include/MLX42/MLX42.h"
+#include "./MLX42/include/MLX42/MLX42.h"
 
 #include "textures_code/textures.c" 
 

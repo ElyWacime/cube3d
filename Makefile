@@ -14,16 +14,16 @@ CFILES = hooks/mouse.c mini_map_system.c hooks/rotation.c ./move_player/move_pla
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = ./libft2/libft.a
-MLX = ./MLX43/build/libmlx42.a
-MLX_LINUX = ./MLX43/build/libmlx42.a
+MLX = ./MLX42/build/libmlx42.a
+MLX_LINUX = ./MLX42/build/libmlx42.a
+INCLUDES = MLX42/build/libmlx42.a libft2/libft.a  MLX42/build/libglfw3.a -Iinclude -lm -framework Cocoa -framework OpenGL -framework IOKit
 GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
-INCLUDES = MLX43/build/libmlx42.a libft2/libft.a  MLX43/build/libglfw3.a -Iinclude -lm -framework Cocoa -framework OpenGL -framework IOKit
-GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
+GLFW = -Iinclude -lglfw -L"/Users/skamroun/goinfre/homebrew/Cellar/glfw/3.4/lib/"
 
 all : ${NAME}
 ${NAME}:${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -O3 -Iinclude -ldl -lglfw  -lm -o ${NAME}
-# ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -O3 -framework OpenGL -framework AppKit -o ${NAME}
+# ${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -O3 -Iinclude -ldl -lglfw  -lm -o ${NAME}
+	${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -O3 -framework OpenGL -framework AppKit -o ${NAME}
 # ${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
 
 ${LIBFT}:
