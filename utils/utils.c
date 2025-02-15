@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 19:54:36 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 20:04:30 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/15 20:23:48 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_all_door_cords_0(t_var *var, int8_t	*i, int8_t *j)
 	*i = -1;
 	while (++(*i) < (int)var->mini_height / 8)
 	{
-		j = -1;
+		*j = -1;
 		while (var->map[*i][++(*j)])
 		{
 			if (var->map[*i][*j] == 'P')

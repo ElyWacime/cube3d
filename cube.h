@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 19:53:03 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/15 20:23:35 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "./libft2/libft.h"
 # include <math.h>
 # include <stdint.h>
-// # include "./MLX42/include/MLX42/MLX42.h"
+# include "./MLX42/include/MLX42/MLX42.h"
 
 //alias cv="make && ./cube file.cub" && alias cr="make && ./cube creepy.cub"
 //
