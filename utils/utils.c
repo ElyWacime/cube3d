@@ -1,4 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 19:54:36 by skamroun          #+#    #+#             */
+/*   Updated: 2025/02/15 20:04:30 by skamroun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
+
+void	get_all_door_cords_0(t_var *var, int8_t	*i, int8_t *j)
+{
+	*i = -1;
+	while (++(*i) < (int)var->mini_height / 8)
+	{
+		j = -1;
+		while (var->map[*i][++(*j)])
+		{
+			if (var->map[*i][*j] == 'P')
+				var->door_cords.len++;
+		}
+	}
+}
 
 void	get_all_door_cords(t_var *var)
 {
@@ -6,16 +32,7 @@ void	get_all_door_cords(t_var *var)
 	int8_t	j;
 	int8_t	trucker;
 
-	i = -1;
-	while (++i < (int)var->mini_height / 8)
-	{
-		j = -1;
-		while (var->map[i][++j])
-		{
-			if (var->map[i][j] == 'P')
-				var->door_cords.len++;
-		}
-	}
+	get_all_door_cords_0(var, &i, &j);
 	if (var->door_cords.len == 0)
 		return ;
 	var->door_cords.cords = malloc(sizeof(t_point) * var->door_cords.len);
@@ -44,14 +61,16 @@ void	close_door(t_var *var)
 	while (i < var->door_cords.len)
 	{
 		if (var->door_cords.cords[i].x == px_to_map_grid(var->player.position.x)
-			&& var->door_cords.cords[i].y == px_to_map_grid(var->player.position.y))
+			&& var->door_cords.cords[i].y
+			== px_to_map_grid(var->player.position.y))
 			return ;
 		i++;
 	}
 	i = 0;
 	while (i < var->door_cords.len)
 	{
-		var->map[(int)var->door_cords.cords[i].y][(int)var->door_cords.cords[i].x] = 'P';
+		var->map[(int)var->door_cords.cords[i].y]
+		[(int)var->door_cords.cords[i].x] = 'P';
 		i++;
 	}
 	init_img3d(var);
@@ -70,7 +89,8 @@ void	open_door(t_var *var)
 	i = 0;
 	while (i < var->door_cords.len)
 	{
-		var->map[(int)var->door_cords.cords[i].y][(int)var->door_cords.cords[i].x] = '0';
+		var->map[(int)var->door_cords.cords[i].y]
+		[(int)var->door_cords.cords[i].x] = '0';
 		i++;
 	}
 	init_img3d(var);

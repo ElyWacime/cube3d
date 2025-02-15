@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils1.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/15 19:55:01 by skamroun          #+#    #+#             */
+/*   Updated: 2025/02/15 19:59:54 by skamroun         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cube.h"
 
 void	quit_program(t_var *var)
@@ -48,9 +60,9 @@ int	strlen_double(void **ptr)
 
 char	**strdup_double(char **str)
 {
-	char **ret;
-	int retlen;
-	int i;
+	char	**ret;
+	int		retlen;
+	int		i;
 
 	retlen = strlen_double((void **)str);
 	i = 0;
