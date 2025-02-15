@@ -12,6 +12,8 @@
 #include <stdint.h>
 #include "./MLX43/include/MLX42/MLX42.h"
 
+#include "textures_code/textures.c" 
+
 //alias cv="make && ./cube file.cub" && alias cr="make && ./cube creepy.cub"
 //
 #define SQUARE_SIZE 8

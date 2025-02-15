@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "../cube.h"
 
 void    sub_listen_to_key(struct mlx_key_data keydata, t_var *var)
 {

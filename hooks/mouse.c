@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "../cube.h"
 
 void mlx_mouse_func(double xpos, double ypos, void* param) {
     t_var *var = (t_var*)param;

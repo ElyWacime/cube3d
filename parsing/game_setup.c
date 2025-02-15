@@ -1,4 +1,4 @@
-#include "cube.h"
+#include "../cube.h"
 
 void parse_arguments(char *arg)
 {

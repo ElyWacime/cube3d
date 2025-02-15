@@ -3,11 +3,14 @@ CC = cc
 # FLAGS = -Wall -Wextra -Werror -fsanitize=address -g 
 # FLAGS = -fsanitize=address -g
 FLAGS = -Wall -Wextra -g
-CFILES = mouse.c mini_map_system.c rotation.c ./move_player/move_player.c\
+CFILES = hooks/mouse.c mini_map_system.c hooks/rotation.c ./move_player/move_player.c\
 			./move_player/move_player1.c ./move_player/move_player2.c\
-			hooks.c init_mini_map.c utils.c check_map.c ./init_map/init_map.c main.c\
-			gnl/gnl.c rays.c textures.c ./init_map/init_map1.c ./init_map/init_map2.c\
-			game_setup.c
+			hooks/hooks.c init_mini_map.c utils/utils.c utils/utils1.c utils/utils2.c\
+			parsing/check_map.c ./init_map/init_map.c main.c\
+			gnl/gnl.c rays.c ./init_map/init_map1.c ./init_map/init_map2.c\
+			parsing/game_setup.c textures_code/door_textures.c textures_code/wall_textures.c\
+			textures_code/gun_textures.c\
+
 OBJ = $(CFILES:.c=.o)
 NAME = cube
 LIBFT = ./libft2/libft.a
