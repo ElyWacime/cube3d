@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 20:23:35 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:54:09 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 //
 # define SQUARE_SIZE 8
 # define DOOR 7
-# define WIDTH 1280 // 2560   //     1080
-# define HEIGHT 640 // 1280  //      896
+# define WIDTH 1940 // 2560   //     
+# define HEIGHT 1280 // 1280  //      
 # define VIEW 63
 # define CUBE_SIZE 8
 # define PI 3.14159265358979323846
