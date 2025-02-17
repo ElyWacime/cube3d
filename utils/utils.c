@@ -17,7 +17,7 @@ void	get_all_door_cords_0(t_var *var, int8_t	*i, int8_t *j)
 	*i = -1;
 	while (++(*i) < (int)var->mini_height / 8)
 	{
-		j = -1;
+		*j = -1;
 		while (var->map[*i][++(*j)])
 		{
 			if (var->map[*i][*j] == 'P')
