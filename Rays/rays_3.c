@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays_3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skamroun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:56:40 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 14:56:41 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/18 09:30:18 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,6 @@ void	cast(t_var *var)
 	}
 	cst.ray.target.x = var->player.vect[0];
 	cst.ray.target.y = var->player.vect[1];
-}
-
-float	cast_one_ray_for_movement(t_var var, t_ray *ray)
-{
-	t_cords	cor;
-
-	cor.line.ax = ray->start.x;
-	cor.line.ay = ray->start.y;
-	cor.line.bx = ray->target.x;
-	cor.line.by = ray->target.y;
-	ray->direction.x = ray->direction_x;
-	ray->direction.y = ray->direction_y;
-	cast_v_h(&var, ray, &cor);
-	cor.h = sqrt(cor.h);
-	return (cor.h);
 }
 
 void	fill_set_direciton(t_ray *ray)

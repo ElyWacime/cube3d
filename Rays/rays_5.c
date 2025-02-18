@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:56:51 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/17 11:53:27 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:31:45 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	fill_one_ray_wall_0(t_var *var, t_ray *ray, t_cords *cor,
 	cor->line.by = ray->target.y;
 	ray->direction.x = ray->direction_x;
 	ray->direction.y = ray->direction_y;
-	ra_wl->distance_to_projection = (WIDTH / (2 * tan(from_deg_to_rad(VIEW / 2))));
+	ra_wl->distance_to_projection = (WIDTH 
+			/ (2 * tan(from_deg_to_rad(VIEW / 2))));
 	cast_v_h(var, ray, cor);
 	cor->h = sqrt(cor->h);
 	ra_wl->distance_correction = cor->h;
