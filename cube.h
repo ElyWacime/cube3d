@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 18:54:43 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:01:33 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 # define SQUARE_SIZE 8
 # define DOOR 7
-# define WIDTH 670 // 2560   //     
-# define HEIGHT 630 // 1280  //      
+# define WIDTH 1280 // 2560   //     
+# define HEIGHT 640 // 1280  //      
 # define VIEW 63
 # define CUBE_SIZE 8
 # define PI 3.14159265358979323846
@@ -165,10 +165,10 @@ void					load_pictures(t_var *var);
 /*
 ** move_player.c
 */
-void					move_player_down(t_var *);
-void					move_player_right(t_var *);
-void					move_player_left(t_var *);
-void					move_player_up(t_var *);
+void					move_player_down(t_var *var);
+void					move_player_right(t_var *var);
+void					move_player_left(t_var *var);
+void					move_player_up(t_var *var);
 int						check_if_wall_up_movement(t_var *var,
 							t_point new_position);
 int						check_if_wall_down_movement(t_var *var,
@@ -177,24 +177,25 @@ int						check_if_wall_left_movement(t_var *var,
 							t_point new_position);
 int						check_if_wall_right_movement(t_var *var,
 							t_point new_position);
-void					calcul_down_movement(t_var *);
-void					calcul_up_movement(t_var *);
-void					calcul_right_movement(t_var *);
-void					calcul_left_movement(t_var *);
+void					calcul_down_movement(t_var *var);
+void					calcul_up_movement(t_var *var);
+void					calcul_right_movement(t_var *var);
+void					calcul_left_movement(t_var *var);
 
 /*
 ** rotation.c
 */
-void					calcul_right_rotation(t_var *);
-void					calcul_left_rotation(t_var *);
-void					rotate_player_right(t_var *);
-void					rotate_player_left(t_var *);
+void					calcul_right_rotation(t_var *var);
+void					calcul_left_rotation(t_var *var);
+void					rotate_player_right(t_var *var);
+void					rotate_player_left(t_var *var);
 
 /*
 ** hooks.c
 */
-void					listen_to_key(struct mlx_key_data, void *);
-void					get_point_position_to_draw_diraction(t_var *, t_uint);
+void					listen_to_key(struct mlx_key_data var, void *ptr);
+void					get_point_position_to_draw_diraction(
+							t_var *v, t_uint u);
 void					cursor_callBackFunc(double x, double y, void *ptr);
 
 /*
@@ -206,14 +207,14 @@ void					mlx_mouse_func(double xpos, double ypos, void *param);
 /*
 ** init_map.c
 */
-char					**create_map(char *, t_var *);
-void					_init_window(t_var *);
-uint32_t				transform_color_to_hexa(int *);
+char					**create_map(char *ptr, t_var *var);
+void					_init_window(t_var *var);
+uint32_t				transform_color_to_hexa(int *var);
 
 /*
 ** init_mini_map.c
 */
-void					init_img3d(t_var *);
+void					init_img3d(t_var *var);
 unsigned int			calculate_mini_map_width(t_var *var);
 void					check_textures(char *NO, char *SO, char *WE, char *EA);
 void					check_path(char *NO, char *SO, char *WE, char *EA);
@@ -229,17 +230,17 @@ void					get_colors(t_var *var, int fd);
 /*
 ** utils.c
 */
-int						ft_isspace(char);
+int						ft_isspace(char var);
 void					ft_error(void);
-void					free_double(void **);
-char					**strdup_double(char **);
-int						strlen_double(void **);
+void					free_double(void **var);
+char					**strdup_double(char **var);
+int						strlen_double(void **var);
 t_uint					px_to_map_grid(t_uint x);
-float					calculate_distance(float, float, float, float);
-float					from_rad_to_deg(float);
-float					from_deg_to_rad(float);
-void					draw_line(t_line, t_var *, t_uint);
-void					quit_program(t_var *);
+float					calculate_distance(float x, float y, float a, float b);
+float					from_rad_to_deg(float var);
+float					from_deg_to_rad(float var);
+void					draw_line(t_line line, t_var *var, t_uint uni);
+void					quit_program(t_var *var);
 void					get_all_door_cords(t_var *var);
 void					close_or_open_door(t_var *var);
 void					open_door(t_var *var);
@@ -247,14 +248,14 @@ void					close_door(t_var *var);
 /*
 ** check_map.c
 */
-int						get_players_position(char **, int *, t_var *);
-void					flood_fill(char **, int, int);
-int						is_still_there_zeros(char **, int *);
+int						get_players_position(char **ptr, int *n, t_var *var);
+void					flood_fill(char **ptr, int a, int b);
+int						is_still_there_zeros(char **ptr, int *ptr2);
 
 /*
 ** rays.c
 */
-void					cast(t_var *);
+void					cast(t_var *var);
 void					_init_window_3d(t_var *var);
 t_point					rotate_by(t_point center, t_point m, float angle);
 float					cast_one_ray_for_movement(t_var var, t_ray *ray);
