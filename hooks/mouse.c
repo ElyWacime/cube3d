@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:49:50 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 18:44:02 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:11:25 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,23 @@
 
 void	mlx_mouse_func(double xpos, double ypos, void *param)
 {
-	t_var	*var;
-	int32_t	prev_x;
-	int32_t	prev_y;
-	float	delta_x;
 
+	t_mouse ms;
+	t_var * var;
+	
 	var = (t_var *)param;
-	prev_x = WIDTH / 2;
-	prev_y = HEIGHT / 2;
+	ms.prev_x = WIDTH / 2;
+	ms.prev_y = HEIGHT / 2;
+	(void)xpos;
+	(void)ypos;
 	mlx_set_cursor_mode(((t_var *)param)->mlx, MLX_MOUSE_HIDDEN);
 	if (!var || !var->mlx)
 		return ;
-	mlx_get_mouse_pos(var->mlx, (int32_t *)&xpos, (int32_t *)&ypos);
-	delta_x = xpos - prev_x;
-	if (delta_x > 0)
+	mlx_get_mouse_pos(var->mlx, &ms.mouse_x, &ms.mouse_y);
+	ms.delta_x = ms.mouse_x - ms.prev_x;
+	if (ms.delta_x > 0)
 		rotate_player_right(var);
-	else if (delta_x < 0)
+	else if (ms.delta_x < 0)
 		rotate_player_left(var);
-	mlx_set_mouse_pos(var->mlx, prev_x, prev_y);
+	mlx_set_mouse_pos(var->mlx, ms.prev_x, ms.prev_y);
 }

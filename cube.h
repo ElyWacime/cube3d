@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 19:01:33 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:11:33 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 # define SQUARE_SIZE 8
 # define DOOR 7
-# define WIDTH 1280 // 2560   //     
-# define HEIGHT 640 // 1280  //      
+# define WIDTH 2560 // 2560   //     
+# define HEIGHT 1280 // 1280  //      
 # define VIEW 63
 # define CUBE_SIZE 8
 # define PI 3.14159265358979323846
@@ -152,6 +152,15 @@ typedef struct s_init_mini_map
 	t_uint				i;
 	t_uint				j;
 }						t_imm;
+
+typedef struct  s_mlx_mouse_func
+{
+	int32_t	prev_x;
+	int32_t	prev_y;
+	float	delta_x;
+	int32_t mouse_x;
+	int32_t  mouse_y;
+}		t_mouse;
 
 /*
 ** game_setup.c
