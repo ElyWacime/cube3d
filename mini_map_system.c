@@ -6,11 +6,29 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:42 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:51:44 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:50:09 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	sub_init_mini_map_system_0(t_var *var, t_imm *imm)
+{
+	if (var->player.position.x - 2 < imm->i
+		&& imm->i < var->player.position.x + 2 && var->player.position.y
+		- 2 < imm->j && imm->j < var->player.position.y + 2)
+		mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0x00FF00FF);
+	else if (var->map[px_to_map_grid(imm->j)]
+		[px_to_map_grid(imm->i)] != '1'
+		&& var->map[px_to_map_grid(imm->j)]
+		[px_to_map_grid(imm->i)] != 'P')
+		mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0x000000FF);
+	else if (var->map[px_to_map_grid(imm->j)]
+		[px_to_map_grid(imm->i)] == 'P')
+		mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0xFF0000FF);
+	else
+		mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0xFFFFFFFF);
+}
 
 void	sub_init_mini_map_system(t_var *var, t_imm *imm)
 {
@@ -23,17 +41,7 @@ void	sub_init_mini_map_system(t_var *var, t_imm *imm)
 			if (imm->i > ft_strlen(var->map[px_to_map_grid(imm->j)])
 				* SQUARE_SIZE)
 				break ;
-			if (var->player.position.x - 2 < imm->i
-				&& imm->i < var->player.position.x + 2 && var->player.position.y
-				- 2 < imm->j && imm->j < var->player.position.y + 2)
-				mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0x00FF00FF);
-			else if (var->map[px_to_map_grid(imm->j)][px_to_map_grid(imm->i)] != '1'
-				&& var->map[px_to_map_grid(imm->j)][px_to_map_grid(imm->i)] != 'P')
-				mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0x000000FF);
-			else if (var->map[px_to_map_grid(imm->j)][px_to_map_grid(imm->i)] == 'P')
-				mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0xFF0000FF);
-			else
-				mlx_put_pixel(var->img_3d, imm->map_x, imm->map_y, 0xFFFFFFFF);
+			sub_init_mini_map_system_0(var, imm);
 			imm->map_x++;
 			imm->i++;
 		}

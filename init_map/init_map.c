@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:06 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:50:07 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:51:44 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ void	sub_init_window(t_var *var, int i, int j)
 		{
 			if (j > HEIGHT / 2)
 			{
-				mlx_put_pixel(var->img, i, j, var->color_F);
+				mlx_put_pixel(var->img, i, j, var->colorf);
 				continue ;
 			}
 			if (i < 100 && j < 100)
 				continue ;
-			mlx_put_pixel(var->img, i, j, var->color_C);
+			mlx_put_pixel(var->img, i, j, var->color_c);
 		}
 	}
 	mlx_image_to_window(var->mlx, var->img, 0, 0);

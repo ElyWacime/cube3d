@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rays_4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skamroun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:56:45 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 14:56:47 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:52:25 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cube.h"
 
-void	fill_cast_vertical(t_ray *ray, cast_v *cst_v)
+void	fill_cast_vertical(t_ray *ray, t_cast_v *cst_v)
 {
 	cst_v->colison.x = ray->start.x;
 	cst_v->colison.y = ray->start.y;
@@ -38,7 +38,7 @@ void	fill_cast_vertical(t_ray *ray, cast_v *cst_v)
 
 t_point	cast_vertical(t_var *var, t_ray *ray)
 {
-	cast_v	cst_v;
+	t_cast_v	cst_v;
 
 	fill_cast_vertical(ray, &cst_v);
 	while (((0 <= cst_v.colison.x && 0 <= cst_v.colison.y)
@@ -58,7 +58,7 @@ t_point	cast_vertical(t_var *var, t_ray *ray)
 	return (cst_v.colison);
 }
 
-void	fill_cast_horizantal(t_ray *ray, cast_h *cst_h)
+void	fill_cast_horizantal(t_ray *ray, t_cast_h *cst_h)
 {
 	ray->wall_or_door_h = 0;
 	cst_h->colison.x = ray->start.x;
@@ -88,7 +88,7 @@ void	fill_cast_horizantal(t_ray *ray, cast_h *cst_h)
 
 t_point	cast_horizantal(t_var *var, t_ray *ray)
 {
-	cast_h	cst_h;
+	t_cast_h	cst_h;
 
 	fill_cast_horizantal(ray, &cst_h);
 	while (((0 <= cst_h.colison.x && 0 <= cst_h.colison.y)

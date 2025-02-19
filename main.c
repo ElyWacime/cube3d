@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:39 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:51:40 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:53:19 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	init_vars(t_var *var)
 	var->colors = NULL;
 	var->door_cords.len = 0;
 	var->door_cords.cords = NULL;
-	var->gunFireImg = NULL;
-	var->gunPreFireImg = NULL;
+	var->gunfireimg = NULL;
+	var->gunprefireimg = NULL;
 }
 
 int	main(int ac, char *av[])

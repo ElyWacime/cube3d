@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:00 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 20:11:24 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:51:13 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ void	load_pictures(t_var *var)
 	var->east = mlx_load_png(var->textures[3] + 3);
 	check_for_images(var);
 	var->door = mlx_load_png("./textures/door.png");
-	var->gunFire = mlx_load_png("./textures/gunImageFire.png");
-	var->gunPreFire = mlx_load_png("./textures/gunImagePreFire.png");
+	var->gunfire = mlx_load_png("./textures/gunImageFire.png");
+	var->gunprefire = mlx_load_png("./textures/gunImagePreFire.png");
 }

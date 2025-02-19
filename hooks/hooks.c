@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:49:38 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:49:40 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:53:19 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	listen_to_key(struct mlx_key_data keydata, void *ptr)
 	if (keydata.key == MLX_KEY_SPACE && (keydata.action == MLX_REPEAT
 			|| keydata.action == MLX_PRESS))
 	{
-		var->gunFireImg->enabled = true;
-		var->gunPreFireImg->enabled = false;
+		var->gunfireimg->enabled = true;
+		var->gunprefireimg->enabled = false;
 	}
 	else if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
 	{
-		var->gunFireImg->enabled = false;
-		var->gunPreFireImg->enabled = true;
+		var->gunfireimg->enabled = false;
+		var->gunprefireimg->enabled = true;
 	}
 	else if (keydata.key == MLX_KEY_LEFT && (keydata.action == MLX_PRESS
 			|| keydata.action == MLX_REPEAT))
@@ -67,7 +67,7 @@ void	shoot(struct mlx_key_data keydata, void *ptr)
 	var = (t_var *)ptr;
 	if (keydata.key == MLX_KEY_SPACE && (keydata.action == MLX_REPEAT
 			|| keydata.action == MLX_PRESS))
-		var->gunFireImg->enabled = true;
+		var->gunfireimg->enabled = true;
 	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
-		var->gunFireImg->enabled = false;
+		var->gunfireimg->enabled = false;
 }

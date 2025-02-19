@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:14 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:50:15 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:51:44 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	extract_f(t_var *var)
 	_colors[2] = ft_atoi(color[2]);
 	free_double((void **)color);
 	free(color);
-	var->color_F = transform_color_to_hexa(_colors);
+	var->colorf = transform_color_to_hexa(_colors);
 }
 
 void	extract_c(t_var *var)
@@ -85,7 +85,7 @@ void	extract_c(t_var *var)
 	_colors[2] = ft_atoi(color[2]);
 	free_double((void **)color);
 	free(color);
-	var->color_C = transform_color_to_hexa(_colors);
+	var->color_c = transform_color_to_hexa(_colors);
 }
 
 void	get_colors(t_var *var, int fd)

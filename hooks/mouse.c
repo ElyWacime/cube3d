@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:49:50 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:49:51 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:44:02 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	mlx_mouse_func(double xpos, double ypos, void *param)
 	mlx_set_cursor_mode(((t_var *)param)->mlx, MLX_MOUSE_HIDDEN);
 	if (!var || !var->mlx)
 		return ;
-	mlx_get_mouse_pos(var->mlx, (int32_t*)&xpos, (int32_t*)&ypos);
+	mlx_get_mouse_pos(var->mlx, (int32_t *)&xpos, (int32_t *)&ypos);
 	delta_x = xpos - prev_x;
 	if (delta_x > 0)
 		rotate_player_right(var);

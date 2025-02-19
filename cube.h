@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 18:37:32 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:54:43 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,10 @@ typedef struct s_var
 	mlx_texture_t		*west;
 	mlx_texture_t		*south;
 	mlx_texture_t		*door;
-	mlx_texture_t		*gunPreFire;
-	mlx_texture_t		*gunFire;
-	mlx_image_t			*gunFireImg;
-	mlx_image_t			*gunPreFireImg;
+	mlx_texture_t		*gunprefire;
+	mlx_texture_t		*gunfire;
+	mlx_image_t			*gunfireimg;
+	mlx_image_t			*gunprefireimg;
 	char				**map;
 	char				**textures;
 	char				**colors;
@@ -132,8 +132,8 @@ typedef struct s_var
 	int					y_3d;
 	t_uint				mini_width;
 	t_uint				mini_height;
-	uint32_t			color_C;
-	uint32_t			color_F;
+	uint32_t			color_c;
+	uint32_t			colorf;
 	t_dcor				door_cords;
 	t_uint				r;
 	t_uint				g;
@@ -287,7 +287,7 @@ typedef struct s_cast_vertical
 	float				skip_y;
 	float				tn;
 
-}						cast_v;
+}						t_cast_v;
 typedef struct s_cast_horizantal
 {
 	t_point				horizon;
@@ -296,7 +296,7 @@ typedef struct s_cast_horizantal
 	float				skip_y;
 	float				tn;
 
-}						cast_h;
+}						t_cast_h;
 typedef struct s_cast
 {
 	t_ray				ray;
@@ -323,9 +323,9 @@ void					fill_set_direciton(t_ray *ray);
 void					set_direciton(t_ray *ray);
 
 // rays_4.c
-void					fill_cast_vertical(t_ray *ray, cast_v *cst_v);
+void					fill_cast_vertical(t_ray *ray, t_cast_v *cst_v);
 t_point					cast_vertical(t_var *var, t_ray *ray);
-void					fill_cast_horizantal(t_ray *ray, cast_h *cst_h);
+void					fill_cast_horizantal(t_ray *ray, t_cast_h *cst_h);
 t_point					cast_horizantal(t_var *var, t_ray *ray);
 float					next_px_in_grid(float p, int d);
 

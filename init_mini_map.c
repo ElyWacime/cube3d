@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:31 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:51:32 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:51:44 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	color_wall(t_uint *tracker, t_var *var)
 	}
 }
 
-void	color_floor(t_uint *tracker, t_var *var)
+void	colorfloor(t_uint *tracker, t_var *var)
 {
 	t_uint	i;
 	t_uint	j;
