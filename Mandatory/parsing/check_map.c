@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:58 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 20:24:49 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:30:41 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	is_still_there_zeros(char **_map, int *zero_position)
 		j = 0;
 		while (_map[i][j])
 		{
-			if (_map[i][j] == '0')
+			if (_map[i][j] == '0' || _map[i][j] == 'P' || _map[i][j] == 'N'
+				|| _map[i][j] == 'W' || _map[i][j] == 'S' || _map[i][j] == 'E')
 			{
 				zero_position[0] = i;
 				zero_position[1] = j;
