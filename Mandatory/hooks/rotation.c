@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:01 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 18:53:19 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:28:49 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ void	rotate_player_right(t_var *var)
 	var->player.angle = my_fmod((var->player.angle + (360 - 6)), 360);
 	init_img3d(var);
 	cast(var);
-	init_mini_map_system(var);
-	mlx_image_to_window(var->mlx, var->gunprefireimg, (WIDTH / 2)
-		- var->gunfire->width, HEIGHT - var->gunfire->height * 2);
-	mlx_image_to_window(var->mlx, var->gunfireimg, (WIDTH / 2)
-		- var->gunprefire->width, HEIGHT - var->gunprefire->height * 2);
 }
 
 void	rotate_player_left(t_var *var)
@@ -57,9 +52,4 @@ void	rotate_player_left(t_var *var)
 	var->player.angle = my_fmod(var->player.angle + 6, 360);
 	init_img3d(var);
 	cast(var);
-	init_mini_map_system(var);
-	mlx_image_to_window(var->mlx, var->gunprefireimg, (WIDTH / 2)
-		- var->gunfire->width, HEIGHT - var->gunfire->height * 2);
-	mlx_image_to_window(var->mlx, var->gunfireimg, (WIDTH / 2)
-		- var->gunprefire->width, HEIGHT - var->gunprefire->height * 2);
 }

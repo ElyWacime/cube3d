@@ -12,7 +12,7 @@ CFILES = hooks/mouse.c mini_map_system.c hooks/rotation.c ./move_player/move_pla
 			textures_code/gun_textures.c move_player/move_player3.c\
 
 OBJ = $(CFILES:.c=.o)
-NAME = cube
+NAME = ../cub3D
 LIBFT = ./libft2/libft.a
 MLX = ./MLX42/build/libmlx42.a
 MLX_LINUX = ./MLX42/build/libmlx42.a

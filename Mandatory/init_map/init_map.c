@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:06 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 18:51:44 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:30:53 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	sub_init_window(t_var *var, int i, int j)
 				mlx_put_pixel(var->img, i, j, var->colorf);
 				continue ;
 			}
-			if (i < 100 && j < 100)
-				continue ;
+			// if (i < 100 && j < 100)
+			// 	continue ;
 			mlx_put_pixel(var->img, i, j, var->color_c);
 		}
 	}

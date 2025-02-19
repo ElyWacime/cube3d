@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 19:11:33 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:16:10 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,6 @@ int						is_still_there_zeros(char **ptr, int *ptr2);
 void					cast(t_var *var);
 void					_init_window_3d(t_var *var);
 t_point					rotate_by(t_point center, t_point m, float angle);
-float					cast_one_ray_for_movement(t_var var, t_ray *ray);
 void					set_direciton(t_ray *ray);
 
 /*
@@ -328,7 +327,6 @@ t_point					rotate_by(t_point center, t_point m, float angle);
 // rays_3.c
 void					fill_cast(t_var *var, t_cast *cst);
 void					cast(t_var *var);
-float					cast_one_ray_for_movement(t_var var, t_ray *ray);
 void					fill_set_direciton(t_ray *ray);
 void					set_direciton(t_ray *ray);
 

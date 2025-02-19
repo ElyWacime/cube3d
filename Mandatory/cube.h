@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 19:11:33 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:44:18 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <unistd.h>
 
 # define SQUARE_SIZE 8
-# define DOOR 7
 # define WIDTH 2560 // 2560   //     
 # define HEIGHT 1280 // 1280  //      
 # define VIEW 63
@@ -118,11 +117,6 @@ typedef struct s_var
 	mlx_texture_t		*east;
 	mlx_texture_t		*west;
 	mlx_texture_t		*south;
-	mlx_texture_t		*door;
-	mlx_texture_t		*gunprefire;
-	mlx_texture_t		*gunfire;
-	mlx_image_t			*gunfireimg;
-	mlx_image_t			*gunprefireimg;
 	char				**map;
 	char				**textures;
 	char				**colors;
@@ -153,14 +147,6 @@ typedef struct s_init_mini_map
 	t_uint				j;
 }						t_imm;
 
-typedef struct  s_mlx_mouse_func
-{
-	int32_t	prev_x;
-	int32_t	prev_y;
-	float	delta_x;
-	int32_t mouse_x;
-	int32_t  mouse_y;
-}		t_mouse;
 
 /*
 ** game_setup.c
@@ -205,13 +191,6 @@ void					rotate_player_left(t_var *var);
 void					listen_to_key(struct mlx_key_data var, void *ptr);
 void					get_point_position_to_draw_diraction(
 							t_var *v, t_uint u);
-void					cursor_callBackFunc(double x, double y, void *ptr);
-
-/*
-** mouse.c
-*/
-void					change_mouse_position(void *param);
-void					mlx_mouse_func(double xpos, double ypos, void *param);
 
 /*
 ** init_map.c
@@ -250,10 +229,6 @@ float					from_rad_to_deg(float var);
 float					from_deg_to_rad(float var);
 void					draw_line(t_line line, t_var *var, t_uint uni);
 void					quit_program(t_var *var);
-void					get_all_door_cords(t_var *var);
-void					close_or_open_door(t_var *var);
-void					open_door(t_var *var);
-void					close_door(t_var *var);
 /*
 ** check_map.c
 */
@@ -267,7 +242,6 @@ int						is_still_there_zeros(char **ptr, int *ptr2);
 void					cast(t_var *var);
 void					_init_window_3d(t_var *var);
 t_point					rotate_by(t_point center, t_point m, float angle);
-float					cast_one_ray_for_movement(t_var var, t_ray *ray);
 void					set_direciton(t_ray *ray);
 
 /*
@@ -287,7 +261,6 @@ void					draw_gun(t_var *var);
 /*
 ** mini_map_system.c
 */
-void					init_mini_map_system(t_var *var);
 void					draw_animated_sprite(t_var *var);
 
 typedef struct s_cast_vertical
@@ -328,7 +301,6 @@ t_point					rotate_by(t_point center, t_point m, float angle);
 // rays_3.c
 void					fill_cast(t_var *var, t_cast *cst);
 void					cast(t_var *var);
-float					cast_one_ray_for_movement(t_var var, t_ray *ray);
 void					fill_set_direciton(t_ray *ray);
 void					set_direciton(t_ray *ray);
 

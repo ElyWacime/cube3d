@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:00 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 18:51:13 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:12:10 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,24 @@ void	check_for_images(t_var *var)
 {
 	int	fd;
 
-	fd = open("./textures/door.png", O_RDONLY);
+	fd = open("./Mandatory/textures/door.png", O_RDONLY);
 	if (fd < 1)
+	{
+		write(2, "Error 69\nFile Not Found!", 25);
 		quit_program(var);
-	fd = open("./textures/gunImageFire.png", O_RDONLY);
+	}
+	fd = open("./Mandatory/textures/gunImageFire.png", O_RDONLY);
 	if (fd < 1)
+	{
+		write(2, "Error 69\nFile Not Found!", 25);
 		quit_program(var);
-	fd = open("./textures/gunImagePreFire.png", O_RDONLY);
+	}
+	fd = open("./Mandatory/textures/gunImagePreFire.png", O_RDONLY);
 	if (fd < 1)
+	{
+		write(2, "Error 69\nFile Not Found!", 25);
 		quit_program(var);
+	}
 }
 
 void	load_pictures(t_var *var)
@@ -99,7 +108,7 @@ void	load_pictures(t_var *var)
 	var->west = mlx_load_png(var->textures[2] + 3);
 	var->east = mlx_load_png(var->textures[3] + 3);
 	check_for_images(var);
-	var->door = mlx_load_png("./textures/door.png");
-	var->gunfire = mlx_load_png("./textures/gunImageFire.png");
-	var->gunprefire = mlx_load_png("./textures/gunImagePreFire.png");
+	var->door = mlx_load_png("./Mandatory/textures/door.png");
+	var->gunfire = mlx_load_png("./Mandatory/textures/gunImageFire.png");
+	var->gunprefire = mlx_load_png("./Mandatory/textures/gunImagePreFire.png");
 }

@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:58 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 20:11:40 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:24:49 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	is_still_there_zeros(char **_map, int *zero_position)
 		j = 0;
 		while (_map[i][j])
 		{
-			if (_map[i][j] == '0' || _map[i][j] == 'P')
+			if (_map[i][j] == '0')
 			{
 				zero_position[0] = i;
 				zero_position[1] = j;
@@ -89,9 +89,9 @@ void	flood_fill(char **map, int x, int y)
 	if (map[y][x] == '1')
 		return ;
 	if (map[y][x] == '0' || map[y][x] == 'N' || map[y][x] == 'W'
-		|| map[y][x] == 'S' || map[y][x] == 'E' || map[y][x] == 'P')
+		|| map[y][x] == 'S' || map[y][x] == 'E' )
 	{
-		if (!(map[y][x] == '0' || map[y][x] == 'P'))
+		if (!(map[y][x] == '0'))
 			flag += 1;
 		map[y][x] = '1';
 	}

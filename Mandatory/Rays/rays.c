@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skamroun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:56:14 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 14:56:22 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:22:07 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,12 @@ void	fill_cast_vh_2(t_var *var, t_ray *ray, t_cords *cor)
 	fill_cast_vh_2_0(var, ray, cor);
 	if (cor->distance_v < cor->distance_h)
 	{
-		if (ray->wall_or_door_v == DOOR)
-			ray->wall_or_door = DOOR;
 		cor->is_collision_horizontal = 0;
 		cor->line.bx = cor->colision_v.x;
 		cor->line.by = cor->colision_v.y;
 	}
 	else if (cor->distance_h < cor->distance_v)
 	{
-		if (ray->wall_or_door_h == DOOR)
-			ray->wall_or_door = DOOR;
 		cor->h = cor->distance_h;
 		ray->angle = my_fmod(ray->angle, 360);
 		cor->line.by = cor->colision_h.y;
@@ -51,8 +47,6 @@ void	fill_cast_vh_2(t_var *var, t_ray *ray, t_cords *cor)
 void	fill_cast_vh_1(t_var *var, t_ray *ray, t_cords *cor)
 {
 	cor->colision_v = cast_horizantal(var, ray);
-	if (ray->wall_or_door_h == DOOR)
-		ray->wall_or_door = DOOR;
 	if (ray->angle == 90)
 		ray->textures_index = 1;
 	else
@@ -66,8 +60,6 @@ void	fill_cast_vh_0(t_var *var, t_ray *ray, t_cords *cor)
 {
 	cor->is_collision_horizontal = 0;
 	cor->colision_h = cast_vertical(var, ray);
-	if (ray->wall_or_door_v == DOOR)
-		ray->wall_or_door = DOOR;
 	if (ray->angle == 0)
 		ray->textures_index = 0;
 	else
