@@ -40,6 +40,7 @@ char	**create_map(char *file_cub, t_var *var)
 	free(_map);
 	return (map);
 }
+
 void	_init_window_3d(t_var *var)
 {
 	if (var->img_3d)

@@ -22,14 +22,11 @@ void	mlx_mouse_func(double xpos, double ypos, void *param)
 	var = (t_var *)param;
 	prev_x = WIDTH / 2;
 	prev_y = HEIGHT / 2;
-	int32_t mouse_x, mouse_y;
-	(void)xpos;
-	(void)ypos;
 	mlx_set_cursor_mode(((t_var *)param)->mlx, MLX_MOUSE_HIDDEN);
 	if (!var || !var->mlx)
 		return ;
-	mlx_get_mouse_pos(var->mlx, &mouse_x, &mouse_y);
-	delta_x = mouse_x - prev_x;
+	mlx_get_mouse_pos(var->mlx, (int32_t*)&xpos, (int32_t*)&ypos);
+	delta_x = xpos - prev_x;
 	if (delta_x > 0)
 		rotate_player_right(var);
 	else if (delta_x < 0)
