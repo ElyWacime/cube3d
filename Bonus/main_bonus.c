@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:39 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/21 16:34:57 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:55:26 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	init_vars(t_var *var)
 {
+
+
+
+	// sdasd
 	var->img = NULL;
 	var->mlx = NULL;
 	var->img = NULL;

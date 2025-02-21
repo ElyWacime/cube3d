@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:06 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 20:30:53 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:47:10 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**create_map(char *file_cub, t_var *var)
 	fd = open(file_cub, O_RDONLY);
 	if (fd < 0)
 	{
-		write(2, "Error\nfile not found!", 21);
+		write(2, "Error0\nfile not found!", 21);
 		exit(6);
 	}
 	get_texures(var, fd);

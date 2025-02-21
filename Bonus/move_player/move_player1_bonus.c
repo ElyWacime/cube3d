@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:50:52 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/21 16:36:58 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:55:57 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	calcul_right_movement(t_var *var)
 	t_point	new_position;
 	int		cnt;
 
-	cnt = -1;
-	while (cnt++ <= 1)
+	cnt = -2;
+	while (cnt++ <= 2)
 	{
 		new_position.x = (var->player.position.x + cnt) + (SPEED
 				* sin(from_deg_to_rad(var->player.angle)));
@@ -40,8 +40,8 @@ void	calcul_left_movement(t_var *var)
 	t_point	new_position;
 	int		cnt;
 
-	cnt = -1;
-	while (cnt++ <= 1)
+	cnt = -2;
+	while (cnt++ <= 2)
 	{
 		new_position.x = (var->player.position.x + cnt) - (SPEED
 				* sin(from_deg_to_rad(var->player.angle)));
@@ -65,8 +65,8 @@ void	calcul_up_movement(t_var *var)
 	t_point	new_position;
 	int		cnt;
 
-	cnt = -1;
-	while (cnt++ <= 1)
+	cnt = -2;
+	while (cnt++ <= 2)
 	{
 		new_position.x = (var->player.position.x + cnt) + (SPEED
 				* cos(from_deg_to_rad(var->player.angle)));
@@ -92,8 +92,8 @@ void	calcul_down_movement(t_var *var)
 	t_point	new_position;
 	int		cnt;
 
-	cnt = -1;
-	while (cnt++ <= 1)
+	cnt = -2;
+	while (cnt++ <= 2)
 	{
 		new_position.x = (var->player.position.x + cnt) - (SPEED
 				* cos(from_deg_to_rad(var->player.angle)));

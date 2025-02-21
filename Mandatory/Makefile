@@ -3,9 +3,9 @@ CC = cc
 # FLAGS = -fsanitize=address -g
 # FLAGS = -Wall -Wextra -g
 FLAGS = -Wall -Wextra -Werror 
-CFILES = hooks/mouse.c mini_map_system.c hooks/rotation.c ./move_player/move_player.c\
+CFILES = hooks/mouse.c ./init_map/mini_map_system.c hooks/rotation.c ./move_player/move_player.c\
 			./move_player/move_player1.c ./move_player/move_player2.c\
-			hooks/hooks.c init_mini_map.c utils/utils.c utils/utils1.c utils/utils2.c\
+			hooks/hooks.c ./init_map/init_mini_map.c utils/utils.c utils/utils1.c utils/utils2.c\
 			parsing/check_map.c ./init_map/init_map.c main.c Rays/rays_2.c Rays/rays_3.c Rays/rays_4.c\
 			Rays/rays_5.c Rays/rays_6.c Rays/rays_7.c gnl/gnl.c Rays/rays.c ./init_map/init_map1.c ./init_map/init_map2.c\
 			parsing/game_setup.c textures_code/door_textures.c textures_code/wall_textures.c\

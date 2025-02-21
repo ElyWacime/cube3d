@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:00 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/19 20:22:15 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:48:18 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,35 +77,10 @@ void	parsing(int ac, char *av[], t_var *var)
 	free(_map);
 }
 
-void	check_for_images(t_var *var)
-{
-	int	fd;
-
-	fd = open("./Mandatory/textures/door.png", O_RDONLY);
-	if (fd < 1)
-	{
-		write(2, "Error 69\nFile Not Found!", 25);
-		quit_program(var);
-	}
-	fd = open("./Mandatory/textures/gunImageFire.png", O_RDONLY);
-	if (fd < 1)
-	{
-		write(2, "Error 69\nFile Not Found!", 25);
-		quit_program(var);
-	}
-	fd = open("./Mandatory/textures/gunImagePreFire.png", O_RDONLY);
-	if (fd < 1)
-	{
-		write(2, "Error 69\nFile Not Found!", 25);
-		quit_program(var);
-	}
-}
-
 void	load_pictures(t_var *var)
 {
 	var->north = mlx_load_png(var->textures[0] + 3);
 	var->south = mlx_load_png(var->textures[1] + 3);
 	var->west = mlx_load_png(var->textures[2] + 3);
 	var->east = mlx_load_png(var->textures[3] + 3);
-	check_for_images(var);
 }
