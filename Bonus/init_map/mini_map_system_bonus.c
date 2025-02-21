@@ -6,11 +6,11 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:42 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/21 16:35:03 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:54:30 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube_bonus.h"
+#include "../cube_bonus.h"
 
 void	sub_init_mini_map_system_0(t_var *var, t_imm *imm)
 {
