@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 19:18:02 by welyousf          #+#    #+#             */
-/*   Updated: 2024/07/01 12:12:50 by welyousf         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:24:03 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 size_t	ft_strlen(const char *str)
 {

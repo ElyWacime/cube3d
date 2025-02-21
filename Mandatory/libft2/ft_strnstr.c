@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 01:13:08 by welyousf          #+#    #+#             */
-/*   Updated: 2024/06/30 11:32:18 by welyousf         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:24:03 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {

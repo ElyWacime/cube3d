@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skamroun <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:48:57 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/15 17:48:58 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:22:31 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl.h"
+#include "../cube.h"
 
 char	*gnl(int fd)
 {

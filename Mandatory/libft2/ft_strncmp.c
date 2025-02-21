@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 17:59:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/07/01 14:51:11 by welyousf         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:24:03 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
