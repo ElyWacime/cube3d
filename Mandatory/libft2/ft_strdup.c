@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: welyousf <welyousf@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 16:00:36 by welyousf          #+#    #+#             */
-/*   Updated: 2023/12/09 19:31:33 by welyousf         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:24:03 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 char	*ft_strdup(const char *s1)
 {

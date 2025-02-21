@@ -6,11 +6,11 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 12:54:29 by welyousf          #+#    #+#             */
-/*   Updated: 2025/02/15 17:50:43 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:24:03 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../cube.h"
 
 static int	handle_result(unsigned long long result, long long sign,
 		const char *str, int i)

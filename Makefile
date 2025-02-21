@@ -19,5 +19,6 @@ re :
 	make re -C ./Mandatory
 re_bonus :
 	make re -C ./Bonus
-
+mlx:
+	make mlx -C ./Mandatory && make mlx -C ./Bonus
 .PHONY: all bonus fclean fclean_bonus clean clean_bonus re re_bonus 

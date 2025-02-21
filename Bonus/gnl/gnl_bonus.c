@@ -6,11 +6,11 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:48:57 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/21 16:37:37 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:47:46 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl_bonus.h"
+#include "../cube_bonus.h"
 
 char	*gnl(int fd)
 {

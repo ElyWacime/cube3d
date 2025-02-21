@@ -6,11 +6,11 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 17:53:20 by welyousf          #+#    #+#             */
-/*   Updated: 2025/02/21 16:36:34 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:13:51 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft_bonus.h"
+#include "../cube_bonus.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {

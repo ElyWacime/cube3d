@@ -6,7 +6,7 @@
 /*   By: skamroun <skamroun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 17:51:29 by skamroun          #+#    #+#             */
-/*   Updated: 2025/02/21 18:54:23 by skamroun         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:41:28 by skamroun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define CUBE_H
 
 # include "./MLX42/include/MLX42/MLX42.h"
-# include "./libft2/libft_bonus.h"
-# include "gnl/gnl_bonus.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdint.h>
@@ -33,6 +31,31 @@
 # define PI 3.14159265358979323846
 # define SPEED 1.5
 
+char	*gnl(int fd);
+typedef struct s_list
+{
+	int				red_status;
+	int				type;
+	int				position;
+	void			*content;
+	struct s_list	*next;
+}					t_list;
+
+int					ft_isdigit(int c);
+size_t				ft_strlen(const char *str);
+void				ft_bzero(void *s, size_t n);
+size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
+int					ft_strncmp(const char *s1, const char *s2, size_t n);
+char				*ft_strnstr(const char *haystack, const char *needle,
+						size_t len);
+int					ft_atoi(const char *str);
+void				*ft_calloc(size_t count, size_t size);
+char				*ft_strdup(const char *s1);
+char				*ft_substr(char const *s, unsigned int start, size_t len);
+char				*ft_strjoin(char *s1, char *s2);
+char				**ft_split(char const *s, char c);
+// ********
 typedef unsigned int	t_uint;
 
 typedef struct s_point
