@@ -1,7 +1,0 @@
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/mlx42.dir
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/edit_cache.dir
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/rebuild_cache.dir
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/list_install_components.dir
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/install.dir
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/install/local.dir
-/home/saad/Desktop/cube3d/MLX42/build/CMakeFiles/install/strip.dir

@@ -1,44 +1,24 @@
-CC = cc
-# FLAGS = -fsanitize=address -g
-FLAGS = -Wall -Wextra -Werror -fsanitize=address -g - O3
-FLAGS = -fsanitize=address -g
-FLAGS = -Wall -Wextra -g
-CFILES = mini_map_system.c rotation.c move_player.c hooks.c init_mini_map.c utils.c check_map.c init_map.c main.c gnl/gnl.c rays.c textures.c
-OBJ = $(CFILES:.c=.o)
-NAME = cube
-LIBFT = ./libft2/libft.a
-MLX = ./mlx/build/libmlx42.a
-MLX_LINUX = ./MLX43/build/libmlx42.a
-GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
-INCLUDES = MLX43/build/libmlx42.a libft2/libft.a  MLX43/build/libglfw3.a -Iinclude -lm -framework Cocoa -framework OpenGL -framework IOKit
-# GLFW = -Iinclude -lglfw -L"/Users/welyousf/goinfre/homebrew/Cellar/glfw/3.4/lib/"
+NAME = cub3D
+NAME_Bonus = cub3D_bonus
+all :
+	make -C ./Mandatory
+bonus :
+	make -C ./Bonus
 
-all : ${NAME}
-${NAME}:${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -O3 -Iinclude -ldl -lglfw  -lm -o ${NAME}
-# ${CC} ${FLAGS} ${OBJ} ${MLX} ${INCLUDES} -o ${NAME}
-# ${CC} ${FLAGS} ${LIBFT} ${OBJ} ${MLX} ${GLFW} -framework OpenGL -framework AppKit -o ${NAME}
+fclean :
+	make fclean -C ./Mandatory
+fclean_bonus :
+	make fclean -C ./Bonus
 
-${LIBFT}:
-	make -C ./libft2
+clean :
+	make clean -C ./Mandatory
+clean_bonus :
+	make clean -C ./Bonus
 
-%.o : %.c cube.h
-	cc ${FLAGS} -Imlx -c $< -o $@
-
-clean:
-	rm -rf ${OBJ}
-
-cleanlib:
-	make fclean -C ./libft2
-
-fclean: clean cleanlib
-	rm -rf ${NAME}
-
-git:
-	git add .
-	git commit -m "update"
-
-linux: ${LIBFT} ${OBJ} 
-	${CC} ${FLAGS} ${OBJ} ${LIBFT} ${MLX_LINUX} -Iinclude -ldl -lglfw  -lm -o ${NAME}
-
-re : fclean all
+re :
+	make re -C ./Mandatory
+re_bonus :
+	make re -C ./Bonus
+mlx:
+	make mlx -C ./Mandatory && make mlx -C ./Bonus
+.PHONY: all bonus fclean fclean_bonus clean clean_bonus re re_bonus 
