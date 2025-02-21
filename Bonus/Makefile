@@ -3,13 +3,13 @@ CC = cc
 # FLAGS = -fsanitize=address -g
 # FLAGS = -Wall -Wextra -g
 FLAGS = -Wall -Wextra -Werror 
-CFILES = hooks/mouse.c mini_map_system.c hooks/rotation.c ./move_player/move_player.c\
-			./move_player/move_player1.c ./move_player/move_player2.c\
-			hooks/hooks.c init_mini_map.c utils/utils.c utils/utils1.c utils/utils2.c\
-			parsing/check_map.c ./init_map/init_map.c main.c Rays/rays_2.c Rays/rays_3.c Rays/rays_4.c\
-			Rays/rays_5.c Rays/rays_6.c Rays/rays_7.c gnl/gnl.c Rays/rays.c ./init_map/init_map1.c ./init_map/init_map2.c\
-			parsing/game_setup.c textures_code/door_textures.c textures_code/wall_textures.c\
-			textures_code/gun_textures.c move_player/move_player3.c\
+CFILES = hooks/mouse_bonus.c mini_map_system_bonus.c hooks/rotation_bonus.c ./move_player/move_player_bonus.c\
+			./move_player/move_player1_bonus.c ./move_player/move_player2_bonus.c\
+			hooks/hooks_bonus.c init_mini_map_bonus.c utils/utils_bonus.c utils/utils1_bonus.c utils/utils2_bonus.c\
+			parsing/check_map_bonus.c ./init_map/init_map_bonus.c main_bonus.c Rays/rays_2_bonus.c Rays/rays_3_bonus.c Rays/rays_4_bonus.c\
+			Rays/rays_5_bonus.c Rays/rays_6_bonus.c Rays/rays_7_bonus.c gnl/gnl_bonus.c Rays/rays_bonus.c ./init_map/init_map1_bonus.c ./init_map/init_map2_bonus.c\
+			parsing/game_setup_bonus.c textures_code/door_textures_bonus.c textures_code/wall_textures_bonus.c\
+			textures_code/gun_textures_bonus.c move_player/move_player3_bonus.c\
 
 OBJ = $(CFILES:.c=.o)
 NAME = ../cub3D_bonus
@@ -29,7 +29,7 @@ ${NAME}:${LIBFT} ${OBJ}
 ${LIBFT}:
 	make -C ./libft2
 
-%.o : %.c cube.h
+%.o : %.c cube_bonus.h
 	cc ${FLAGS} -Imlx -c $< -o $@
 
 clean:
